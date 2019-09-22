@@ -1,5 +1,7 @@
 package cn.mayu.yugioh.reptile.ourocg;
 
+import org.springframework.web.client.RestTemplate;
+
 public class B implements Runnable {
 	
 	private int num;
