@@ -1,0 +1,12 @@
+.classpath
+.project
+*.cmd
+*.class
+/classes
+**/target/**
+**/logs/**
+**/test/**
+.git/
+.settings/
+pom.properties
+MANIFEST.MF
