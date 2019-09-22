@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.registry;
+package cn.mayu.yugioh.basic.registry;
 
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
