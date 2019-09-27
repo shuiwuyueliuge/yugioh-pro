@@ -56,7 +56,7 @@ public class CardMetaDataFinder {
 	private static void saveInFile(int num, String data) throws Exception {
 		FileOutputStream out = null;
 		try {
-			out = new FileOutputStream("E:\\eclipse\\test1\\src\\test\\java\\com\\app\\aaaa.txt", true);
+			out = new FileOutputStream("C:\\Users\\Viewshine123\\Desktop\\aaaa.txt", true);
 			out.write((num + " " + data + "\r\n").getBytes());
 		} finally {
 			if (out != null) out.close();
