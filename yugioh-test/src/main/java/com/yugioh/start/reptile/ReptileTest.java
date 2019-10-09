@@ -15,9 +15,9 @@ public class ReptileTest {
 
 	@Test
 	public void test1() {
-		TestEntity entity = new TestEntity();
-		entity.setAge("123");
-		entity.setName("zhangsan");
+//		TestEntity entity = new TestEntity();
+//		entity.setAge("123");
+//		entity.setName("zhangsan");
 		//Mono<TestEntity> savedEntity = tr.insert(entity);
 		//savedEntity.subscribe(System.out::println);
 		
@@ -28,10 +28,12 @@ public class ReptileTest {
 //		});
 		
 		//tr.findByNameAndAge("lisi", "28").subscribe(System.out::println);
-		tr.findByAgeBetween("12", "133").collectList().subscribe(testEntityList -> {
-			for (TestEntity testEntity : testEntityList) {
-				System.out.println(testEntity);
-			}
-		});
+//		tr.findByAgeBetween("12", "133").collectList().subscribe(testEntityList -> {
+//			for (TestEntity testEntity : testEntityList) {
+//				System.out.println(testEntity);
+//			}
+//		});
+		
+		while(true) {}
 	}
 }

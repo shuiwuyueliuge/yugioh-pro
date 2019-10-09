@@ -10,11 +10,12 @@ public class Test4 {
 	Logger log = LoggerFactory.getLogger(getClass());
 
 	public static void main(String[] args) throws Exception {	
-		long time = System.currentTimeMillis();
+		//long time = System.currentTimeMillis();
 		IntStream.rangeClosed(1, 1001).mapToObj(num -> {
 			return num;
-		}).collect(Collectors.toList()).parallelStream().forEach(cn.mayu.yugioh.reptile.ourocg.CardMetaDataFinder::exec);
+		//}).collect(Collectors.toList()).parallelStream().forEach(CardMetaDataFinder::exec);
+	    }).collect(Collectors.toList()).stream().filter(num -> num % 2 == 1).forEach(System.out::println);
 		
-		System.out.println(System.currentTimeMillis() - time);
+		//System.out.println(System.currentTimeMillis() - time);
 	}
 }

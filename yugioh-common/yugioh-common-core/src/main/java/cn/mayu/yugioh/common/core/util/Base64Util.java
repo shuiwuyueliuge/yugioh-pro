@@ -11,6 +11,7 @@ public class Base64Util {
 		return Base64.getEncoder().encodeToString(content);
 	}
 
+	//<img src="data:image/png;base64,....."/>
 	public static String UrlImg2Base64(String url) throws Exception {
 		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 		try (InputStream in = conn.getInputStream()) {
