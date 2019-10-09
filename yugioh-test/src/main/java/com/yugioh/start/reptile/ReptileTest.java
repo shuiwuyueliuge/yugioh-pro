@@ -28,7 +28,6 @@ public class ReptileTest {
 //		});
 		
 		//tr.findByNameAndAge("lisi", "28").subscribe(System.out::println);
-		
 		tr.findByAgeBetween("12", "133").collectList().subscribe(testEntityList -> {
 			for (TestEntity testEntity : testEntityList) {
 				System.out.println(testEntity);
