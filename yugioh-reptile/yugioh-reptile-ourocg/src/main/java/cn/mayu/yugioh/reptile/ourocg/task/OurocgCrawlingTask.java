@@ -28,7 +28,7 @@ public class OurocgCrawlingTask {
 
 	@Scheduled(cron = "*/1 * * * * ?")
 	public void CardBasicDataCrawing() {
-		IntStream.rangeClosed(1, 1001).boxed().forEach(num -> exec(String.format(BASE_ULR, num)));
+		IntStream.rangeClosed(1, 1001).boxed().parallel().forEach(num -> exec(String.format(BASE_ULR, num)));
 	}
 	
 	private void exec(String url) {

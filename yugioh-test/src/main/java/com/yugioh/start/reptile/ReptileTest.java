@@ -25,7 +25,7 @@ public class ReptileTest {
 	
 	@Test
 	public void execTest() {
-		IntStream.rangeClosed(1, 1001).boxed().forEach(num -> {
+		IntStream.rangeClosed(1, 1001).boxed().parallel().forEach(num -> {
 			try {
 				saveInFile(String.format("%s %s", num, dataFindManager.doExec(String.format("https://www.ourocg.cn/card/list-5/%s", num))));
 			} catch (Exception e) {
