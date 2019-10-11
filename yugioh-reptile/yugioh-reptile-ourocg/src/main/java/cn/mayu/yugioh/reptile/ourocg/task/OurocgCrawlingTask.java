@@ -1,14 +1,12 @@
 package cn.mayu.yugioh.reptile.ourocg.task;
 
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.reptile.ourocg.manager.CardMetaDataFindManager;
+import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
 
 @Component
 public class OurocgCrawlingTask {
@@ -18,7 +16,7 @@ public class OurocgCrawlingTask {
 	private static final String BASE_ULR = "https://www.ourocg.cn/card/list-5/%s";
 
 	@Autowired
-	private CardMetaDataFindManager dataFindManager;
+	private OurocgDataService ourocgDataService;
 
 	@Value("${spring.cloud.config.label}")
 	private int lable;
@@ -28,14 +26,23 @@ public class OurocgCrawlingTask {
 
 	@Scheduled(cron = "*/1 * * * * ?")
 	public void CardBasicDataCrawing() {
-		IntStream.rangeClosed(1, 1001).boxed().parallel().forEach(num -> exec(String.format(BASE_ULR, num)));
-	}
-	
-	private void exec(String url) {
-		try {
-			dataFindManager.doExec(url);
-		} catch (Exception e) {
-			log.error("Ourocg Crawling url [{}] error [{}]", url, e);
+		int num = 1;
+		while (true) {
+			if (num % count != lable) {
+				continue;
+			}
+			
+			String url = String.format(BASE_ULR, num);
+			try {
+				if (num > ourocgDataService.findOurocgData(url, num)) {
+					continue;
+				}
+			} catch (Exception e) {
+				log.error("Ourocg Crawling url [{}] error [{}]", url, e);
+				break;
+			}
+			
+			num++;
 		}
 	}
 }

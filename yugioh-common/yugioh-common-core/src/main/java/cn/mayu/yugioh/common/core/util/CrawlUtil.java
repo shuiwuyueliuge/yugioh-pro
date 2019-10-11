@@ -12,7 +12,7 @@ public class CrawlUtil {
 	private static final String AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)  Chrome/56.0.2924.87 Safari/537.36";
 
 	private static Response getResponse(String url) throws Exception {
-		return Jsoup.connect(url).ignoreContentType(false).userAgent(AGENT).ignoreHttpErrors(true).execute();
+		return Jsoup.connect(url).ignoreContentType(false).timeout(50000).userAgent(AGENT).ignoreHttpErrors(true).execute();
 	}
 
 	private static Document getDocument(Response res) throws Exception {
