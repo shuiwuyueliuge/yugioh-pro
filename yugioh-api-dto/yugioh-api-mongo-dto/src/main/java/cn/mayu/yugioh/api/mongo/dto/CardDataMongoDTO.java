@@ -1,11 +1,12 @@
-package cn.mayu.yugioh.reptile.ourocg.model;
+package cn.mayu.yugioh.api.mongo.dto;
 
+import java.util.List;
 import lombok.Data;
 
 @Data
-public class OurocgCard {
-	
-	private String id;
+public class CardDataMongoDTO {
+
+    private String id;
 	
 	private String hashId;
 	
@@ -49,9 +50,19 @@ public class OurocgCard {
 	
 	private String descNw;
 	
-	private String rare;
+	private List<IncludeInfo> includeInfos;
 	
-	private String packages;
-	
-	private String href;
+	@Data
+	public static class IncludeInfo {
+		
+		private String race;
+		
+		private String packName;
+		
+		private String number;
+		
+		private String shortName;
+		
+		private String sellTime;
+	}
 }

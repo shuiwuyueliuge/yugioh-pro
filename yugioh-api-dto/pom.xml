@@ -11,6 +11,6 @@
 
 
   <modules>
-    
+    <module>yugioh-api-mongo-dto</module>
   </modules>
 </project>

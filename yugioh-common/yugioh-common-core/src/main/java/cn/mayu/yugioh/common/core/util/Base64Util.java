@@ -15,7 +15,7 @@ public class Base64Util {
 	public static String UrlImg2Base64(String url) throws Exception {
 		HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
 		try (InputStream in = conn.getInputStream()) {
-			byte[] origin = new byte[10];
+			byte[] origin = new byte[128];
 			int readLen = 0;
 			byte[] content = new byte[readLen];
 			while ((readLen = in.read(origin)) != -1) {

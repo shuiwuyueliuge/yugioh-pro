@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
 
-@Component
+//@Component
 public class OurocgCrawlingTask {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
@@ -34,12 +34,12 @@ public class OurocgCrawlingTask {
 			
 			String url = String.format(BASE_ULR, num);
 			try {
-				if (num > ourocgDataService.findOurocgData(url, num)) {
-					continue;
+				if (num >= ourocgDataService.findOurocgData(url, num)) {
+					break;
 				}
 			} catch (Exception e) {
 				log.error("Ourocg Crawling url [{}] error [{}]", url, e);
-				break;
+				continue;
 			}
 			
 			num++;
