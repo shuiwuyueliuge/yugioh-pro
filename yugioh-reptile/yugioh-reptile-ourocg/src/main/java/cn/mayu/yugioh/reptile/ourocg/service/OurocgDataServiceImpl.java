@@ -10,7 +10,6 @@ import java.util.List;
 import cn.mayu.yugioh.api.mongo.dto.CardDataMongoDTO.IncludeInfo;
 import java.util.stream.Collectors;
 import cn.mayu.yugioh.common.core.util.Base64Util;
-import cn.mayu.yugioh.common.core.util.Md5Util;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.reptile.ourocg.model.ArrRepository;
 import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
@@ -47,27 +46,12 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			List<IncludeInfo> includeInfos = dataFindManager.findDetilData(card.getHref()).stream().map(include -> initIncludeInfo(include)).collect(Collectors.toList());
 			entity.setIncludeInfos(includeInfos);
 			entity.setId(null);
-			entity.setHashId(generateHashId(entity));
 			entity.setImgUrl(generateImg(entity.getImgUrl()));
 			return entity;
 		} catch (Exception e) {
 			log.error("OurocgCard to CardDataMongoDTO error [{}]", e);
 			return null;
 		}
-	}
-	
-	private String generateHashId(CardInfoEntity entity) throws Exception {
-		String hash = "";
-		if (entity.getNameJa() != null) {
-			hash = Md5Util.md5(entity.getNameJa());
-		}
-		
-		if (entity.getNameEn() != null) {
-			hash = Md5Util.md5(entity.getNameEn());
-		}
-		
-		hash = Md5Util.md5(entity.getName());
-		return hash.substring(0, 8);
 	}
 	
 	private String generateImg(String url) {

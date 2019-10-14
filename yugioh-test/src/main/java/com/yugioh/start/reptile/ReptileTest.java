@@ -18,7 +18,7 @@ public class ReptileTest {
 	
 	@Test
 	public void execTest() throws Exception {
-		int num = 92;
+		int num = 1;
 		while(true) {
 			System.out.println(num);
 			String url = String.format("https://www.ourocg.cn/card/list-5/%s", num);
@@ -32,6 +32,10 @@ public class ReptileTest {
 			}
 			
 			num++;
+			
+//			if (num > 30) {
+//				break;
+//			}
 		}
 	}
 }
