@@ -23,7 +23,7 @@ public class ReptileTest {
 			System.out.println(num);
 			String url = String.format("https://www.ourocg.cn/card/list-5/%s", num);
 			try {
-				if (num >= ourocgDataService.findOurocgData(url, num)) {
+				if (num >= ourocgDataService.findOurocgData(url)) {
 					break;
 				}
 			} catch (Exception e) {

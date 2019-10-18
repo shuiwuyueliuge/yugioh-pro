@@ -28,7 +28,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public int findOurocgData(String url, int num) throws Exception {
+	public int findOurocgData(String url) throws Exception {
 		String data = dataFindManager.findMetaData(url);
 		OurocgMetaData metaData = readValue(data, OurocgMetaData.class);
 		List<CardInfoEntity> mongoDTOs = metaData.getCards().stream().map(card -> data2Entity(card)).filter(entity -> entity != null).collect(Collectors.toList());

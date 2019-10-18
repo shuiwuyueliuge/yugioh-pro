@@ -34,7 +34,7 @@ public class OurocgCrawlingTask {
 			
 			String url = String.format(BASE_ULR, num);
 			try {
-				if (num >= ourocgDataService.findOurocgData(url, num)) {
+				if (num >= ourocgDataService.findOurocgData(url)) {
 					break;
 				}
 			} catch (Exception e) {
