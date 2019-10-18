@@ -45,7 +45,6 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			BeanUtils.copyProperties(card, entity);
 			List<IncludeInfo> includeInfos = dataFindManager.findDetilData(card.getHref()).stream().map(include -> initIncludeInfo(include)).collect(Collectors.toList());
 			entity.setIncludeInfos(includeInfos);
-			entity.setId(null);
 			entity.setImgUrl(generateImg(entity.getImgUrl()));
 			return entity;
 		} catch (Exception e) {
