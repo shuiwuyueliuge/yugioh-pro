@@ -64,7 +64,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			String str = null;
 			while((str = reader.readLine()) != null) {
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				metaData.getCards().stream().map(card -> modelEntityConvert(card)).forEach(entity -> repository.save(entity).subscribe());
+				metaData.getCards().stream().map(card -> modelEntityConvert(card)).forEach(entity -> persistent(entity));
 			}
 		}
 	}
@@ -77,6 +77,11 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 		
 		return modelFactory.convert(card);
+	}
+	
+	private void persistent(CardInfoEntity entity) {
+		// TODO 入库判断
+		repository.save(entity).subscribe();
 	}
 }
 

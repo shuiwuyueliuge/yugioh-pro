@@ -74,8 +74,7 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 }
 
 //每月执行一次
-//删除昨天的文件
-//ourocg拉取全部卡片的数据保存到本地文件，队列多次写入
+//ourocg拉取全部卡片的数据保存到本地文件，队列多次写入√
 //从本地文件每张卡md5签名 - mongo查找指定id的数据 - 没有就查询卡片详细信息写入
 //                                          |
 //                                         判断md5是否相同 - 相同不操作
