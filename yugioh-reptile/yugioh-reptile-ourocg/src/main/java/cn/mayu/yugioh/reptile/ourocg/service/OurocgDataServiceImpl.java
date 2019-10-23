@@ -63,6 +63,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		try (BufferedReader reader = new BufferedReader(new FileReader(genTodayFileName()))) {
 			String str = null;
 			while((str = reader.readLine()) != null) {
+				// TODO md5判断是否重复数据
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
 				metaData.getCards().stream().map(card -> modelEntityConvert(card)).forEach(entity -> persistent(entity));
 			}
@@ -80,13 +81,19 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 	
 	private void persistent(CardInfoEntity entity) {
-		// TODO 入库判断
 		repository.save(entity).subscribe();
 	}
 }
 
 //卡包信息 https://www.ourocg.cn/package/MP16-EN/wwSW1
 
+//每月执行一次
+//ourocg拉取全部卡片的数据保存到本地文件，队列多次写入√
+//从本地文件每张卡md5签名 - mongo查找指定id的数据 - 没有就查询卡片详细信息写入
+//                                        |
+//                                       判断md5是否相同 - 相同不操作
+//                                        |
+//                                       不相同查询卡片详细信息写入mongo
 //禁卡表
 
 //卡包期号
