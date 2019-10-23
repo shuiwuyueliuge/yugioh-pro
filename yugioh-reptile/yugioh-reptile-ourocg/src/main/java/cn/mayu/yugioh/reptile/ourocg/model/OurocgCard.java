@@ -1,5 +1,7 @@
 package cn.mayu.yugioh.reptile.ourocg.model;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -54,4 +56,6 @@ public class OurocgCard {
 	private String packages;
 	
 	private String href;
+	
+	private List<String> packageDetil;
 }

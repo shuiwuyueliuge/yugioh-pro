@@ -14,22 +14,35 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 
 	private static final String RETRY_AFTER = "Retry-After";
 	
-	private static final String DATA_ZONE = "script";
+	private static final String META_DATA_ZONE = "script";
+	
+	private static final String PACKAGE_DATA_ZONE = "table";
+	
+	private static final String REPLACE_SOURCE = "package";
+	
+	private static final String REPLACE_TARGET = "packages";
+	
+	private static final String SUB_START = "{";
+	
+	private static final String SUB_END = "}";
 
 	@Override
 	public String findMetaData(String url) throws Exception {
-		CrawlResponse response = getCrawlResponseByTag(url, DATA_ZONE, 2);
+		CrawlResponse response = getCrawlResponseByTag(url, META_DATA_ZONE, 2);
 		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
 			return findMetaData(url);
 		}
 
-		String data = response.getData().replace("package", "packages");
-		return data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1);
+		return metaDataFilter(response.getData());
+	}
+	
+	private String metaDataFilter(String metaData) {
+		return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1).replace(REPLACE_SOURCE, REPLACE_TARGET);
 	}
 	
 	@Override
 	public List<String> findPackageData(String url) throws Exception {
-		CrawlResponse response = getCrawlResponseByTag(url, "table", 0);
+		CrawlResponse response = getCrawlResponseByTag(url, PACKAGE_DATA_ZONE, 0);
 		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
 			return findPackageData(url);
 		}
@@ -56,7 +69,6 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 			log.debug("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, header);
 		}
 		
-		log.info("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, header);
 		TimeUnit.SECONDS.sleep(time <= 0 ? 1L : time);
 	}
 }

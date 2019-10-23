@@ -1,5 +1,10 @@
 package com.yugioh.start.reptile;
 
+import static org.junit.Assert.assertEquals;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +42,21 @@ public class ReptileTest {
 	@Test
 	public void findPackageDetil() throws Exception {
 		ourocgDataService.findPackageDetil();
+	}
+	
+	String base = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM";
+	
+	@Test
+	public void hashTest() throws Exception {
+		int start = 1, total = 70000, size = 6;
+		Set<String> continer = IntStream.rangeClosed(start, total).boxed().map(num -> generateHashId(size)).collect(Collectors.toSet());
+		assertEquals(continer.size(), total);
+	}
+	
+	private String generateHashId(int size) {
+		StringBuilder builder = new StringBuilder();
+		Random random = new Random();
+		IntStream.rangeClosed(1, size).boxed().forEach(num -> builder.append(base.charAt(random.nextInt(base.length() - 1))));
+		return builder.toString();
 	}
 }
