@@ -6,5 +6,5 @@ public interface CardDataFindManager {
 
 	String findMetaData(String url) throws Exception;
 	
-	List<String> findDetilData(String url) throws Exception;
+	List<String> findPackageData(String url) throws Exception;
 }

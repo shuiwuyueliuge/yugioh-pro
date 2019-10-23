@@ -6,12 +6,18 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.List;
 import cn.mayu.yugioh.api.mongo.dto.CardDataMongoDTO.IncludeInfo;
 import java.util.stream.Collectors;
 import cn.mayu.yugioh.common.core.util.Base64Util;
+import static cn.mayu.yugioh.common.core.util.DateUtil.*;
+import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
-import cn.mayu.yugioh.reptile.ourocg.model.ArrRepository;
+import cn.mayu.yugioh.reptile.ourocg.model.OurocgCardRepository;
 import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;
@@ -23,34 +29,59 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private CardDataFindManager dataFindManager;
 	
 	@Autowired
-	private ArrRepository repository;
+	private OurocgCardRepository repository;
 
 	private Logger log = LoggerFactory.getLogger(getClass());
+	
+	private static StringBuffer stringBuffer;
+	
+	static {
+		stringBuffer = new StringBuffer();
+	}
 
 	@Override
-	public int findOurocgData(String url) throws Exception {
+	public boolean findOurocgData(String url) throws Exception {
 		String data = dataFindManager.findMetaData(url);
-		OurocgMetaData metaData = readValue(data, OurocgMetaData.class);
-		List<CardInfoEntity> mongoDTOs = metaData.getCards().stream().map(card -> data2Entity(card)).filter(entity -> entity != null).collect(Collectors.toList());
-		for (CardInfoEntity entity : mongoDTOs) {
-			repository.save(entity).subscribe();
+		long total = readTree(data, "total_page");
+		long curr = readTree(data, "cur_page");
+		saveData(curr, total, data);
+		return curr >= total ? false : true;
+	}
+	
+	private void saveData(long currentPage, long total, String data) throws Exception {
+		stringBuffer.append(String.format("%s%s", data, "\r\n"));
+		if (currentPage % 100 == 0 || currentPage == total) {
+			saveInFile(genTodayFileName(), stringBuffer.toString());
+			stringBuffer = new StringBuffer();
 		}
-		
-		return metaData.getMeta().getTotalPage();
+	}
+	
+	@Override
+	public void findPackageDetil() throws Exception {
+		try (BufferedReader reader = new BufferedReader(new FileReader(genTodayFileName()))) {
+			String str = null;
+			while((str = reader.readLine()) != null) {
+				readValue(str, OurocgMetaData.class).getCards().stream().map(card -> data2Entity(card)).forEach(entity -> repository.save(entity).subscribe());
+			}
+		}
+	}
+	
+	private String genTodayFileName() {
+		return String.format("%s%sCardData-%s", userDir(), File.separator, dayNow());
 	}
 
 	private CardInfoEntity data2Entity(OurocgCard card) {
+		CardInfoEntity entity = new CardInfoEntity();
+		BeanUtils.copyProperties(card, entity);
+		entity.setImgUrl(generateImg(entity.getImgUrl()));
 		try {
-			CardInfoEntity entity = new CardInfoEntity();
-			BeanUtils.copyProperties(card, entity);
-			List<IncludeInfo> includeInfos = dataFindManager.findDetilData(card.getHref()).stream().map(include -> initIncludeInfo(include)).collect(Collectors.toList());
+			List<IncludeInfo> includeInfos = dataFindManager.findPackageData(card.getHref()).stream().map(include -> initIncludeInfo(include)).collect(Collectors.toList());
 			entity.setIncludeInfos(includeInfos);
-			entity.setImgUrl(generateImg(entity.getImgUrl()));
-			return entity;
 		} catch (Exception e) {
 			log.error("OurocgCard to CardDataMongoDTO error [{}]", e);
-			return null;
 		}
+		
+		return entity;
 	}
 	
 	private String generateImg(String url) {
@@ -75,14 +106,6 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 }
 
 //卡包信息 https://www.ourocg.cn/package/MP16-EN/wwSW1
-//卡片元信息
-//卡片具体信息
-//找不到图片地址默认的是ygopro的图片（密码.jpg）
-//mongo索引：卡片字符串md5,hashid,insert_time
-// 日文名md5>英文名MD5>中文md5，8位hashid
-// 卡片字符串md5验证版本
-// 数据库查询按照hashid，比对md5，卡片入库时间（日），version默认为1
-// 按照时间增量更新mysql，version：1新增，其他更新
 
 //禁卡表
 

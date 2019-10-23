@@ -29,12 +29,13 @@ public class OurocgCrawlingTask {
 		int num = 1;
 		while (true) {
 			if (num % count != lable) {
+				num++;
 				continue;
 			}
 			
 			String url = String.format(BASE_ULR, num);
 			try {
-				if (num >= ourocgDataService.findOurocgData(url)) {
+				if (!ourocgDataService.findOurocgData(url)) {
 					break;
 				}
 			} catch (Exception e) {

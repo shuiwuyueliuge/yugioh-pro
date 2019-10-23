@@ -16,6 +16,7 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	
 	private static final String DATA_ZONE = "script";
 
+	@Override
 	public String findMetaData(String url) throws Exception {
 		CrawlResponse response = getCrawlResponseByTag(url, DATA_ZONE, 2);
 		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
@@ -27,10 +28,10 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	}
 	
 	@Override
-	public List<String> findDetilData(String url) throws Exception {
+	public List<String> findPackageData(String url) throws Exception {
 		CrawlResponse response = getCrawlResponseByTag(url, "table", 0);
 		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
-			return findDetilData(url);
+			return findPackageData(url);
 		}
 		
 		return includeParse(response.getData());
@@ -51,16 +52,12 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	
 	private void sleep(int statusCode, String url, String header) throws Exception {
 		long time = Long.parseLong(header);
-		if (time <= 0) {
-			return;
-		}
-		
 		if (log.isDebugEnabled()) {
 			log.debug("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, header);
 		}
-		log.info("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, header);
 		
-		TimeUnit.SECONDS.sleep(time);
+		log.info("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, header);
+		TimeUnit.SECONDS.sleep(time <= 0 ? 1L : time);
 	}
 }
 

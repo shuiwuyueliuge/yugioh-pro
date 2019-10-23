@@ -18,8 +18,8 @@ public class JsonUtil {
 		return MAPPER.readValue(content, valueType);
 	}
 	
-	public static String readTree(String content, String value) throws Exception {
-		return MAPPER.readTree(content).findParent(value).toString();
+	public static Long readTree(String content, String value) throws Exception {
+		return MAPPER.readTree(content).findValue(value).asLong();
 	}
 	
 	public <T> T readValue(String content, T type) throws Exception {

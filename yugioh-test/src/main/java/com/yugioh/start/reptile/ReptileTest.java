@@ -17,13 +17,12 @@ public class ReptileTest {
 
 	
 	@Test
-	public void execTest() throws Exception {
+	public void findOurocgDataTest() throws Exception {
 		int num = 1;
 		while(true) {
-			System.out.println(num);
 			String url = String.format("https://www.ourocg.cn/card/list-5/%s", num);
 			try {
-				if (num >= ourocgDataService.findOurocgData(url)) {
+				if (!ourocgDataService.findOurocgData(url)) {
 					break;
 				}
 			} catch (Exception e) {
@@ -32,10 +31,11 @@ public class ReptileTest {
 			}
 			
 			num++;
-			
-//			if (num > 30) {
-//				break;
-//			}
 		}
+	}
+	
+	@Test
+	public void findPackageDetil() throws Exception {
+		ourocgDataService.findPackageDetil();
 	}
 }

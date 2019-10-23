@@ -2,5 +2,7 @@ package cn.mayu.yugioh.reptile.ourocg.service;
 
 public interface OurocgDataService {
 
-	int findOurocgData(String url) throws Exception;
+	boolean findOurocgData(String url) throws Exception;
+	
+	void findPackageDetil() throws Exception;
 }
