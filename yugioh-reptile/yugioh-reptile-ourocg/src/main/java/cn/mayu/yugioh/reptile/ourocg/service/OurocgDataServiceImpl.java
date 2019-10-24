@@ -96,8 +96,6 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 }
 
-//卡包信息 https://www.ourocg.cn/package/MP16-EN/wwSW1
-
 //禁卡表
 
 //卡包期号

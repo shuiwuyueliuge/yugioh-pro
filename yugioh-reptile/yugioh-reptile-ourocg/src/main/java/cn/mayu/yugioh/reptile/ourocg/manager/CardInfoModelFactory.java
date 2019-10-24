@@ -1,6 +1,7 @@
 package cn.mayu.yugioh.reptile.ourocg.manager;
 
 import static cn.mayu.yugioh.common.core.util.Base64Util.UrlImg2Base64;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -24,6 +25,8 @@ public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardI
 		entity.setVersion(generateVersion(card));
 		entity.setImgUrl(generateImg(entity.getImgUrl()));
 		entity.setIncludeInfos(includeInfoParser(card.getPackageDetil()));
+		entity.setModifyTime(LocalDateTime.now());
+		entity.setCtrateTime(LocalDateTime.now());
 		return entity;
 	}
 	

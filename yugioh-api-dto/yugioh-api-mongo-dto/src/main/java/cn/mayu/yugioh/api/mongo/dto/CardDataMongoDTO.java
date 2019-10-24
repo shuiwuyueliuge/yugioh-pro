@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.api.mongo.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
@@ -53,6 +54,10 @@ public class CardDataMongoDTO {
 	private List<IncludeInfo> includeInfos;
 	
 	private String version;
+	
+	private LocalDateTime ctrateTime;
+	
+	private LocalDateTime modifyTime;
 	
 	@Data
 	public static class IncludeInfo {
