@@ -1,6 +1,8 @@
 package cn.mayu.yugioh.common.core.util;
 
+import static cn.mayu.yugioh.common.core.util.DateUtil.dayNow;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 
 public class FileUtil {
@@ -14,5 +16,9 @@ public class FileUtil {
 	
 	public static String userDir() {
 		return System.getProperty("user.dir");
+	}
+	
+	public static String genTodayFileName() {
+		return String.format("%s%sCardData-%s", userDir(), File.separator, dayNow());
 	}
 }

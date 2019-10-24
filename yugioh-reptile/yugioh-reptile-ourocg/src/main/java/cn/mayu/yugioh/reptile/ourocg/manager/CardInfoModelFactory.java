@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.api.mongo.dto.CardDataMongoDTO.IncludeInfo;
 import cn.mayu.yugioh.common.core.bean.AbstractModelFactory;
+import cn.mayu.yugioh.common.core.util.Md5Util;
 import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 
@@ -20,15 +21,45 @@ public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardI
 	protected CardInfoEntity doConvert(OurocgCard card) {
 		CardInfoEntity entity = new CardInfoEntity();
 		copyProperties(card, entity);
+		entity.setVersion(generateVersion(card));
 		entity.setImgUrl(generateImg(entity.getImgUrl()));
 		entity.setIncludeInfos(includeInfoParser(card.getPackageDetil()));
 		return entity;
 	}
 	
-	private List<IncludeInfo> includeInfoParser(List<String> list) {
-		return list.stream().filter(include -> include.indexOf(":") != -1).map(include -> initIncludeInfo(include)).collect(Collectors.toList());
+	private String generateVersion(OurocgCard card) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(card.getPassword())
+		       .append(card.getName())
+		       .append(card.getNameJa())
+		       .append(card.getNameEn())
+		       .append(card.getLocale())
+		       .append(card.getTypeSt())
+		       .append(card.getTypeVal())
+		       .append(card.getImgUrl())
+		       .append(card.getLevel())
+		       .append(card.getAttribute())
+		       .append(card.getRace())
+		       .append(card.getAtk())
+		       .append(card.getDef())
+		       .append(card.getPendL())
+		       .append(card.getPendR())
+		       .append(card.getLink())
+		       .append(card.getLinkArrow())
+		       .append(card.getNameNw())
+		       .append(card.getRare())
+		       .append(card.getDesc())
+		       .append(card.getDescNw())
+		       .append(card.getPackages());
+		String version = "";
+		try {
+			version = Md5Util.md5(builder.toString());
+		} catch (Exception e) {
+		}
+		
+		return version;
 	}
-
+	
 	private String generateImg(String url) {
 		try {
 			return UrlImg2Base64(url);
@@ -39,6 +70,10 @@ public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardI
 
 			return null;
 		}
+	}
+
+	private List<IncludeInfo> includeInfoParser(List<String> list) {
+		return list.stream().filter(include -> include.indexOf(":") != -1).map(include -> initIncludeInfo(include)).collect(Collectors.toList());
 	}
 
 	private IncludeInfo initIncludeInfo(String include) {

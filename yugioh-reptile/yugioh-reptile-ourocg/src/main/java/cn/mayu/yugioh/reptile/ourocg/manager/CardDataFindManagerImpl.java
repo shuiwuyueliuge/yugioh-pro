@@ -29,28 +29,28 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	@Override
 	public String findMetaData(String url) throws Exception {
 		CrawlResponse response = getCrawlResponseByTag(url, META_DATA_ZONE, 2);
-		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
+		if (retry(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
 			return findMetaData(url);
 		}
 
 		return metaDataFilter(response.getData());
 	}
 	
-	private String metaDataFilter(String metaData) {
-		return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1).replace(REPLACE_SOURCE, REPLACE_TARGET);
-	}
-	
 	@Override
 	public List<String> findPackageData(String url) throws Exception {
 		CrawlResponse response = getCrawlResponseByTag(url, PACKAGE_DATA_ZONE, 0);
-		if (isSleep(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
+		if (retry(response.getStatusCode(), url, response.getHeaders().get(RETRY_AFTER))) {
 			return findPackageData(url);
 		}
 		
 		return includeParse(response.getData());
 	}
+	
+	private String metaDataFilter(String metaData) {
+		return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1).replace(REPLACE_SOURCE, REPLACE_TARGET);
+	}
 
-	private boolean isSleep(int statusCode, String url, String header) throws Exception {
+	private boolean retry(int statusCode, String url, String header) throws Exception {
 		if (statusCode == 429 && header != null) {
 			sleep(statusCode, url, header);
 			return true;

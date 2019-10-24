@@ -1,5 +1,7 @@
 package cn.mayu.yugioh.reptile.ourocg.task;
 
+import static cn.mayu.yugioh.common.core.util.FileUtil.genTodayFileName;
+import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,19 @@ public class OurocgCrawlingTask {
 	private int count;
 
 	@Scheduled(cron = "*/1 * * * * ?")
-	public void CardBasicDataCrawing() {
+	public void crawing() {
+		if (!new File(genTodayFileName()).exists()) {
+			metaDataCrawing();
+		}
+		
+		try {
+			ourocgDataService.packageDetilSave();
+		} catch (Exception e) {
+			log.error("OurocgCard packageDetilSave error [{}]", e);
+		}
+	}
+	
+	private void metaDataCrawing() {
 		int num = 1;
 		while (true) {
 			if (num % count != lable) {
@@ -35,11 +49,12 @@ public class OurocgCrawlingTask {
 			
 			String url = String.format(BASE_ULR, num);
 			try {
-				if (!ourocgDataService.findOurocgData(url)) {
+				if (!ourocgDataService.ourocgDataInFile(url)) {
 					break;
 				}
 			} catch (Exception e) {
 				log.error("Ourocg Crawling url [{}] error [{}]", url, e);
+				num++;
 				continue;
 			}
 			

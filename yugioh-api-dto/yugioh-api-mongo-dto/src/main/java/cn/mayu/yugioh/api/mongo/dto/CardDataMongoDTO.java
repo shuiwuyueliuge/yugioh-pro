@@ -52,6 +52,8 @@ public class CardDataMongoDTO {
 	
 	private List<IncludeInfo> includeInfos;
 	
+	private String version;
+	
 	@Data
 	public static class IncludeInfo {
 		
