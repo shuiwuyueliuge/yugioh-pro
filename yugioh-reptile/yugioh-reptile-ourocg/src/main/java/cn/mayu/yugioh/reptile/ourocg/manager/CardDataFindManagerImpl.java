@@ -1,10 +1,13 @@
 package cn.mayu.yugioh.reptile.ourocg.manager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import cn.mayu.yugioh.reptile.ourocg.model.CardLimitEntity;
 import static cn.mayu.yugioh.common.core.util.CrawlUtil.*;
 
 @Component
@@ -70,5 +73,26 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 		}
 		
 		TimeUnit.SECONDS.sleep(time <= 0 ? 1L : time);
+	}
+
+	@Override
+	public List<CardLimitEntity> findLimitCard(String latestUrl) throws Exception {
+		return searchUrlList(latestUrl).stream().map(url -> {
+			try {
+				Map<String, List<String>> map = getLimitHashId(url);
+				CardLimitEntity dto = new CardLimitEntity();
+				dto.setName(map.get("name").get(0));
+				dto.setForbidden(map.get("forbidden"));
+				dto.setLimited(map.get("limited"));
+				dto.setSemiLimited(map.get("semiLimited"));
+				return dto;
+			} catch (Exception e) {
+				return null;
+			}
+		}).collect(Collectors.toList());
+	}
+	
+	private List<String> searchUrlList(String latestUrl) throws Exception {
+		return getLimitUrls(latestUrl);
 	}
 }

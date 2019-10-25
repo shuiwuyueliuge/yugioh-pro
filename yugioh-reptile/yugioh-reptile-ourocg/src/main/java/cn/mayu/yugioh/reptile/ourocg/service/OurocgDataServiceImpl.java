@@ -11,10 +11,11 @@ import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.common.core.bean.ModelFactory;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
-import cn.mayu.yugioh.reptile.ourocg.model.OurocgCardRepository;
 import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;
+import cn.mayu.yugioh.reptile.ourocg.repository.OurocgCardRepository;
+import cn.mayu.yugioh.reptile.ourocg.repository.OurocgLimitRepository;
 
 @Service
 public class OurocgDataServiceImpl implements OurocgDataService {
@@ -24,6 +25,9 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	@Autowired
 	private OurocgCardRepository repository;
+	
+	@Autowired
+	private OurocgLimitRepository limitRepository;
 	
 	@Autowired
 	private ModelFactory<OurocgCard, CardInfoEntity> modelFactory;
@@ -55,7 +59,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			String str = null;
 			while((str = reader.readLine()) != null) {
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				metaData.getCards().stream().map(card -> modelEntityConvert(card)).forEach(entity -> persistent(entity));
+				metaData.getCards().stream().map(card -> modelToEntity(card)).forEach(entity -> persistent(entity));
 			}
 		}
 	}
@@ -68,7 +72,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 	}
 	
-	private CardInfoEntity modelEntityConvert(OurocgCard card) {
+	private CardInfoEntity modelToEntity(OurocgCard card) {
 		card.setPackageDetil(findPackageDetil(card.getHref()));
 		return modelFactory.convert(card);
 	}
@@ -93,6 +97,11 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			entity.setId(cardInfoEntity.getId());
 			repository.save(entity).subscribe();// update
 		}
+	}
+
+	@Override
+	public void limitInfoSave(String latestUrl) throws Exception {
+		dataFindManager.findLimitCard(latestUrl).stream().forEach(data -> limitRepository.save(data).subscribe());
 	}
 }
 
