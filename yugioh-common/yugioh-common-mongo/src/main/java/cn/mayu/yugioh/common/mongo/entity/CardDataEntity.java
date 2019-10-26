@@ -1,11 +1,15 @@
-package cn.mayu.yugioh.api.mongo.dto;
+package cn.mayu.yugioh.common.mongo.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import lombok.Data;
 
 @Data
-public class CardDataMongoDTO {
+@Document(collection = "card")
+public class CardDataEntity {
 
     private String id;
 	

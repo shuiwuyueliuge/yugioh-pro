@@ -13,8 +13,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import cn.mayu.yugioh.common.mongo.repository.CardRepository;
 import cn.mayu.yugioh.reptile.ourocg.App;
-import cn.mayu.yugioh.reptile.ourocg.repository.OurocgCardRepository;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 
@@ -26,7 +27,7 @@ public class ReptileTest {
 	private OurocgDataService ourocgDataService;
 
 	@Autowired
-	OurocgCardRepository repository;
+	CardRepository repository;
 	
 	@Test
 	public void findOurocgDataTest() throws Exception {

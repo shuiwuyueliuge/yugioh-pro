@@ -11,5 +11,6 @@
 	<modules>
 		<module>yugioh-common-logbbok</module>
     <module>yugioh-common-core</module>
+    <module>yugioh-common-mongo</module>
   </modules>
 </project>

@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.reptile.ourocg.manager;
 
 import java.util.List;
-import cn.mayu.yugioh.reptile.ourocg.model.CardLimitEntity;
+import cn.mayu.yugioh.common.mongo.entity.CardLimitEntity;
 
 public interface CardDataFindManager {
 

@@ -6,11 +6,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.mayu</groupId>
-		<artifactId>yugioh-api-dto</artifactId>
+		<artifactId>yugioh-common</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>yugioh-api-mongo-dto</artifactId>
+	<artifactId>yugioh-common-mongo</artifactId>
+	<name>yugioh-common-mongo</name>
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

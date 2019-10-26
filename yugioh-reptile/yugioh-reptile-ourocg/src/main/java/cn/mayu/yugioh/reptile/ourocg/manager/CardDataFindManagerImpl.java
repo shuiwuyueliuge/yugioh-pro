@@ -7,7 +7,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.reptile.ourocg.model.CardLimitEntity;
+
+import cn.mayu.yugioh.common.mongo.entity.CardLimitEntity;
+
 import static cn.mayu.yugioh.common.core.util.CrawlUtil.*;
 
 @Component

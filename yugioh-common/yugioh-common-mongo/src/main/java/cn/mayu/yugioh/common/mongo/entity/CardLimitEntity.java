@@ -1,10 +1,12 @@
-package cn.mayu.yugioh.api.mongo.dto;
+package cn.mayu.yugioh.common.mongo.entity;
 
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-public class CardLimitMongoDTO {
+@Document(collection = "limit")
+public class CardLimitEntity {
 	
 	private String name;
 

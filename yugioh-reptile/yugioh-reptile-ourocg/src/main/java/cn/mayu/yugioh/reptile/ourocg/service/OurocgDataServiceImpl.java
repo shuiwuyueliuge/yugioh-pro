@@ -10,12 +10,12 @@ import java.io.FileReader;
 import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.common.core.bean.ModelFactory;
+import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.common.mongo.repository.CardRepository;
+import cn.mayu.yugioh.common.mongo.repository.LimitRepository;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
-import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;
-import cn.mayu.yugioh.reptile.ourocg.repository.OurocgCardRepository;
-import cn.mayu.yugioh.reptile.ourocg.repository.OurocgLimitRepository;
 
 @Service
 public class OurocgDataServiceImpl implements OurocgDataService {
@@ -24,13 +24,13 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private CardDataFindManager dataFindManager;
 	
 	@Autowired
-	private OurocgCardRepository repository;
+	private CardRepository repository;
 	
 	@Autowired
-	private OurocgLimitRepository limitRepository;
+	private LimitRepository limitRepository;
 	
 	@Autowired
-	private ModelFactory<OurocgCard, CardInfoEntity> modelFactory;
+	private ModelFactory<OurocgCard, CardDataEntity> modelFactory;
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -72,7 +72,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 	}
 	
-	private CardInfoEntity modelToEntity(OurocgCard card) {
+	private CardDataEntity modelToEntity(OurocgCard card) {
 		card.setPackageDetil(findPackageDetil(card.getHref()));
 		return modelFactory.convert(card);
 	}
@@ -86,8 +86,8 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 	}
 	
-	private void persistent(CardInfoEntity entity) {
-		CardInfoEntity cardInfoEntity = repository.findByHashId(entity.getHashId()).block();
+	private void persistent(CardDataEntity entity) {
+		CardDataEntity cardInfoEntity = repository.findByHashId(entity.getHashId()).block();
 		if (cardInfoEntity == null) {
 			repository.save(entity).subscribe();
 			return;

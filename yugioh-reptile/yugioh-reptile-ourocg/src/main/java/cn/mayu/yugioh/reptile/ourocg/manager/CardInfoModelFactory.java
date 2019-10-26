@@ -7,20 +7,20 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.api.mongo.dto.CardDataMongoDTO.IncludeInfo;
 import cn.mayu.yugioh.common.core.bean.AbstractModelFactory;
 import cn.mayu.yugioh.common.core.util.Md5Util;
-import cn.mayu.yugioh.reptile.ourocg.model.CardInfoEntity;
+import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 
 @Component
-public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardInfoEntity> {
+public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardDataEntity> {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	protected CardInfoEntity doConvert(OurocgCard card) {
-		CardInfoEntity entity = new CardInfoEntity();
+	protected CardDataEntity doConvert(OurocgCard card) {
+		CardDataEntity entity = new CardDataEntity();
 		copyProperties(card, entity);
 		entity.setVersion(generateVersion(card));
 		entity.setImgUrl(generateImg(entity.getImgUrl()));
