@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.common.core.bean;
+package cn.mayu.yugioh.common.core.factory;
 
 public interface ModelFactory<S, T> {
 

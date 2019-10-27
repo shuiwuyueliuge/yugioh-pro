@@ -9,7 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-import cn.mayu.yugioh.common.core.bean.ModelFactory;
+
+import cn.mayu.yugioh.common.core.factory.ModelFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.common.mongo.repository.CardRepository;
 import cn.mayu.yugioh.common.mongo.repository.LimitRepository;

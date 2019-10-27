@@ -7,7 +7,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.bean.AbstractModelFactory;
+
+import cn.mayu.yugioh.common.core.factory.AbstractModelFactory;
 import cn.mayu.yugioh.common.core.util.Md5Util;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
