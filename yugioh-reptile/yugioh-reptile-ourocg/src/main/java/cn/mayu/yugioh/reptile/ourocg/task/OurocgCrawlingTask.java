@@ -2,18 +2,16 @@ package cn.mayu.yugioh.reptile.ourocg.task;
 
 import static cn.mayu.yugioh.common.core.util.FileUtil.genTodayFileName;
 import java.io.File;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 //import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
+import lombok.extern.slf4j.Slf4j;
 
 //@Component
+@Slf4j
 public class OurocgCrawlingTask {
-
-	private Logger log = LoggerFactory.getLogger(getClass());
 
 	private static final String BASE_ULR = "https://www.ourocg.cn/card/list-5/%s";
 

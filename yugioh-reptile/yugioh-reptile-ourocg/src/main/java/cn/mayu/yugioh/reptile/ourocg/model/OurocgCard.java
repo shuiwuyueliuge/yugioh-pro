@@ -2,6 +2,7 @@ package cn.mayu.yugioh.reptile.ourocg.model;
 
 import java.util.List;
 
+import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
 import lombok.Data;
 
 @Data
@@ -57,5 +58,5 @@ public class OurocgCard {
 	
 	private String href;
 	
-	private List<String> packageDetil;
+	private List<IncludeInfo> includeInfos;
 }

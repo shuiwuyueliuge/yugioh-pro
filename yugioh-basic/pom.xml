@@ -14,7 +14,6 @@
 	<modules>
 		<module>yugioh-basic-registry</module>
 		<module>yugioh-basic-config</module>
-		<module>yugioh-basic-track</module>
 		<module>yugioh-basic-gateway</module>
 	</modules>
 </project>

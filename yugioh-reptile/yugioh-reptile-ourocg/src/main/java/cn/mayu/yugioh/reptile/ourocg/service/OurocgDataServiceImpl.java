@@ -1,7 +1,5 @@
 package cn.mayu.yugioh.reptile.ourocg.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
@@ -9,16 +7,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-
 import cn.mayu.yugioh.common.core.factory.ModelFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
-import cn.mayu.yugioh.common.mongo.repository.CardRepository;
-import cn.mayu.yugioh.common.mongo.repository.LimitRepository;
+import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;
+import cn.mayu.yugioh.reptile.ourocg.repository.CardRepository;
+import cn.mayu.yugioh.reptile.ourocg.repository.LimitRepository;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class OurocgDataServiceImpl implements OurocgDataService {
 
 	@Autowired
@@ -32,8 +32,6 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	@Autowired
 	private ModelFactory<OurocgCard, CardDataEntity> modelFactory;
-
-	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	private static final String TOTAL_PAGE = "total_page";
 	
@@ -74,11 +72,11 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 	
 	private CardDataEntity modelToEntity(OurocgCard card) {
-		card.setPackageDetil(findPackageDetil(card.getHref()));
+		card.setIncludeInfos(findPackageDetil(card.getHref()));
 		return modelFactory.convert(card);
 	}
 	
-	private List<String> findPackageDetil(String href) {
+	private List<IncludeInfo> findPackageDetil(String href) {
 		try {
 			return dataFindManager.findPackageData(href);
 		} catch (Exception e) {

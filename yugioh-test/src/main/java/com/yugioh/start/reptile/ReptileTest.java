@@ -13,9 +13,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import cn.mayu.yugioh.common.mongo.repository.CardRepository;
 import cn.mayu.yugioh.reptile.ourocg.App;
+import cn.mayu.yugioh.reptile.ourocg.repository.CardRepository;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 
