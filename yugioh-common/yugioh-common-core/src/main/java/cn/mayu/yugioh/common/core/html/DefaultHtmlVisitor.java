@@ -5,16 +5,16 @@ import static cn.mayu.yugioh.common.core.util.HtmlUtil.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class DefaultHtmlTranslater<T> implements HtmlTranslater<T> {
+public abstract class DefaultHtmlVisitor<T> implements HtmlVisitor<T> {
 	
 	private static final String RETRY_AFTER = "Retry-After";
 	
-	public T visitHtml(String url) throws Exception {
+	public T visit(String url) throws Exception {
 		VisitResponse response = connect(url);
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
-			return visitHtml(url);
+			return visit(url);
 		}
 		
 		return htmlTranslate(response.getHtml());

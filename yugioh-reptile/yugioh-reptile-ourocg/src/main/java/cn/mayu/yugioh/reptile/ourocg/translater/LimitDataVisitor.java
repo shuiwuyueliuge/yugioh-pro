@@ -8,11 +8,12 @@ import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlTranslater;
+
+import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
 import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
 
 @Component
-public class LimitDataTranslater extends DefaultHtmlTranslater<List<LimitEntity>> {
+public class LimitDataVisitor extends DefaultHtmlVisitor<List<LimitEntity>> {
 
 	@Override
 	protected List<LimitEntity> htmlTranslate(String html) throws Exception {

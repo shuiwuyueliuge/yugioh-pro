@@ -4,10 +4,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlTranslater;
+import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
 
 @Component
-public class CardDataTranslater extends DefaultHtmlTranslater<String> {
+public class CardDataVisitor extends DefaultHtmlVisitor<String> {
 	
 	private static final String CARD_DATA_TAG = "script";
 	

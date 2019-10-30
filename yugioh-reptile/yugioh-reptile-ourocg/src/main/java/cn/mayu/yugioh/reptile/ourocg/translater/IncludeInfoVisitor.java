@@ -6,11 +6,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlTranslater;
+import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 
 @Component
-public class IncludeInfoTranslater extends DefaultHtmlTranslater<List<IncludeInfo>> {
+public class IncludeInfoVisitor extends DefaultHtmlVisitor<List<IncludeInfo>> {
 	
 	private static final String INCLUDE_INFO_TAG = "table";
 	
