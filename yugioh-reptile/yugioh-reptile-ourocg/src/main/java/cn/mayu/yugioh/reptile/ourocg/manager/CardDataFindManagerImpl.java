@@ -20,17 +20,17 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	private HtmlTranslater<List<LimitEntity>> limitDataTranslater;
 
 	@Override
-	public String findMetaData(String url) throws Exception {
+	public String findCardData(String url) throws Exception {
 		return cardDataTranslater.visitHtml(url);
 	}
 	
 	@Override
-	public List<IncludeInfo> findPackageData(String url) throws Exception {
+	public List<IncludeInfo> findIncludeInfo(String url) throws Exception {
 		return includeInfoTranslater.visitHtml(url);
 	}
 
 	@Override
-	public List<LimitEntity> findLimitCard(String latestUrl) throws Exception {
+	public List<LimitEntity> findLimitData(String latestUrl) throws Exception {
 		return limitDataTranslater.visitHtml(latestUrl);
 	}
 }

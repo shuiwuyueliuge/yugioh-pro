@@ -45,7 +45,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 
 	@Override
 	public boolean ourocgDataInFile(String url) throws Exception {
-		String data = dataFindManager.findMetaData(url);
+		String data = dataFindManager.findCardData(url);
 		long total = readTree(data, TOTAL_PAGE);
 		long curr = readTree(data, CUR_PAGE);
 		inFile(curr, total, data);
@@ -78,7 +78,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	private List<IncludeInfo> findPackageDetil(String href) {
 		try {
-			return dataFindManager.findPackageData(href);
+			return dataFindManager.findIncludeInfo(href);
 		} catch (Exception e) {
 			log.error("OurocgCard findPackageData error [{}]", e);
 			return null;
@@ -100,7 +100,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 
 	@Override
 	public void limitInfoSave(String latestUrl) throws Exception {
-		dataFindManager.findLimitCard(latestUrl).stream().forEach(data -> limitRepository.save(data).subscribe());
+		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> limitRepository.save(data).subscribe());
 	}
 }
 

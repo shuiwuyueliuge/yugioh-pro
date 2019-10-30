@@ -6,9 +6,9 @@ import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
 
 public interface CardDataFindManager {
 
-	String findMetaData(String url) throws Exception;
+	String findCardData(String url) throws Exception;
 	
-	List<IncludeInfo> findPackageData(String url) throws Exception;
+	List<IncludeInfo> findIncludeInfo(String url) throws Exception;
 
-	List<LimitEntity> findLimitCard(String latestUrl) throws Exception;
+	List<LimitEntity> findLimitData(String latestUrl) throws Exception;
 }
