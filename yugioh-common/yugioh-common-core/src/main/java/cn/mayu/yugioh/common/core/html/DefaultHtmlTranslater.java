@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.common.core.html;
 
-import java.util.concurrent.TimeUnit;
-import cn.mayu.yugioh.common.core.util.HtmlUtil;
+import static java.util.concurrent.TimeUnit.*;
+import static cn.mayu.yugioh.common.core.util.HtmlUtil.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -9,18 +9,18 @@ public abstract class DefaultHtmlTranslater<T> implements HtmlTranslater<T> {
 	
 	private static final String RETRY_AFTER = "Retry-After";
 	
-	public T visit(String url) throws Exception {
-		VisitResponse response = HtmlUtil.connect(url);
+	public T visitHtml(String url) throws Exception {
+		VisitResponse response = connect(url);
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
-			return visit(url);
+			return visitHtml(url);
 		}
 		
 		return htmlTranslate(response.getHtml());
 	}
 	
-	protected abstract T htmlTranslate(String html);
+	protected abstract T htmlTranslate(String html) throws Exception;
 
 	private boolean retry(int statusCode, String url, String retryAfter) throws Exception {
 		if (statusCode == 429 && retryAfter != null) {
@@ -41,6 +41,6 @@ public abstract class DefaultHtmlTranslater<T> implements HtmlTranslater<T> {
 			log.debug("connect [{}] status code is [{}] and retry-after is [{}]", url, statusCode, retryAfter);
 		}
 		
-		TimeUnit.SECONDS.sleep(time <= 0 ? 1L : time);
+		SECONDS.sleep(time <= 0 ? 1L : time);
 	}
 }

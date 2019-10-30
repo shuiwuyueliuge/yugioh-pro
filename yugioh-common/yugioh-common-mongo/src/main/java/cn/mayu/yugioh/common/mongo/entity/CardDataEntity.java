@@ -62,18 +62,4 @@ public class CardDataEntity {
 	private LocalDateTime ctrateTime;
 	
 	private LocalDateTime modifyTime;
-	
-	@Data
-	public static class IncludeInfo {
-		
-		private String race;
-		
-		private String packName;
-		
-		private String number;
-		
-		private String shortName;
-		
-		private String sellTime;
-	}
 }

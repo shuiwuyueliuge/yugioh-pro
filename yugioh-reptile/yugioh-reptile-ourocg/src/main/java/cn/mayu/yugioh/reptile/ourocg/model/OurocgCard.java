@@ -2,7 +2,7 @@ package cn.mayu.yugioh.reptile.ourocg.model;
 
 import java.util.List;
 
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
+import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import lombok.Data;
 
 @Data

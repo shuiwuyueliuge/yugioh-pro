@@ -9,7 +9,7 @@ import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.common.core.factory.ModelFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity.IncludeInfo;
+import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;

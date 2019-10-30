@@ -1,9 +1,10 @@
 package com.yugioh.start.reptile;
 
+import static org.junit.Assert.assertNotNull;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import cn.mayu.yugioh.common.core.html.HtmlTranslater;
+import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
 import cn.mayu.yugioh.reptile.ourocg.App;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
 
@@ -20,6 +23,16 @@ public class LimitTest {
 	
 	@Autowired
 	OurocgDataService dataService;
+	
+	@Autowired
+	HtmlTranslater<List<LimitEntity>> ht;
+	
+	@Test
+	public void limitTest() throws Exception {
+		List<LimitEntity> list = ht.visitHtml("https://www.ourocg.cn/Limit-Latest");
+		list.stream().forEach(System.out::println);
+		assertNotNull(list);
+	}
 	
 	@Test
 	public void limitDataTest() throws Exception {

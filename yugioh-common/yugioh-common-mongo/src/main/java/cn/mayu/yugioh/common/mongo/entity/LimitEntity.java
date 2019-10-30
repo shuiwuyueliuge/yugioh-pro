@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Document(collection = "limit")
-public class CardLimitEntity {
+public class LimitEntity {
 	
 	private String name;
 
