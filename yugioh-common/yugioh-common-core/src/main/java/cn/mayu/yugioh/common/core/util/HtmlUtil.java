@@ -23,4 +23,12 @@ public class HtmlUtil {
 				    .ignoreHttpErrors(true)
 				    .execute();
 	}
+	
+	public static String getElementsByTag(String html, String tag, int index) {
+		return Jsoup.parse(html).getElementsByTag(tag).get(index).toString();
+	}
+
+	public static String getElementsByClass(String html, String className, int index) {
+		return Jsoup.parse(html).getElementsByClass(className).get(index).toString();
+	}
 }
