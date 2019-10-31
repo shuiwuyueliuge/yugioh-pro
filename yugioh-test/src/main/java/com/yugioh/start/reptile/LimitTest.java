@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import cn.mayu.yugioh.common.core.html.HtmlVisitor;
+import cn.mayu.yugioh.common.core.html.HtmlHandler;
 import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
 import cn.mayu.yugioh.reptile.ourocg.App;
 import cn.mayu.yugioh.reptile.ourocg.service.OurocgDataService;
@@ -25,11 +25,11 @@ public class LimitTest {
 	OurocgDataService dataService;
 	
 	@Autowired
-	HtmlVisitor<List<LimitEntity>> ht;
+	HtmlHandler<List<LimitEntity>> ht;
 	
 	@Test
 	public void limitTest() throws Exception {
-		List<LimitEntity> list = ht.visit("https://www.ourocg.cn/Limit-Latest");
+		List<LimitEntity> list = ht.handle("https://www.ourocg.cn/Limit-Latest");
 		list.stream().forEach(System.out::println);
 		assertNotNull(list);
 	}

@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import cn.mayu.yugioh.common.core.html.HtmlVisitor;
+import cn.mayu.yugioh.common.core.html.HtmlHandler;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.reptile.ourocg.App;
 
@@ -16,11 +16,12 @@ import cn.mayu.yugioh.reptile.ourocg.App;
 public class PackageTest {
 	
 	@Autowired
-	private HtmlVisitor<List<IncludeInfo>> includeInfoTranslater;
+	private HtmlHandler<List<IncludeInfo>> includeInfoTranslater;
 	
 	@Test
 	public void packageDataTest() throws Exception {
-		List<IncludeInfo> infos = includeInfoTranslater.visit("https://www.ourocg.cn/card/x9cPxBVZ");
+		//List<IncludeInfo> infos = includeInfoTranslater.handle("https://www.ourocg.cn/card/x9cPxBVZ");
+	    List<IncludeInfo> infos = includeInfoTranslater.handle("https://www.ourocg.cn/card/o0sWE");
 	    assertNull(infos);
 	}
 }

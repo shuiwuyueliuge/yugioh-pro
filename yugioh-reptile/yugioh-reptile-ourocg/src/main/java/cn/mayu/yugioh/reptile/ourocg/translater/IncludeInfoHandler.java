@@ -6,25 +6,41 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
+import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
+import cn.mayu.yugioh.common.core.html.HtmlParser;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 
 @Component
-public class IncludeInfoVisitor extends DefaultHtmlVisitor<List<IncludeInfo>> {
+public class IncludeInfoHandler extends DefaultHtmlHandler<List<IncludeInfo>> {
 	
 	private static final String INCLUDE_INFO_TAG = "table";
 	
 	private static final int INCLUDE_INFO_TAG_INDEX = 0;
 	
 	@Override
-	protected List<IncludeInfo> htmlTranslate(String html) {
-		Document doc = Jsoup.parse(html);
-		Elements els = doc.getElementsByTag(INCLUDE_INFO_TAG);
-		if (els.size() <= 0) {
-			return null;
-		}
+	protected List<IncludeInfo> htmlTranslate(HtmlParser parser) {
+		String html = parser.getRes();
+		//Document doc = Jsoup.parse(html);
+		//Elements els = doc.getElementsByTag(INCLUDE_INFO_TAG);
+		//if (els.size() <= 0) {
+			//return null;
+		//}
 		
-		return includeParse(els.get(INCLUDE_INFO_TAG_INDEX).toString());
+		//return includeParse(els.get(INCLUDE_INFO_TAG_INDEX).toString());
+		
+//		parser = parser.parseByTagIndex(INCLUDE_INFO_TAG, INCLUDE_INFO_TAG_INDEX);
+//		parser = parser.parseByTag("tr");
+//		parser = parser.parseByTagIndex("td", 2);
+		for (String s : parser.parseByTag("td")) {
+			System.out.println(s);
+		}
+//		for (int i = 3; i <= Jsoup.parse(html).getElementsByTag("td").size(); i+=3) {
+//			System.out.println(Jsoup.parse(html).getElementsByTag("td").get(i - 3).html());
+//			System.out.println(Jsoup.parse(html).getElementsByTag("td").get(i - 2).html());
+//			System.out.println(Jsoup.parse(html).getElementsByTag("td").get(i - 1).html());
+//			System.out.println();
+//		}
+		return null;
 	}
 	
 	private List<IncludeInfo> includeParse(String xml) {

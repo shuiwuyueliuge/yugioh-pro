@@ -1,13 +1,11 @@
 package cn.mayu.yugioh.reptile.ourocg.translater;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
+import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
+import cn.mayu.yugioh.common.core.html.HtmlParser;
 
 @Component
-public class CardDataVisitor extends DefaultHtmlVisitor<String> {
+public class CardDataHandler extends DefaultHtmlHandler<String> {
 	
 	private static final String CARD_DATA_TAG = "script";
 	
@@ -22,10 +20,9 @@ public class CardDataVisitor extends DefaultHtmlVisitor<String> {
 	private static final String SUB_END = "}";
 
 	@Override
-	protected String htmlTranslate(String html) {
-		Document doc = Jsoup.parse(html);
-		Elements els = doc.getElementsByTag(CARD_DATA_TAG);
-		return cardDataFilter(els.get(CARD_DATA_TAG_INDEX).toString());
+	protected String htmlTranslate(HtmlParser parser) {
+		String data = parser.parseByTagIndex(CARD_DATA_TAG, CARD_DATA_TAG_INDEX).getRes();
+		return cardDataFilter(data);
 	}
 	
 	private String cardDataFilter(String metaData) {

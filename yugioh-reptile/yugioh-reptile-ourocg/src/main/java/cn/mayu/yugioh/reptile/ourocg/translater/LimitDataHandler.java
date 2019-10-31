@@ -9,14 +9,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Component;
 
-import cn.mayu.yugioh.common.core.html.DefaultHtmlVisitor;
+import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
+import cn.mayu.yugioh.common.core.html.HtmlParser;
 import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
 
 @Component
-public class LimitDataVisitor extends DefaultHtmlVisitor<List<LimitEntity>> {
+public class LimitDataHandler extends DefaultHtmlHandler<List<LimitEntity>> {
 
 	@Override
-	protected List<LimitEntity> htmlTranslate(String html) throws Exception {
+	protected List<LimitEntity> htmlTranslate(HtmlParser parser) throws Exception {
+		String html = parser.getRes();
 		List<String> urls = limitUrls(html);
 		List<LimitEntity> list = new ArrayList<LimitEntity>();
 		for (String string : urls) {

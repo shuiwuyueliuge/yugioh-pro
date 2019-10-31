@@ -5,22 +5,26 @@ import static cn.mayu.yugioh.common.core.util.HtmlUtil.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class DefaultHtmlVisitor<T> implements HtmlVisitor<T> {
+public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 	
 	private static final String RETRY_AFTER = "Retry-After";
 	
-	public T visit(String url) throws Exception {
+	public T handle(String url) throws Exception {
 		VisitResponse response = connect(url);
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
-			return visit(url);
+			return handle(url);
 		}
 		
-		return htmlTranslate(response.getHtml());
+		return htmlTranslate(initParser(response.getHtml()));
 	}
 	
-	protected abstract T htmlTranslate(String html) throws Exception;
+	protected abstract T htmlTranslate(HtmlParser parser) throws Exception;
+	
+	private HtmlParser initParser(String html) {
+		return new HtmlParser(html);
+	}
 
 	private boolean retry(int statusCode, String url, String retryAfter) throws Exception {
 		if (statusCode == 429 && retryAfter != null) {
