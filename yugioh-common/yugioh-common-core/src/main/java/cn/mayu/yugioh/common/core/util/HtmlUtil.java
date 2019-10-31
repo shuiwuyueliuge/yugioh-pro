@@ -41,9 +41,8 @@ public class HtmlUtil {
 		return Jsoup.parse(html);
 	}
 
-	public static String[] getElementsByTag(String html, String tagName) {
+	public static Object[] getElementsByTag(String html, String tagName) {
 		Elements els = parse(html).getElementsByTag(tagName);
-		String strs[] = new String[els.size()]; 
-		return els.toArray(strs);
+		return els.toArray();
 	}
 }

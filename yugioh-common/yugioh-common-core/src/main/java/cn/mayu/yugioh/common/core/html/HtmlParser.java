@@ -19,8 +19,8 @@ public class HtmlParser {
 		return this;
 	}
 	
-	public List<String> parseByTag(String tagName) {
-		String[] objs = HtmlUtil.getElementsByTag(html, tagName);
+	public List<Object> parseByTag(String tagName) {
+		Object[] objs = HtmlUtil.getElementsByTag(html, tagName);
 		return Arrays.asList(objs);
 	}
 	

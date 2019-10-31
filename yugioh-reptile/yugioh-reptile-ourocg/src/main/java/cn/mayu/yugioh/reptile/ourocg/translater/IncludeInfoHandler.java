@@ -31,7 +31,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<List<IncludeInfo>> {
 //		parser = parser.parseByTagIndex(INCLUDE_INFO_TAG, INCLUDE_INFO_TAG_INDEX);
 //		parser = parser.parseByTag("tr");
 //		parser = parser.parseByTagIndex("td", 2);
-		for (String s : parser.parseByTag("td")) {
+		for (Object s : parser.parseByTag("td")) {
 			System.out.println(s);
 		}
 //		for (int i = 3; i <= Jsoup.parse(html).getElementsByTag("td").size(); i+=3) {
