@@ -26,8 +26,8 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<List<IncludeInfo>> {
 				info.setShortName(number.substring(0, number.indexOf("-")));
 			}
 			
-			info.setPackName(parser.setHtml(res[i - 3]).parseByTagIndex("a", 0).getRes());
-			info.setSellTime(parser.setHtml(res[i - 3]).parseByTagIndex("small", 0).getRes());
+			info.setPackName(parser.setHtml(res[i - 3]).parseByTagIndex("a", 0).toString());
+			info.setSellTime(parser.setHtml(res[i - 3]).parseByTagIndex("small", 0).toString());
 			info.setNumber(number);
 			info.setRace(res[i - 1]);
 			infos.add(info);

@@ -1,7 +1,6 @@
 package cn.mayu.yugioh.common.core.html;
 
 import static java.util.concurrent.TimeUnit.*;
-import static cn.mayu.yugioh.common.core.util.HtmlUtil.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -10,20 +9,21 @@ public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 	private static final String RETRY_AFTER = "Retry-After";
 	
 	public T handle(String url) throws Exception {
-		VisitResponse response = connect(url);
+		HtmlParser parser = initParser(url);
+		VisitResponse response = parser.getResponse();
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
 			return handle(url);
 		}
 		
-		return htmlTranslate(initParser(response.getHtml()));
+		return htmlTranslate(parser);
 	}
 	
 	protected abstract T htmlTranslate(HtmlParser parser) throws Exception;
 	
-	private HtmlParser initParser(String html) {
-		return new HtmlParser(html);
+	private HtmlParser initParser(String url) {
+		return new HtmlParser(url);
 	}
 
 	private boolean retry(int statusCode, String url, String retryAfter) throws Exception {

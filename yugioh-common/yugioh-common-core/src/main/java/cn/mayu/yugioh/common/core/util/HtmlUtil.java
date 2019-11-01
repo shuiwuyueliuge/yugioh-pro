@@ -4,18 +4,26 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import cn.mayu.yugioh.common.core.html.VisitResponse;
+import lombok.extern.slf4j.Slf4j;
+
 import org.jsoup.Connection.Response;
 import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 
+@Slf4j
 public class HtmlUtil {
 	
 	private static final String AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)  Chrome/56.0.2924.87 Safari/537.36";
 
 	private static final int TIMEOUT_MILLIS = 50000;
 	
-	public static VisitResponse connect(String url) throws Exception {
-		Response res = getResponse(url);
-		return new VisitResponse(res.statusCode(), res.headers(), res.body());
+	public static VisitResponse connect(String url) {
+		try {
+			Response res = getResponse(url);
+			return new VisitResponse(res.statusCode(), res.headers(), res.body());
+		} catch (Exception e) {
+			log.error("connect [{}] error [{}]", url, e);
+			return new VisitResponse(0, null, "");
+		}
 	}
 	
 	public static String getElementsByTagIndex(String html, String tag, int index) {
@@ -49,5 +57,10 @@ public class HtmlUtil {
 		}
 		
 		return res;
+	}
+
+	public static String getElementsByTagIndexArr(String html, String tagName, int index, String attribute) {
+		Elements els = parse(html).getElementsByTag(tagName);
+		return isIndexOutOfBounds(els, index) ? "" : els.get(index).attr(attribute);
 	}
 }

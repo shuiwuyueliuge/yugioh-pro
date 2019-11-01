@@ -21,7 +21,7 @@ public class CardDataHandler extends DefaultHtmlHandler<String> {
 
 	@Override
 	protected String htmlTranslate(HtmlParser parser) {
-		String data = parser.parseByTagIndex(CARD_DATA_TAG, CARD_DATA_TAG_INDEX).getRes();
+		String data = parser.parseByTagIndex(CARD_DATA_TAG, CARD_DATA_TAG_INDEX).toString();
 		return cardDataFilter(data);
 	}
 	
