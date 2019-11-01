@@ -1,6 +1,6 @@
 package com.yugioh.start.reptile;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ public class PackageTest {
 	@Test
 	public void packageDataTest() throws Exception {
 		//List<IncludeInfo> infos = includeInfoTranslater.handle("https://www.ourocg.cn/card/x9cPxBVZ");
-	    List<IncludeInfo> infos = includeInfoTranslater.handle("https://www.ourocg.cn/card/o0sWE");
-	    assertNull(infos);
+		List<IncludeInfo> infos = includeInfoTranslater.handle("https://www.ourocg.cn/card/o0sWE");
+	    assertFalse(infos.isEmpty());
 	}
 }

@@ -1,9 +1,5 @@
 package cn.mayu.yugioh.common.core.html;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import cn.mayu.yugioh.common.core.util.HtmlUtil;
 
 public class HtmlParser {
@@ -11,25 +7,29 @@ public class HtmlParser {
 	private String html;
 
 	public HtmlParser(String html) {
-		this.html = html;
+		this.setHtml(html);
 	}
 	
 	public HtmlParser parseByTagIndex(String tagName, int index) {
-		this.html = HtmlUtil.getElementsByTagIndex(html, tagName, index);
+		this.setHtml(HtmlUtil.getElementsByTagIndex(html, tagName, index));
 		return this;
 	}
 	
-	public List<Object> parseByTag(String tagName) {
-		Object[] objs = HtmlUtil.getElementsByTag(html, tagName);
-		return Arrays.asList(objs);
+	public String[] parseByTag(String tagName) {
+		return HtmlUtil.getElementsByTag(html, tagName);
 	}
 	
 	public HtmlParser parseByClassIndex(String className, int index) {
-		this.html = HtmlUtil.getElementsByClassIndex(html, className, index);
+		this.setHtml(HtmlUtil.getElementsByClassIndex(html, className, index));
 		return this;
 	}
 	
 	public String getRes() {
 		return html;
+	}
+
+	public HtmlParser setHtml(String html) {
+		this.html = html;
+		return this;
 	}
 }

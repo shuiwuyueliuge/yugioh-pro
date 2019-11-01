@@ -20,12 +20,12 @@ public class HtmlUtil {
 	
 	public static String getElementsByTagIndex(String html, String tag, int index) {
 		Elements els = parse(html).getElementsByTag(tag);
-		return isIndexOutOfBounds(els, index) ? "" : els.get(index).toString();
+		return isIndexOutOfBounds(els, index) ? "" : els.get(index).html();
 	}
 
 	public static String getElementsByClassIndex(String html, String className, int index) {
 		Elements els = parse(html).getElementsByClass(className);
-		return isIndexOutOfBounds(els, index) ? "" : els.get(index).toString();
+		return isIndexOutOfBounds(els, index) ? "" : els.get(index).html();
 	}
 	
 	private static Response getResponse(String url) throws Exception {
@@ -41,8 +41,13 @@ public class HtmlUtil {
 		return Jsoup.parse(html);
 	}
 
-	public static Object[] getElementsByTag(String html, String tagName) {
+	public static String[] getElementsByTag(String html, String tagName) {
 		Elements els = parse(html).getElementsByTag(tagName);
-		return els.toArray();
+		String res[] = new String[els.size()];
+		for (int i = 0; i < els.size(); i++) {
+			res[i] = els.get(i).html();
+		}
+		
+		return res;
 	}
 }

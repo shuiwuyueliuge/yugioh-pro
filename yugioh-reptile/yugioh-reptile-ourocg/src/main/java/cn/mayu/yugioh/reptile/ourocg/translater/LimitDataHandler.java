@@ -20,6 +20,7 @@ public class LimitDataHandler extends DefaultHtmlHandler<List<LimitEntity>> {
 	protected List<LimitEntity> htmlTranslate(HtmlParser parser) throws Exception {
 		String html = parser.getRes();
 		List<String> urls = limitUrls(html);
+		
 		List<LimitEntity> list = new ArrayList<LimitEntity>();
 		for (String string : urls) {
 			Map<String, List<String>> map = getLimitHashId(string);
