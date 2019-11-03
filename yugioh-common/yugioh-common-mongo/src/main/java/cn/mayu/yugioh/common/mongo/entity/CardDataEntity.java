@@ -59,7 +59,7 @@ public class CardDataEntity {
 	
 	private String version;
 	
-	private LocalDateTime ctrateTime;
+	private LocalDateTime createTime;
 	
 	private LocalDateTime modifyTime;
 }

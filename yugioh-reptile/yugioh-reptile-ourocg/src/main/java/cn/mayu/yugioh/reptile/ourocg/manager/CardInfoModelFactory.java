@@ -20,7 +20,7 @@ public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardD
 		entity.setVersion(generateVersion(card));
 		entity.setImgUrl(generateImg(entity.getImgUrl()));
 		entity.setModifyTime(LocalDateTime.now());
-		entity.setCtrateTime(LocalDateTime.now());
+		entity.setCreateTime(LocalDateTime.now());
 		return entity;
 	}
 	

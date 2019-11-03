@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.reptile.ourocg.translater;
+package cn.mayu.yugioh.reptile.ourocg.handler;
 
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;

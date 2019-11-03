@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.reptile.ourocg.translater;
+package cn.mayu.yugioh.reptile.ourocg.handler;
 
 import java.util.ArrayList;
 import java.util.List;

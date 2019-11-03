@@ -58,8 +58,18 @@ public class HtmlUtil {
 		
 		return res;
 	}
+	
+	public static String[] getElementsByTagAttr(String html, String tagName, String attr) {
+		Elements els = parse(html).getElementsByTag(tagName);
+		String res[] = new String[els.size()];
+		for (int i = 0; i < els.size(); i++) {
+			res[i] = els.get(i).attr(attr);
+		}
+		
+		return res;
+	}
 
-	public static String getElementsByTagIndexArr(String html, String tagName, int index, String attribute) {
+	public static String getElementsByTagIndexAttr(String html, String tagName, int index, String attribute) {
 		Elements els = parse(html).getElementsByTag(tagName);
 		return isIndexOutOfBounds(els, index) ? "" : els.get(index).attr(attribute);
 	}

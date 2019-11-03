@@ -23,13 +23,17 @@ public class HtmlParser {
 		return this;
 	}
 
-	public HtmlParser parseByTagIndexArr(String tagName, int index, String attribute) {
-		this.html = HtmlUtil.getElementsByTagIndexArr(html, tagName, index, attribute);
+	public HtmlParser parseByTagIndexAttr(String tagName, int index, String attribute) {
+		this.html = HtmlUtil.getElementsByTagIndexAttr(html, tagName, index, attribute);
 		return this;
 	}
 
 	public String[] parseByTag(String tagName) {
 		return HtmlUtil.getElementsByTag(html, tagName);
+	}
+	
+	public String[] parseByTagAttr(String tagName, String attr) {
+		return HtmlUtil.getElementsByTagAttr(html, tagName, attr);
 	}
 
 	public HtmlParser parseByClassIndex(String className, int index) {

@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.common.mongo.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
@@ -15,4 +16,8 @@ public class LimitEntity {
 	private List<String> limited;
 	
 	private List<String> semiLimited;
+	
+	private LocalDateTime createTime;
+	
+	private LocalDateTime modifyTime;
 }
