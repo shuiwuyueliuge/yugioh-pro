@@ -103,7 +103,3 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> limitRepository.save(data).subscribe());
 	}
 }
-
-//禁卡表
-
-//卡包期号

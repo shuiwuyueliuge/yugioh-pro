@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection.Response;
 import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 
+import java.util.Collections;
+
 @Slf4j
 public class HtmlUtil {
 	
@@ -22,7 +24,7 @@ public class HtmlUtil {
 			return new VisitResponse(res.statusCode(), res.headers(), res.body());
 		} catch (Exception e) {
 			log.error("connect [{}] error [{}]", url, e);
-			return new VisitResponse(0, null, "");
+			return new VisitResponse(0, Collections.emptyMap(), "");
 		}
 	}
 	
