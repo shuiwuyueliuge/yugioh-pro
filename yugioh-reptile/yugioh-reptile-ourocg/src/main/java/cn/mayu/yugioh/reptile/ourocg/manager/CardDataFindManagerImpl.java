@@ -4,8 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.HtmlHandler;
-import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
+import cn.mayu.yugioh.reptile.ourocg.model.CardDetil;
 
 @Component
 public class CardDataFindManagerImpl implements CardDataFindManager {
@@ -14,7 +14,7 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	private HtmlHandler<String> cardDataTranslater;
 	
 	@Autowired
-	private HtmlHandler<List<IncludeInfo>> includeInfoTranslater;
+	private HtmlHandler<CardDetil> includeInfoTranslater;
 	
 	@Autowired
 	private HtmlHandler<List<LimitEntity>> limitDataTranslater;
@@ -25,7 +25,7 @@ public class CardDataFindManagerImpl implements CardDataFindManager {
 	}
 	
 	@Override
-	public List<IncludeInfo> findIncludeInfo(String url) throws Exception {
+	public CardDetil findIncludeInfo(String url) throws Exception {
 		return includeInfoTranslater.handle(url);
 	}
 

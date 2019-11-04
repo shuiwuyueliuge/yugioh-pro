@@ -59,6 +59,8 @@ public class CardDataEntity {
 	
 	private String version;
 	
+	private String adjust;
+	
 	private LocalDateTime createTime;
 	
 	private LocalDateTime modifyTime;

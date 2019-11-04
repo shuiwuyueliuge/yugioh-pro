@@ -6,16 +6,19 @@ import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.common.core.html.HtmlParser;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
+import cn.mayu.yugioh.reptile.ourocg.model.CardDetil;
 
 @Component
-public class IncludeInfoHandler extends DefaultHtmlHandler<List<IncludeInfo>> {
+public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
 	
 	@Override
-	protected List<IncludeInfo> htmlTranslate(HtmlParser parser) {
+	protected CardDetil htmlTranslate(HtmlParser parser) {
+		String html = parser.toString();
 		String[] res = parser.parseByTag("td");
 		List<IncludeInfo> infos = new ArrayList<IncludeInfo>();
 		collectToList(infos, res, parser);
-		return infos;
+		String adjust = parseAdjust(parser.setHtml(html));
+		return new CardDetil(infos, adjust);
 	}
 	
 	private void collectToList(List<IncludeInfo> infos, String[] res, HtmlParser parser) {
@@ -31,6 +34,14 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<List<IncludeInfo>> {
 			info.setNumber(number);
 			info.setRace(res[i - 1]);
 			infos.add(info);
+		}
+	}
+	
+	private String parseAdjust(HtmlParser parser) {
+		try {
+			return parser.parseByClassIndex("wiki", 0).parseByTagIndex("li", 1).toString();
+		} catch (Exception e) {
+			return "";
 		}
 	}
 }

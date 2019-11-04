@@ -5,12 +5,11 @@ import org.springframework.stereotype.Service;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.List;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.common.core.factory.ModelFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
-import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
+import cn.mayu.yugioh.reptile.ourocg.model.CardDetil;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.reptile.ourocg.model.OurocgMetaData;
 import cn.mayu.yugioh.reptile.ourocg.repository.CardRepository;
@@ -72,11 +71,13 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 	
 	private CardDataEntity modelToEntity(OurocgCard card) {
-		card.setIncludeInfos(findPackageDetil(card.getHref()));
+		CardDetil cardDetil = findIncludeDetilAndAdjust(card.getHref());
+		card.setIncludeInfos(cardDetil.getIncludeInfos());
+		card.setAdjust(cardDetil.getAdjust());
 		return modelFactory.convert(card);
 	}
 	
-	private List<IncludeInfo> findPackageDetil(String href) {
+	private CardDetil findIncludeDetilAndAdjust(String href) {
 		try {
 			return dataFindManager.findIncludeInfo(href);
 		} catch (Exception e) {

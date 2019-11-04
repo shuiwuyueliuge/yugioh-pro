@@ -58,5 +58,7 @@ public class OurocgCard {
 	
 	private String href;
 	
+	private String adjust;
+	
 	private List<IncludeInfo> includeInfos;
 }

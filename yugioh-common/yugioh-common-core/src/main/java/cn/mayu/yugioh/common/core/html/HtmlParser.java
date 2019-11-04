@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.common.core.html;
 
-import cn.mayu.yugioh.common.core.util.HtmlUtil;
+import static cn.mayu.yugioh.common.core.util.HtmlUtil.*;
 
 public class HtmlParser {
 
@@ -13,31 +13,31 @@ public class HtmlParser {
 	}
 
 	public HtmlParser connUrl(String url) {
-		this.response = HtmlUtil.connect(url);
+		this.response = connect(url);
 		this.html = getResponse().getHtml();
 		return this;
 	}
 
 	public HtmlParser parseByTagIndex(String tagName, int index) {
-		this.html = HtmlUtil.getElementsByTagIndex(html, tagName, index);
+		this.html = getElementsByTagIndex(html, tagName, index);
 		return this;
 	}
 
 	public HtmlParser parseByTagIndexAttr(String tagName, int index, String attribute) {
-		this.html = HtmlUtil.getElementsByTagIndexAttr(html, tagName, index, attribute);
+		this.html = getElementsByTagIndexAttr(html, tagName, index, attribute);
 		return this;
 	}
 
 	public String[] parseByTag(String tagName) {
-		return HtmlUtil.getElementsByTag(html, tagName);
+		return getElementsByTag(html, tagName);
 	}
 	
 	public String[] parseByTagAttr(String tagName, String attr) {
-		return HtmlUtil.getElementsByTagAttr(html, tagName, attr);
+		return getElementsByTagAttr(html, tagName, attr);
 	}
 
 	public HtmlParser parseByClassIndex(String className, int index) {
-		this.html = HtmlUtil.getElementsByClassIndex(html, className, index);
+		this.html = getElementsByClassIndex(html, className, index);
 		return this;
 	}
 

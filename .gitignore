@@ -10,3 +10,4 @@
 .settings/
 pom.properties
 MANIFEST.MF
+application-*.properties
