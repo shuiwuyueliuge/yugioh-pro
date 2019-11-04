@@ -55,6 +55,7 @@
 		<module>yugioh-test</module>
 		<module>yugioh-reptile</module>
     <module>yugioh-api-dto</module>
+    <module>yugioh-sync</module>
   </modules>
 	<build>
 		<plugins>
