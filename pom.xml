@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.mayu</groupId>
@@ -13,7 +15,26 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-boot.version>2.1.8.RELEASE</spring-boot.version>
 		<spring-cloud.version>Greenwich.SR3</spring-cloud.version>
+		<java.version>1.8</java.version>
 	</properties>
+
+	<scm>
+		<connection>scm:git:https://github.com/shuiwuyueliuge/yugioh-pro</connection>
+	</scm>
+
+	<distributionManagement>
+		<repository>
+			<!--这里的id需要和settings.xml中的server的id一致 -->
+			<id>ygo-release</id>
+			<name>Ygo release Repository</name>
+			<url>http://172.28.179.131:7001/repository/ygo-release/</url>
+		</repository>
+		<snapshotRepository>
+			<id>ygo-snapshots</id>
+			<name>Ygo snapshots Repository</name>
+			<url>http://172.28.179.131:7001/repository/ygo-snapshot/</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<dependencyManagement>
 		<dependencies>
@@ -42,30 +63,77 @@
 				<version>1.12.1</version>
 			</dependency>
 			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>1.18.10</version>
-				<scope>provided</scope>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-core</artifactId>
+				<version>1.3.7</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
 	<modules>
 		<module>yugioh-basic</module>
 		<module>yugioh-common</module>
 		<module>yugioh-test</module>
 		<module>yugioh-reptile</module>
-    <module>yugioh-api-dto</module>
-    <module>yugioh-sync</module>
-  </modules>
+		<module>yugioh-api-dto</module>
+		<module>yugioh-sync</module>
+	</modules>
+
 	<build>
+		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+			<!--发布源码插件 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<shortRevisionLength>7</shortRevisionLength>
 				</configuration>
 			</plugin>
 		</plugins>
