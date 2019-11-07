@@ -2,7 +2,7 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-	<localRepository>F:/repository</localRepository>
+	<localRepository>d:/repository</localRepository>
 
 	<servers>
 		<server>
@@ -20,14 +20,20 @@
 			<username>admin</username>
 			<password>123</password>
 		</server>
+		<server>
+			<id>ygo-docker</id>
+			<username>admin</username>
+			<password>123</password>
+		</server>
 	</servers>
-	<mirrors>
-		<mirror>
-			<id>nexus2</id>
-			<mirrorOf>*</mirrorOf>
-			<url>http://172.28.179.131:7001/repository/maven-public/</url>
-		</mirror>
-	</mirrors>
+<mirrors>
+      <mirror>
+        <id>maven-public</id>
+        <name>maven-public</name>
+          <url>http://172.28.179.131:7001/repository/maven-public/</url>
+        <mirrorOf>*</mirrorOf>
+      </mirror>
+    </mirrors>
 	<profiles>
 		<profile>
 			<id>ygo-nexus</id>
@@ -57,6 +63,16 @@
 				<repository>
 					<id>ygo-release</id>
 					<url>http://172.28.179.131:7001/repository/ygo-release/</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+				<repository>
+					<id>ygo-docker</id>
+					<url>http://172.28.179.131:7001/repository/docker-hosted/</url>
 					<releases>
 						<enabled>true</enabled>
 					</releases>
