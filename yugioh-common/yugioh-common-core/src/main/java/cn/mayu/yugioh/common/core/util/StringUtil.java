@@ -2,25 +2,19 @@ package cn.mayu.yugioh.common.core.util;
 
 public class StringUtil {
 	
-	private static final String SPECIAL = "[`~!@#$%^&*()+=|{}／';'\\[\\][\n][ ].<>/?~！@#￥%……&*（）——+|{}【】‘；”“’ 、]";
-	
-	private static final String LETTER = "[a-zA-Z]";
-	
-	private static final String REGEX = "(「-)";
-	
-	public static String replaceSpecialChar(String character, String replacement) {
-		return character.replaceAll(SPECIAL, replacement);
-	}
-	
-	public static String replaceLetter(String character, String replacement) {
-		return character.replaceAll(LETTER, replacement);
-	}
-	
-	public static String cardDescLetterFormat(String character) {
-		return character.replaceAll(SPECIAL, "").replaceAll(LETTER, "").replaceAll(REGEX, "「");
-	}
-	
-	public static String cardDescFormat(String character) {
-		return character.replaceAll(SPECIAL, "").replaceAll(REGEX, "「");
+	public static String effectFormat(String str) {
+		while(true) {
+			int index = str.indexOf("@#");
+			if (str.indexOf("@#") == -1) {
+				break;
+			}
+			
+			int nextIndex = str.indexOf("@", index + 3);
+			String source = str.substring(index, nextIndex + 1);
+			String target = str.substring(index + 2, nextIndex);
+			str = str.replace(source, target);
+		}
+		
+		return str;
 	}
 }

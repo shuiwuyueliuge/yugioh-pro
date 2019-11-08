@@ -10,10 +10,29 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-10-11 19:06:51
+Date: 2019-11-08 13:58:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for t_card_adjust
+-- ----------------------------
+DROP TABLE IF EXISTS `t_card_adjust`;
+CREATE TABLE `t_card_adjust` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `card_id` int(11) NOT NULL COMMENT '卡的主键',
+  `adjust` text COMMENT '中文效果',
+  `type_val` tinyint(1) DEFAULT '3' COMMENT '卡的类型 3怪兽，2魔法，1陷阱',
+  `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='卡的效果表';
+
+-- ----------------------------
+-- Records of t_card_adjust
+-- ----------------------------
+INSERT INTO `t_card_adjust` VALUES ('1', '1', '藉由「ゼラの儀式／@#杰拉的仪式@」降临。', '3', null, '2019-10-09 17:01:57');
 
 -- ----------------------------
 -- Table structure for t_card_effect

@@ -47,6 +47,7 @@ public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardD
 		       .append(card.getRare())
 		       .append(card.getDesc())
 		       .append(card.getDescNw())
+		       .append(card.getAdjust())
 		       .append(card.getPackages());
 		String version = "";
 		try {
