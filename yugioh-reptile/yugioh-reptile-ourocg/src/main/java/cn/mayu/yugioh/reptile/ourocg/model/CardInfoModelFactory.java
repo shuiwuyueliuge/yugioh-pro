@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.reptile.ourocg.manager;
+package cn.mayu.yugioh.reptile.ourocg.model;
 
 import static cn.mayu.yugioh.common.core.util.Base64Util.UrlImg2Base64;
 import java.time.LocalDateTime;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.factory.AbstractModelFactory;
 import cn.mayu.yugioh.common.core.util.Md5Util;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
-import cn.mayu.yugioh.reptile.ourocg.model.OurocgCard;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
