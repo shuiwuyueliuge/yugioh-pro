@@ -13,5 +13,6 @@
     <module>yugioh-common-core</module>
     <module>yugioh-common-mongo</module>
     <module>yugioh-common-mybatis-generator</module>
+    <module>yugioh-common-redis</module>
   </modules>
 </project>

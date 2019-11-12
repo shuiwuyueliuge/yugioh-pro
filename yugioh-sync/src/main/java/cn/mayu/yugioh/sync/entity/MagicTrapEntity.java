@@ -19,37 +19,37 @@ public class MagicTrapEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "hash_id", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "hash_id")
     private String hashId;
 
-    @Column(name = "password", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "name", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "name_ja", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_ja")
     private String nameJa;
 
-    @Column(name = "name_en", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_en")
     private String nameEn;
 
-    @Column(name = "name_nw", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_nw")
     private String nameNw;
 
-    @Column(name = "locale", insertable = false, columnDefinition = "BIT DEFAULT 3")
+    @Column(name = "locale")
     private Integer locale;
 
     @Column(name = "type_st")
     private Integer typeSt;
 
-    @Column(name = "type_val", insertable = false, columnDefinition = "BIT DEFAULT 3")
+    @Column(name = "type_val")
     private Integer typeVal;
 
     @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(insertable = false, updatable = false, name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 }

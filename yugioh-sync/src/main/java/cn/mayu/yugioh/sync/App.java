@@ -8,11 +8,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 public class App {
-	
+
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(App.class);
 		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
 }
-

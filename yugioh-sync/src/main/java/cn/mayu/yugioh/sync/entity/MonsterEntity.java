@@ -19,25 +19,25 @@ public class MonsterEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "hash_id", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "hash_id")
     private String hashId;
 
-    @Column(name = "password", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "name", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "name_ja", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_ja")
     private String nameJa;
 
-    @Column(name = "name_en", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_en")
     private String nameEn;
 
-    @Column(name = "name_nw", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    @Column(name = "name_nw")
     private String nameNw;
 
-    @Column(name = "locale", insertable = false, columnDefinition = "BIT DEFAULT 3")
+    @Column(name = "locale")
     private Integer locale;
 
     @Column(name = "level")
@@ -49,19 +49,19 @@ public class MonsterEntity {
     @Column(name = "race")
     private Integer race;
 
-    @Column(name = "atk", insertable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Column(name = "atk")
     private Integer atk;
 
-    @Column(name = "def", insertable = false, columnDefinition = "INTEGER DEFAULT 0")
+    @Column(name = "def")
     private Integer def;
 
-    @Column(name = "pend_l", insertable = false, columnDefinition = "TINYINT DEFAULT -1")
+    @Column(name = "pend_l")
     private Integer pendL;
 
-    @Column(name = "pend_r", insertable = false, columnDefinition = "TINYINT DEFAULT -1")
+    @Column(name = "pend_r")
     private Integer pendR;
 
-    @Column(name = "link", insertable = false, columnDefinition = "BIT DEFAULT -1")
+    @Column(name = "link")
     private Integer link;
 
     @UpdateTimestamp

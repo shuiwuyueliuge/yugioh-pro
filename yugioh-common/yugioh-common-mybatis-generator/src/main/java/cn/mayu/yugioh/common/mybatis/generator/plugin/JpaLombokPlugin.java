@@ -58,9 +58,9 @@ public class JpaLombokPlugin extends PluginAdapter {
 		}
 		
 		topLevelClass.addImportedType("javax.persistence.Column");
-		if (introspectedColumn.getDefaultValue() != null) {
-			field.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\", insertable = false, columnDefinition = \"" + introspectedColumn.getJdbcTypeName() + " DEFAULT " + introspectedColumn.getDefaultValue() + "\")");
-		} else
+//		if (introspectedColumn.getDefaultValue() != null) {
+//			field.addAnnotation("@Column(name = \"" + introspectedColumn.getActualColumnName() + "\", insertable = false, columnDefinition = \"" + introspectedColumn.getJdbcTypeName() + " DEFAULT " + introspectedColumn.getDefaultValue() + "\")");
+//		} else
 		if (introspectedColumn.getDefaultValue() != null && introspectedColumn.getDefaultValue().equals("CURRENT_TIMESTAMP")) {
 			field.addAnnotation("@Column(insertable = false, updatable = false, name = \"" + introspectedColumn.getActualColumnName() + "\", columnDefinition = \"TIMESTAMP DEFAULT CURRENT_TIMESTAMP\")");
 		} else

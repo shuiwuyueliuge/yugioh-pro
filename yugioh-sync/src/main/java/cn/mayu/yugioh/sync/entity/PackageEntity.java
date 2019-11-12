@@ -26,7 +26,7 @@ public class PackageEntity {
     private String shotName;
 
     @Column(name = "sell_time")
-    private LocalDateTime sellTime;
+    private String sellTime;
 
     @UpdateTimestamp
     @Column(name = "modify_time")

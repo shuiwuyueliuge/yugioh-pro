@@ -22,7 +22,7 @@ public class AdjustEntity {
     @Column(name = "card_id")
     private Integer cardId;
 
-    @Column(name = "type_val", insertable = false, columnDefinition = "BIT DEFAULT 3")
+    @Column(name = "type_val")
     private Integer typeVal;
 
     @UpdateTimestamp

@@ -67,6 +67,26 @@
 				<artifactId>mybatis-generator-core</artifactId>
 				<version>1.3.7</version>
 			</dependency>
+			<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-logbbok</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-mongo</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-core</artifactId>
+			<version>${version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-redis</artifactId>
+			<version>${version}</version>
+		</dependency>
 		</dependencies>
 	</dependencyManagement>
 

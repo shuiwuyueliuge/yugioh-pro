@@ -41,11 +41,11 @@ public class CardDataEntity {
 	
 	private String def;
 	
-	private Integer pendL;
+	private String pendL;
 	
-	private Integer pendR;
+	private String pendR;
 	
-	private Integer link;
+	private String link;
 	
 	private String linkArrow;
 	

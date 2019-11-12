@@ -21,7 +21,8 @@
 		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
 		<table schema="yugioh-sync" tableName="t_package" domainObjectName="PackageEntity"></table>
 		<table schema="yugioh-sync" tableName="t_monster" domainObjectName="MonsterEntity"></table>
-		<table schema="yugioh-sync" tableName="t_rare" domainObjectName="RareEntity"></table> -->
-		<table schema="yugioh-sync" tableName="t_sync_record" domainObjectName="SyncRecordEntity"></table>
+		<table schema="yugioh-sync" tableName="t_rare" domainObjectName="RareEntity"></table> 
+		<table schema="yugioh-sync" tableName="t_sync_record" domainObjectName="SyncRecordEntity"></table>-->
+		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
 	</context>
 </generatorConfiguration>
