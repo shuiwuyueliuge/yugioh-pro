@@ -73,13 +73,7 @@ public class CardServiceImpl implements CardService {
 
 	@Transactional
 	private void doSync(CardDataEntity entity) {
-		Integer cardId = null;
-		if (entity.getTypeVal() == 1) { // monster
-			cardId = monsterService.saveMonsterInfo(entity);
-		} else {// magic/trap
-			cardId = magicTrapService.saveMagicTrapInfo(entity);
-		}
-		
+		Integer cardId = entity.getTypeVal() == 1 ? monsterService.saveMonsterInfo(entity) : magicTrapService.saveMagicTrapInfo(entity);
 		if (!entity.getAdjust().equals("")) {
 			AdjustEntity adjust = new AdjustEntity();
 			adjust.setCardId(cardId);
