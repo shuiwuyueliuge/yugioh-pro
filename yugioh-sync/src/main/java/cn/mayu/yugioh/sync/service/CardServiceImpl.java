@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static cn.mayu.yugioh.common.core.util.StringUtil.*;
-
-import cn.mayu.yugioh.common.core.util.StringUtil;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.sync.entity.AdjustEntity;
@@ -88,13 +86,7 @@ public class CardServiceImpl implements CardService {
 			return;
 		}
 
-		dataFlux.subscribe(entity -> {
-			try {
-				doSync(entity);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
+		dataFlux.subscribe(entity -> doSync(entity));
 	}
 
 	private LocalDateTime getLastSyncTime() {
@@ -160,8 +152,8 @@ public class CardServiceImpl implements CardService {
 		
 		EffectEntity effect = new EffectEntity();
 		effect.setCardId(cardId);
-		effect.setEffect(StringUtil.effectFormat(entity.getDesc()));
-		effect.setEffectNw(StringUtil.effectFormat(entity.getDescNw()));
+		effect.setEffect(effectFormat(entity.getDesc()));
+		effect.setEffectNw(effectFormat(entity.getDescNw()));
 		effect.setTypeVal(entity.getTypeVal());
 		effectRepository.save(effect);
 		

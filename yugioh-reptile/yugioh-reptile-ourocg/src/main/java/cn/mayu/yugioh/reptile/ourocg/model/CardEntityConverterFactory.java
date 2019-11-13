@@ -3,14 +3,14 @@ package cn.mayu.yugioh.reptile.ourocg.model;
 import static cn.mayu.yugioh.common.core.util.Base64Util.UrlImg2Base64;
 import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.factory.AbstractModelFactory;
+import cn.mayu.yugioh.common.core.factory.AbstractDomainConverterFactory;
 import cn.mayu.yugioh.common.core.util.Md5Util;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-public class CardInfoModelFactory extends AbstractModelFactory<OurocgCard, CardDataEntity> {
+public class CardEntityConverterFactory extends AbstractDomainConverterFactory<OurocgCard, CardDataEntity> {
 
 	@Override
 	protected CardDataEntity doConvert(OurocgCard card) {

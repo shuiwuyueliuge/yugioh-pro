@@ -6,7 +6,7 @@ import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-import cn.mayu.yugioh.common.core.factory.ModelFactory;
+import cn.mayu.yugioh.common.core.factory.DomainConverterFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.reptile.ourocg.model.CardDetil;
@@ -30,7 +30,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private LimitRepository limitRepository;
 	
 	@Autowired
-	private ModelFactory<OurocgCard, CardDataEntity> modelFactory;
+	private DomainConverterFactory<OurocgCard, CardDataEntity> modelFactory;
 	
 	private static final String TOTAL_PAGE = "total_page";
 	

@@ -2,7 +2,7 @@ package cn.mayu.yugioh.common.core.factory;
 
 import org.springframework.beans.BeanUtils;
 
-public abstract class AbstractModelFactory<S, T> implements ModelFactory<S, T> {
+public abstract class AbstractDomainConverterFactory<S, T> implements DomainConverterFactory<S, T> {
 
 	@Override
 	public T convert(S source) {
@@ -11,6 +11,10 @@ public abstract class AbstractModelFactory<S, T> implements ModelFactory<S, T> {
 	
 	protected void copyProperties(S source, T target) {
 		BeanUtils.copyProperties(source, target);
+	}
+	
+	protected void copyProperties(S source, T target, String... ignoreProperties) {
+		BeanUtils.copyProperties(source, target, ignoreProperties);
 	}
 	
 	protected abstract T doConvert(S source);

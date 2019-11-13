@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.common.core.factory;
 
-public interface ModelFactory<S, T> {
+public interface DomainConverterFactory<S, T> {
 
 	 T convert(S source);
 }

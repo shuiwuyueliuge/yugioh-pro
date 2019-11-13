@@ -26,9 +26,11 @@ public class IndexServiceImpl implements IndexService {
 	@Override
 	public Integer findByNameFromCache(Integer type, String name) {
 		for (IndexEntity entity : takeOutCache(type)) {
-			if (entity.getName().equals(name)) {
-				return entity.getTypeIndex();
+			if (!entity.getName().equals(name)) {
+				continue;
 			}
+			
+			return entity.getTypeIndex();
 		}
 		
 		return 0;
@@ -37,9 +39,11 @@ public class IndexServiceImpl implements IndexService {
 	@Override
 	public String findByTypeIndexFromCache(Integer type, Integer index) {
 		for (IndexEntity entity : takeOutCache(type)) {
-			if (entity.getTypeIndex().equals(index)) {
-				return entity.getName();
+			if (!entity.getTypeIndex().equals(index)) {
+				continue;
 			}
+			
+			return entity.getName();
 		}
 		
 		return "";
