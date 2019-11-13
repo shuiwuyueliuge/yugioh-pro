@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.common.core.factory;
+package cn.mayu.yugioh.common.core.domain;
 
 public interface DomainConverterFactory<S, T> {
 

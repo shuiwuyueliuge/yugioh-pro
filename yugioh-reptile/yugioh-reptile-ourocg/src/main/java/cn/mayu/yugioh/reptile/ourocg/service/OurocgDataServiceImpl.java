@@ -6,7 +6,8 @@ import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-import cn.mayu.yugioh.common.core.factory.DomainConverterFactory;
+
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.reptile.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.reptile.ourocg.model.CardDetil;
