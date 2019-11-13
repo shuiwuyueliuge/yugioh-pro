@@ -19,7 +19,9 @@ public class RedisConfig {
 
 	@Bean
 	public ReactiveRedisTemplate<String, IndexEntity> IndexEntityRedis() {
-		RedisConfigContext<String, IndexEntity> context = new RedisConfigContext<String, IndexEntity>(new StringRedisSerializer(), new Jackson2JsonRedisSerializer<IndexEntity>(IndexEntity.class), factory);
+		RedisConfigContext<String, IndexEntity> context = new RedisConfigContext<String, IndexEntity>(new StringRedisSerializer(), 
+				                                                                                      new Jackson2JsonRedisSerializer<IndexEntity>(IndexEntity.class), 
+				                                                                                      factory);
 		RedisConfiguration<String, IndexEntity> configuration = new RedisConfiguration<String, IndexEntity>(context);
 		return configuration.reactiveRedisTemplate();
 	}

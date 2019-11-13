@@ -7,10 +7,12 @@ public class StringUtil {
 	
 	private static final String BASE = "0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM";
 	
-	public static String generateHashId(final int size) {
+	private static final int HASH_ID_SIZE = 8;
+	
+	public static String generateHashId() {
 		StringBuilder builder = new StringBuilder();
 		Random random = new Random();
-		IntStream.rangeClosed(1, size).boxed().forEach(num -> builder.append(BASE.charAt(random.nextInt(BASE.length() - 1))));
+		IntStream.rangeClosed(1, HASH_ID_SIZE).boxed().forEach(num -> builder.append(BASE.charAt(random.nextInt(BASE.length() - 1))));
 		return builder.toString();
 	}
 	

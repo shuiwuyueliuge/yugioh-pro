@@ -33,8 +33,7 @@ public class SyncTest {
 
 	@Test
 	public void findData() throws Exception {
-		repository.findByModifyTimeGreaterThanEqual(LocalDateTime.of(2019, 5, 11, 11, 11))
-				.subscribe(System.out::println);
+		repository.findByModifyTimeGreaterThanEqual(LocalDateTime.of(2019, 5, 11, 11, 11)).subscribe();
 	}
 	
 	@Test

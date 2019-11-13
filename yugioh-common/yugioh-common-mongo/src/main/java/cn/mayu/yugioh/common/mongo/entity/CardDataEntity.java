@@ -11,7 +11,7 @@ import lombok.Data;
 @Document(collection = "card")
 public class CardDataEntity {
 
-    private String id;
+    private int id;
 	
 	private String hashId;
 	
