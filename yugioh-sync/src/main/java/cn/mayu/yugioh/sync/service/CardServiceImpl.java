@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static cn.mayu.yugioh.common.core.util.StringUtil.*;
+
+import cn.mayu.yugioh.common.core.util.StringUtil;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
 import cn.mayu.yugioh.sync.entity.AdjustEntity;
@@ -77,7 +79,7 @@ public class CardServiceImpl implements CardService {
 	@Autowired
 	private PackageInfoRepository packageInfoRepository;
 	
-	private static final int HASH_ID_SIZE = 6;
+	private static final int HASH_ID_SIZE = 8;
 
 	@Override
 	public void saveCardData() throws Exception {
@@ -117,14 +119,16 @@ public class CardServiceImpl implements CardService {
 			MonsterEntity saved = monsterRepository.save(monster);
 			cardId = saved.getId();
 			
-			String typeSt = entity.getTypeSt().replace("，", ",");
-			String[] typeSts = typeSt.split(",");
-			List<TypeEntity> monsterTypes = Stream.of(typeSts).map(types -> {
-				TypeEntity type = new TypeEntity();
-				type.setCardId(saved.getId());
-				type.setTypeSt(indexService.findByNameFromCache(4, types));
-				return type;
-			}).collect(Collectors.toList());
+			String[] typeSts = entity.getTypeSt().split("\\|");
+			List<TypeEntity> monsterTypes = Stream.of(typeSts)
+					                              .map(types -> indexService.findByNameFromCache(4, types))
+					                              .filter(num -> !num.equals(0))
+					                              .map(num -> {
+					                            	  			TypeEntity type = new TypeEntity();
+					                            	  			type.setCardId(saved.getId());
+					                            	  			type.setTypeSt(num);
+					                            	  			return type;
+					                              }).collect(Collectors.toList());
 			typeRepository.saveAll(monsterTypes);
 			
 			if (monster.getLink() != -1) {
@@ -156,28 +160,36 @@ public class CardServiceImpl implements CardService {
 		
 		EffectEntity effect = new EffectEntity();
 		effect.setCardId(cardId);
-		effect.setEffect(entity.getDesc());
-		effect.setEffectNw(entity.getDescNw());
+		effect.setEffect(StringUtil.effectFormat(entity.getDesc()));
+		effect.setEffectNw(StringUtil.effectFormat(entity.getDescNw()));
 		effect.setTypeVal(entity.getTypeVal());
 		effectRepository.save(effect);
 		
-		ImgEntity img = new ImgEntity();
-		img.setCardId(cardId);
-		img.setImg(entity.getImgUrl());
-		img.setTypeVal(entity.getTypeVal());
-		imgRepository.save(img);
+		if (entity.getImgUrl() != null) {
+			ImgEntity img = new ImgEntity();
+			img.setCardId(cardId);
+			img.setImg(entity.getImgUrl());
+			img.setTypeVal(entity.getTypeVal());
+			imgRepository.save(img);
+		}
 		
 		if (entity.getIncludeInfos() != null && entity.getIncludeInfos().size() > 0) {
 			for (IncludeInfo info : entity.getIncludeInfos()) {
-				RareEntity rare = new RareEntity();
-				rare.setShortName(info.getRace());
-				RareEntity savedRare = rareRepository.save(rare);
+				RareEntity savedRare = rareRepository.findByShortName(info.getRace());
+				if (savedRare == null) {
+					RareEntity rare = new RareEntity();
+					rare.setShortName(info.getRace());
+					savedRare = rareRepository.save(rare);
+				}
 				
-				PackageEntity packageEntity = new PackageEntity();
-				packageEntity.setName(info.getPackName());
-				packageEntity.setSellTime(info.getSellTime());
-				packageEntity.setShotName(info.getShortName());
-				PackageEntity savedPackage = packageRepository.save(packageEntity);
+				PackageEntity savedPackage = packageRepository.findByName(info.getPackName());
+				if (savedPackage == null) {
+					PackageEntity packageEntity = new PackageEntity();
+					packageEntity.setName(info.getPackName());
+					packageEntity.setSellTime(info.getSellTime());
+					packageEntity.setShotName(info.getShortName());
+					savedPackage = packageRepository.save(packageEntity);
+				}
 				
 				PackageInfoEntity packageInfo = new PackageInfoEntity();
 				packageInfo.setCardId(cardId);

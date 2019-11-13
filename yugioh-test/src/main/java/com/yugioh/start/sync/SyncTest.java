@@ -13,7 +13,7 @@ import cn.mayu.yugioh.sync.App;
 import cn.mayu.yugioh.sync.repository.CardRepository;
 import cn.mayu.yugioh.sync.repository.SyncRecordRepository;
 import cn.mayu.yugioh.sync.service.CardService;
-//import cn.mayu.yugioh.sync.service.IndexService;
+import cn.mayu.yugioh.sync.service.IndexService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class, webEnvironment = WebEnvironment.NONE)
@@ -25,8 +25,8 @@ public class SyncTest {
 	@Mock
 	SyncRecordRepository record;
 	
-	//@Autowired
-	//IndexService indexservice;
+	@Autowired
+	IndexService indexservice;
 	
 	@Autowired
 	CardService cardservice;
@@ -38,8 +38,8 @@ public class SyncTest {
 	}
 	
 	@Test
-	public void redis() throws Exception {
-		//indexservice.indexCache();
+	public void save() throws Exception {
+		indexservice.indexCache();
 		cardservice.saveCardData();
 	}
 }
