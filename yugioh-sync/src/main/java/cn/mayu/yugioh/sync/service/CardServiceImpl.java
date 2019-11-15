@@ -33,7 +33,7 @@ public class CardServiceImpl implements CardService {
 	private OtherInfoService otherInfoService;
 
 	@Override
-	public void saveCardData() throws Exception {
+	public void saveCardData() {
 		Flux<CardDataEntity> dataFlux = repository.findByModifyTimeGreaterThanEqual(getLastSyncTime());
 		if (dataFlux.count().block() == 0) {
 			return;
