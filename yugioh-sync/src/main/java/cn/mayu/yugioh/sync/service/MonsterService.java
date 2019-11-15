@@ -4,5 +4,5 @@ import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 
 public interface MonsterService {
 
-	Integer saveMonsterInfo(CardDataEntity entity);
+	void saveMonsterInfo(CardDataEntity entity);
 }

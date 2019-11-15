@@ -36,7 +36,7 @@ public class MonsterServiceImpl implements MonsterService {
 
 	@Override
 	@Transactional
-	public Integer saveMonsterInfo(CardDataEntity entity) {
+	public void saveMonsterInfo(CardDataEntity entity) {
 		MonsterEntity monster = monsterConverterFactory.convert(entity);
 		MonsterEntity saved = monsterRepository.save(monster);
 		entity.setId(saved.getId());
@@ -44,6 +44,5 @@ public class MonsterServiceImpl implements MonsterService {
 		typeRepository.saveAll(monsterTypes);
 		List<LinkEntity> links = linkConverterFactory.convert(entity);
 		linkRepository.saveAll(links);
-		return saved.getId();
 	}
 }

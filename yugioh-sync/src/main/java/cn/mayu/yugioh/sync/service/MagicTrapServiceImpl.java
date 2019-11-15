@@ -20,8 +20,9 @@ public class MagicTrapServiceImpl implements MagicTrapService {
 
 	@Override
 	@Transactional
-	public Integer saveMagicTrapInfo(CardDataEntity entity) {
+	public void saveMagicTrapInfo(CardDataEntity entity) {
 		MagicTrapEntity magicTrap = mtConverterFactory.convert(entity);
-		return magicTrapRepository.save(magicTrap).getId();
+		Integer cardId = magicTrapRepository.save(magicTrap).getId();
+		entity.setId(cardId);
 	}
 }
