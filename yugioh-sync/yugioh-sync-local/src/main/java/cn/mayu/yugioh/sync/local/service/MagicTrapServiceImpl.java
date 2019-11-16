@@ -3,7 +3,6 @@ package cn.mayu.yugioh.sync.local.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.sync.local.entity.MagicTrapEntity;
@@ -21,6 +20,11 @@ public class MagicTrapServiceImpl implements MagicTrapService {
 	@Override
 	@Transactional
 	public void saveMagicTrapInfo(CardDataEntity entity) {
+		if (entity.getState() == 0) {
+			MagicTrapEntity saved = magicTrapRepository.findByNameAndPassword(entity.getName(), entity.getPassword());
+			entity.setId(saved.getId());
+		}
+		
 		MagicTrapEntity magicTrap = mtConverterFactory.convert(entity);
 		Integer cardId = magicTrapRepository.save(magicTrap).getId();
 		entity.setId(cardId);

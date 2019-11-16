@@ -90,12 +90,14 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private void persistent(CardDataEntity entity) {
 		CardDataEntity cardInfoEntity = repository.findByHashId(entity.getHashId()).block();
 		if (cardInfoEntity == null) {
+			entity.setState(1);
 			repository.save(entity).subscribe();
 			return;
 		}
 		
 		if (!entity.getVersion().equals(cardInfoEntity.getVersion())) {
 			entity.setId(cardInfoEntity.getId());
+			entity.setState(0);
 			repository.save(entity).subscribe();// update
 		}
 	}

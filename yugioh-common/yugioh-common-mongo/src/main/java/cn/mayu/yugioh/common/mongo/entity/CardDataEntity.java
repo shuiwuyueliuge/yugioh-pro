@@ -60,6 +60,8 @@ public class CardDataEntity {
 	private String version;
 	
 	private String adjust;
+	//0-> update, 1-> create
+	private int state;
 	
 	private LocalDateTime createTime;
 	

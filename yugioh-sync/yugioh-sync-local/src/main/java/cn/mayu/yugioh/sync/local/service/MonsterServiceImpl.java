@@ -37,6 +37,11 @@ public class MonsterServiceImpl implements MonsterService {
 	@Override
 	@Transactional
 	public void saveMonsterInfo(CardDataEntity entity) {
+		if (entity.getState() == 0) {
+			MonsterEntity saved = monsterRepository.findByNameAndPassword(entity.getName(), entity.getPassword());
+			entity.setId(saved.getId());
+		}
+		
 		MonsterEntity monster = monsterConverterFactory.convert(entity);
 		MonsterEntity saved = monsterRepository.save(monster);
 		entity.setId(saved.getId());
