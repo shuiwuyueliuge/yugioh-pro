@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
-import cn.mayu.yugioh.sync.App;
-import cn.mayu.yugioh.sync.repository.CardRepository;
-import cn.mayu.yugioh.sync.repository.SyncRecordRepository;
-import cn.mayu.yugioh.sync.service.CardService;
-import cn.mayu.yugioh.sync.service.IndexService;
+import cn.mayu.yugioh.sync.local.App;
+import cn.mayu.yugioh.sync.local.repository.CardRepository;
+import cn.mayu.yugioh.sync.local.repository.SyncRecordRepository;
+import cn.mayu.yugioh.sync.local.service.CardService;
+import cn.mayu.yugioh.sync.local.service.IndexService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class, webEnvironment = WebEnvironment.NONE)

@@ -6,18 +6,30 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cn.mayu</groupId>
-		<artifactId>yugioh-basic</artifactId>
+		<artifactId>yugioh-sync</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>yugioh-basic-config</artifactId>
+	<artifactId>yugioh-sync-local</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-logbbok</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-mongo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-redis</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -25,22 +37,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-web</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -52,6 +50,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -59,7 +61,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>cn.mayu.yugioh.basic.config.App</mainClass>
+					<mainClass>cn.mayu.yugioh.sync.App</mainClass>
 					<layout>ZIP</layout>
 				</configuration>
 				<executions>
