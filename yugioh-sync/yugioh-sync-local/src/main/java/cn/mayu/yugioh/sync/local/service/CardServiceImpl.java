@@ -38,8 +38,8 @@ public class CardServiceImpl implements CardService {
 		if (dataFlux.count().block() == 0) {
 			return;
 		}
-
-		dataFlux.subscribe(entity -> doSync(entity));
+		
+		dataFlux.collectList().block().stream().forEach(entity -> doSync(entity));
 	}
 
 	private LocalDateTime getLastSyncTime() {

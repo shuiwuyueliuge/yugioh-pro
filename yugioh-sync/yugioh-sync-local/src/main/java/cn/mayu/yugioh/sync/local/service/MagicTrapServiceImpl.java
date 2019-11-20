@@ -22,11 +22,11 @@ public class MagicTrapServiceImpl implements MagicTrapService {
 	public void saveMagicTrapInfo(CardDataEntity entity) {
 		if (entity.getState() == 0) {
 			MagicTrapEntity saved = magicTrapRepository.findByNameAndPassword(entity.getName(), entity.getPassword());
-			entity.setId(saved.getId());
+			entity.setId(saved.getId() + "");
 		}
 		
 		MagicTrapEntity magicTrap = mtConverterFactory.convert(entity);
 		Integer cardId = magicTrapRepository.save(magicTrap).getId();
-		entity.setId(cardId);
+		entity.setId(cardId + "");
 	}
 }

@@ -39,7 +39,7 @@ public class OtherInfoServiceImpl implements OtherInfoService {
 		}
 
 		AdjustEntity adjust = new AdjustEntity();
-		adjust.setCardId(entity.getId());
+		adjust.setCardId(Integer.valueOf(entity.getId()));
 		adjust.setAdjust(entity.getAdjust());
 		adjust.setTypeVal(entity.getTypeVal());
 		adjustRepository.save(adjust);
@@ -48,7 +48,7 @@ public class OtherInfoServiceImpl implements OtherInfoService {
 	@Transactional
 	private void saveEffect(CardDataEntity entity) {
 		EffectEntity effect = new EffectEntity();
-		effect.setCardId(entity.getId());
+		effect.setCardId(Integer.valueOf(entity.getId()));
 		effect.setEffect(effectFormat(entity.getDesc()));
 		effect.setEffectNw(effectFormat(entity.getDescNw()));
 		effect.setTypeVal(entity.getTypeVal());
@@ -62,7 +62,7 @@ public class OtherInfoServiceImpl implements OtherInfoService {
 		}
 
 		ImgEntity img = new ImgEntity();
-		img.setCardId(entity.getId());
+		img.setCardId(Integer.valueOf(entity.getId()));
 		img.setImg(entity.getImgUrl());
 		img.setTypeVal(entity.getTypeVal());
 		imgRepository.save(img);

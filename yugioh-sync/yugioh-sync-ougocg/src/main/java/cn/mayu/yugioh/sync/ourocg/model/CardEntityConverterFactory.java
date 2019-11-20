@@ -17,6 +17,7 @@ public class CardEntityConverterFactory extends AbstractDomainConverterFactory<O
 	protected CardDataEntity doConvert(OurocgCard card) {
 		CardDataEntity entity = new CardDataEntity();
 		copyProperties(card, entity);
+		entity.setId(null);
 		entity.setVersion(generateVersion(card));
 		entity.setImgUrl(generateImg(entity.getImgUrl()));
 		entity.setModifyTime(LocalDateTime.now());

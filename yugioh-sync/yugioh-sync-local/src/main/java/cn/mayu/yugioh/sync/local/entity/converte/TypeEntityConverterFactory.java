@@ -22,7 +22,7 @@ public class TypeEntityConverterFactory extends AbstractDomainConverterFactory<C
 		return Stream.of(typeSts)
 				     .map(types -> indexService.findByNameFromCache(4, types))
 				     .filter(num -> !num.equals(0))
-				     .map(num -> getInstance(entity.getId(), num))
+				     .map(num -> getInstance(Integer.valueOf(entity.getId()), num))
 				     .collect(Collectors.toList());
 	}
 

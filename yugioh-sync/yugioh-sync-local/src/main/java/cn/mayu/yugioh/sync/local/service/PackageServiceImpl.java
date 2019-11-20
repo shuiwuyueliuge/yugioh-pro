@@ -35,7 +35,7 @@ public class PackageServiceImpl implements PackageService {
 		for (IncludeInfo info : entity.getIncludeInfos()) {
 			int savedRareId = saveRare(info);
 			int savedPackageId = savePackage(info);
-			savePackageDetil(info, savedRareId, savedPackageId, entity.getId(), entity.getTypeVal());
+			savePackageDetil(info, savedRareId, savedPackageId, Integer.valueOf(entity.getId()), entity.getTypeVal());
 		}
 	}
 	

@@ -2,7 +2,7 @@ package cn.mayu.yugioh.common.mongo.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -11,7 +11,8 @@ import lombok.Data;
 @Document(collection = "card")
 public class CardDataEntity {
 
-    private int id;
+	@Id
+    private String id;
 	
 	private String hashId;
 	

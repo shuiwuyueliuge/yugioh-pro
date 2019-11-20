@@ -21,7 +21,7 @@ public class LinkEntityConverterFactory extends AbstractDomainConverterFactory<C
 		String linkArrowStr = entity.getLinkArrow().replace("，", ",");
 		String[] linkArrows = linkArrowStr.split(",");
 		return Stream.of(linkArrows)
-				     .map(arrow -> getInstance(entity.getId(), arrow))
+				     .map(arrow -> getInstance(Integer.valueOf(entity.getId()), arrow))
 				     .collect(Collectors.toList());
 	}
 	
