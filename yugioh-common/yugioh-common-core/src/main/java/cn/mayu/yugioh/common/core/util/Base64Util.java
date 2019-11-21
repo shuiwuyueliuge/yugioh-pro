@@ -10,6 +10,10 @@ public class Base64Util {
 	public static String encode(byte[] content) {
 		return Base64.getEncoder().encodeToString(content);
 	}
+	
+	public static byte[] decoder(String content) {
+		return Base64.getDecoder().decode(content);
+	}
 
 	//<img src="data:image/png;base64,....."/>
 	public static String UrlImg2Base64(String url) throws Exception {

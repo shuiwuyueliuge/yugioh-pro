@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2019-11-13 16:23:23
+Date: 2019-11-21 18:41:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,24 +50,6 @@ CREATE TABLE `t_card_effect` (
 
 -- ----------------------------
 -- Records of t_card_effect
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_card_img
--- ----------------------------
-DROP TABLE IF EXISTS `t_card_img`;
-CREATE TABLE `t_card_img` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `card_id` int(11) NOT NULL,
-  `img` text COMMENT '卡图的base64字符串',
-  `type_val` tinyint(1) DEFAULT '3' COMMENT '卡的类型 3怪兽，2魔法，1陷阱',
-  `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='卡图base64';
-
--- ----------------------------
--- Records of t_card_img
 -- ----------------------------
 
 -- ----------------------------
@@ -291,7 +273,7 @@ CREATE TABLE `t_package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `shot_name` varchar(255) DEFAULT NULL,
-  `sell_time` datetime DEFAULT NULL COMMENT '发售时间',
+  `sell_time` varchar(20) DEFAULT NULL COMMENT '发售时间',
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

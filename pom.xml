@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.mayu</groupId>
@@ -66,25 +68,30 @@
 				<version>1.3.7</version>
 			</dependency>
 			<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-logbbok</artifactId>
-			<version>${version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-mongo</artifactId>
-			<version>${version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-core</artifactId>
-			<version>${version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-redis</artifactId>
-			<version>${version}</version>
-		</dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+				<version>3.6</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-logbbok</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-mongo</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-core</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-redis</artifactId>
+				<version>${version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -94,7 +101,7 @@
 		<module>yugioh-test</module>
 		<module>yugioh-api-dto</module>
 		<module>yugioh-sync</module>
-  </modules>
+	</modules>
 
 	<build>
 		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>

@@ -5,12 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.sync.local.async.AsyncBoondock;
 import cn.mayu.yugioh.sync.local.entity.AdjustEntity;
 import cn.mayu.yugioh.sync.local.entity.EffectEntity;
-import cn.mayu.yugioh.sync.local.entity.ImgEntity;
 import cn.mayu.yugioh.sync.local.repository.AdjustRepository;
 import cn.mayu.yugioh.sync.local.repository.EffectRepository;
-import cn.mayu.yugioh.sync.local.repository.ImgRepository;
 
 @Service
 public class OtherInfoServiceImpl implements OtherInfoService {
@@ -20,16 +19,16 @@ public class OtherInfoServiceImpl implements OtherInfoService {
 
 	@Autowired
 	private EffectRepository effectRepository;
-
+	
 	@Autowired
-	private ImgRepository imgRepository;
+	private AsyncBoondock boondock;
 
 	@Override
 	@Transactional
 	public void saveOtherData(CardDataEntity entity) {
 		saveAdjust(entity);
 		saveEffect(entity);
-		saveImg(entity);
+		boondock.saveInDisk(entity);
 	}
 
 	@Transactional
@@ -53,18 +52,5 @@ public class OtherInfoServiceImpl implements OtherInfoService {
 		effect.setEffectNw(effectFormat(entity.getDescNw()));
 		effect.setTypeVal(entity.getTypeVal());
 		effectRepository.save(effect);
-	}
-
-	@Transactional
-	private void saveImg(CardDataEntity entity) {
-		if (entity.getImgUrl() == null) {
-			return;
-		}
-
-		ImgEntity img = new ImgEntity();
-		img.setCardId(Integer.valueOf(entity.getId()));
-		img.setImg(entity.getImgUrl());
-		img.setTypeVal(entity.getTypeVal());
-		imgRepository.save(img);
 	}
 }
