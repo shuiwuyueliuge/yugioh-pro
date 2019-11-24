@@ -1,0 +1,38 @@
+package cn.mayu.yugioh.facade.sync.home;
+option java_outer_classname = "CardProto";
+
+message CardEntity {
+	optional string id = 1;
+	optional string hashId = 2;
+	optional string password = 3;
+	optional string name = 4;
+	optional string nameJa = 5;
+	optional string nameEn = 6;
+	optional int32 locale = 7;
+	optional string typeSt = 8;
+	optional int32 typeVal = 9;
+	optional string imgUrl = 10;
+	optional int32 level = 11;
+	optional string attribute = 12;
+	optional string race = 13;
+	optional string atk = 14;
+	optional string def = 15;
+	optional string pendL = 16;
+	optional string pendR = 17;
+	optional string link = 18;
+	optional string linkArrow = 19;
+	optional string nameNw = 20;
+	optional string desc = 21;
+	optional string descNw = 22;
+	repeated IncludeInfo includeInfos = 23;
+	optional string version = 24;
+	optional string adjust = 25;
+}
+
+message IncludeInfo {
+		optional string race = 1;
+		optional string packName = 2;
+		optional string number = 3;
+		optional string shortName = 4;
+		optional string sellTime = 5;
+}

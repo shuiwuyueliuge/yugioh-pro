@@ -21,8 +21,13 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-facade-sync-home</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-core</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

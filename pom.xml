@@ -63,6 +63,11 @@
 				<version>1.12.1</version>
 			</dependency>
 			<dependency>
+				<groupId>com.google.protobuf</groupId>
+				<artifactId>protobuf-java</artifactId>
+				<version>3.6.1</version>
+			</dependency>
+			<dependency>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-core</artifactId>
 				<version>1.3.7</version>
@@ -89,6 +94,11 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-facade-sync-home</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
 				<artifactId>yugioh-common-redis</artifactId>
 				<version>${version}</version>
 			</dependency>
@@ -99,8 +109,8 @@
 		<module>yugioh-basic</module>
 		<module>yugioh-common</module>
 		<module>yugioh-test</module>
-		<module>yugioh-api-dto</module>
 		<module>yugioh-sync</module>
+		<module>yugioh-facade</module>
 	</modules>
 
 	<build>

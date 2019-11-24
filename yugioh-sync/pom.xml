@@ -11,5 +11,6 @@
   <modules>
   	<module>yugioh-sync-local</module>
     <module>yugioh-sync-ougocg</module>
+    <module>yugioh-sync-home</module>
   </modules>
 </project>

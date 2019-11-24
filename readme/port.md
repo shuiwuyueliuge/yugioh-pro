@@ -4,7 +4,9 @@
 9100-9199
 网关
 9200-9299
-ourocg
+sync-ourocg
 9300-9399
-sync
+sync-local
 9400-9499
+sync-home
+9500-9599

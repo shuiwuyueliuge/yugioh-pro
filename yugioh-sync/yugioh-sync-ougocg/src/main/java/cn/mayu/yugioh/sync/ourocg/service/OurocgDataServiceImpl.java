@@ -9,6 +9,7 @@ import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
