@@ -20,11 +20,11 @@ public class OurocgCard {
 	
 	private String nameEn;
 	
-	private int locale;
+	private Integer locale;
 	
 	private String typeSt;
 	
-	private int typeVal;
+	private Integer typeVal;
 	
 	private String imgUrl;
 	

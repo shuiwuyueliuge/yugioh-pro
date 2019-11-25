@@ -67,6 +67,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	private void persistent(OurocgCard card) {
 		CardProto.CardEntity entity = factory.convert(card);
 		SaveResultEntity result = syncHomeService.saveCardInMongo(entity);
+		System.out.println(result);
 	}
 
 	@Override
