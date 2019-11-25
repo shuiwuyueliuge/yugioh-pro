@@ -38,8 +38,8 @@
 			<artifactId>yugioh-facade-sync-home</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

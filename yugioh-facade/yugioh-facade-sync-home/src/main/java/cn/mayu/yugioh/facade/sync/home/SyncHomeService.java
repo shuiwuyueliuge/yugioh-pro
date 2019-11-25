@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "sync-home")
 public interface SyncHomeService {
 	
-    @PostMapping(value = "/card", consumes = "application/x-protobuf", produces = "application/x-protobuf")
-    SaveInMongoResultProto.SaveInMongoResultEntity saveCardInMongo(@RequestBody CardProto.CardEntity cardEntity);
+	String CONSUMES = "application/x-protobuf";
+
+	String PRODUCES = CONSUMES;
+	
+    @PostMapping(value = "/card", consumes = CONSUMES, produces = PRODUCES)
+    SaveResultProto.SaveResultEntity saveCardInMongo(@RequestBody CardProto.CardEntity cardEntity);
     
-    @PostMapping(value = "/limit", consumes = "application/x-protobuf", produces = "application/x-protobuf")
-    SaveInMongoResultProto.SaveInMongoResultEntity saveLimitInMongo(@RequestBody LimitProto.LimitEntity limitEntity);
+    @PostMapping(value = "/limit", consumes = CONSUMES, produces = PRODUCES)
+    SaveResultProto.SaveResultEntity saveLimitInMongo(@RequestBody LimitProto.LimitEntity limitEntity);
 }

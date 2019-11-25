@@ -8,7 +8,7 @@ import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.facade.sync.home.CardProto;
-import cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity;
+import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
@@ -66,7 +66,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	private void persistent(OurocgCard card) {
 		CardProto.CardEntity entity = factory.convert(card);
-		SaveInMongoResultEntity result = syncHomeService.saveCardInMongo(entity);
+		SaveResultEntity result = syncHomeService.saveCardInMongo(entity);
 	}
 
 	@Override

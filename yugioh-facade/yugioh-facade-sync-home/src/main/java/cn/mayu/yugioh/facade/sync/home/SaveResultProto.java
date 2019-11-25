@@ -3,13 +3,13 @@
 
 package cn.mayu.yugioh.facade.sync.home;
 
-public final class SaveInMongoResultProto {
-  private SaveInMongoResultProto() {}
+public final class SaveResultProto {
+  private SaveResultProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public interface SaveInMongoResultEntityOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity)
+  public interface SaveResultEntityOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:cn.mayu.yugioh.facade.sync.home.SaveResultEntity)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -36,25 +36,25 @@ public final class SaveInMongoResultProto {
         getMsgBytes();
   }
   /**
-   * Protobuf type {@code cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity}
+   * Protobuf type {@code cn.mayu.yugioh.facade.sync.home.SaveResultEntity}
    */
-  public static final class SaveInMongoResultEntity extends
+  public static final class SaveResultEntity extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity)
-      SaveInMongoResultEntityOrBuilder {
-    // Use SaveInMongoResultEntity.newBuilder() to construct.
-    private SaveInMongoResultEntity(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      // @@protoc_insertion_point(message_implements:cn.mayu.yugioh.facade.sync.home.SaveResultEntity)
+      SaveResultEntityOrBuilder {
+    // Use SaveResultEntity.newBuilder() to construct.
+    private SaveResultEntity(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private SaveInMongoResultEntity(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private SaveResultEntity(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final SaveInMongoResultEntity defaultInstance;
-    public static SaveInMongoResultEntity getDefaultInstance() {
+    private static final SaveResultEntity defaultInstance;
+    public static SaveResultEntity getDefaultInstance() {
       return defaultInstance;
     }
 
-    public SaveInMongoResultEntity getDefaultInstanceForType() {
+    public SaveResultEntity getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -64,7 +64,7 @@ public final class SaveInMongoResultProto {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private SaveInMongoResultEntity(
+    private SaveResultEntity(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -112,28 +112,28 @@ public final class SaveInMongoResultProto {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor;
+      return cn.mayu.yugioh.facade.sync.home.SaveResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_fieldAccessorTable
+      return cn.mayu.yugioh.facade.sync.home.SaveResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.class, cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.Builder.class);
+              cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.class, cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<SaveInMongoResultEntity> PARSER =
-        new com.google.protobuf.AbstractParser<SaveInMongoResultEntity>() {
-      public SaveInMongoResultEntity parsePartialFrom(
+    public static com.google.protobuf.Parser<SaveResultEntity> PARSER =
+        new com.google.protobuf.AbstractParser<SaveResultEntity>() {
+      public SaveResultEntity parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SaveInMongoResultEntity(input, extensionRegistry);
+        return new SaveResultEntity(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<SaveInMongoResultEntity> getParserForType() {
+    public com.google.protobuf.Parser<SaveResultEntity> getParserForType() {
       return PARSER;
     }
 
@@ -247,53 +247,53 @@ public final class SaveInMongoResultProto {
       return super.writeReplace();
     }
 
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(byte[] data)
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(java.io.InputStream input)
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseDelimitedFrom(java.io.InputStream input)
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseDelimitedFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parseFrom(
+    public static cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -302,7 +302,7 @@ public final class SaveInMongoResultProto {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity prototype) {
+    public static Builder newBuilder(cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -314,25 +314,25 @@ public final class SaveInMongoResultProto {
       return builder;
     }
     /**
-     * Protobuf type {@code cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity}
+     * Protobuf type {@code cn.mayu.yugioh.facade.sync.home.SaveResultEntity}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity)
-        cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntityOrBuilder {
+        // @@protoc_insertion_point(builder_implements:cn.mayu.yugioh.facade.sync.home.SaveResultEntity)
+        cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntityOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor;
+        return cn.mayu.yugioh.facade.sync.home.SaveResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_fieldAccessorTable
+        return cn.mayu.yugioh.facade.sync.home.SaveResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.class, cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.Builder.class);
+                cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.class, cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.Builder.class);
       }
 
-      // Construct using cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.newBuilder()
+      // Construct using cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -365,23 +365,23 @@ public final class SaveInMongoResultProto {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor;
+        return cn.mayu.yugioh.facade.sync.home.SaveResultProto.internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor;
       }
 
-      public cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity getDefaultInstanceForType() {
-        return cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.getDefaultInstance();
+      public cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity getDefaultInstanceForType() {
+        return cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.getDefaultInstance();
       }
 
-      public cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity build() {
-        cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity result = buildPartial();
+      public cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity build() {
+        cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity buildPartial() {
-        cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity result = new cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity(this);
+      public cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity buildPartial() {
+        cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity result = new cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
@@ -398,16 +398,16 @@ public final class SaveInMongoResultProto {
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity) {
-          return mergeFrom((cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity)other);
+        if (other instanceof cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity) {
+          return mergeFrom((cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity other) {
-        if (other == cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity.getDefaultInstance()) return this;
+      public Builder mergeFrom(cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity other) {
+        if (other == cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity.getDefaultInstance()) return this;
         if (other.hasCode()) {
           setCode(other.getCode());
         }
@@ -428,11 +428,11 @@ public final class SaveInMongoResultProto {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity parsedMessage = null;
+        cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity) e.getUnfinishedMessage();
+          parsedMessage = (cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -551,22 +551,22 @@ public final class SaveInMongoResultProto {
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity)
+      // @@protoc_insertion_point(builder_scope:cn.mayu.yugioh.facade.sync.home.SaveResultEntity)
     }
 
     static {
-      defaultInstance = new SaveInMongoResultEntity(true);
+      defaultInstance = new SaveResultEntity(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:cn.mayu.yugioh.facade.sync.home.SaveInMongoResultEntity)
+    // @@protoc_insertion_point(class_scope:cn.mayu.yugioh.facade.sync.home.SaveResultEntity)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor;
+    internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_fieldAccessorTable;
+      internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -577,9 +577,8 @@ public final class SaveInMongoResultProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\014result.proto\022\037cn.mayu.yugioh.facade.sy" +
-      "nc.home\"4\n\027SaveInMongoResultEntity\022\014\n\004co" +
-      "de\030\001 \001(\005\022\013\n\003msg\030\002 \001(\tB\030B\026SaveInMongoResu" +
-      "ltProto"
+      "nc.home\"-\n\020SaveResultEntity\022\014\n\004code\030\001 \001(" +
+      "\005\022\013\n\003msg\030\002 \001(\tB\021B\017SaveResultProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -593,11 +592,11 @@ public final class SaveInMongoResultProto {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor =
+    internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_fieldAccessorTable = new
+    internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_cn_mayu_yugioh_facade_sync_home_SaveInMongoResultEntity_descriptor,
+        internal_static_cn_mayu_yugioh_facade_sync_home_SaveResultEntity_descriptor,
         new java.lang.String[] { "Code", "Msg", });
   }
 

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import static cn.mayu.yugioh.common.core.api.ResultCodeEnum.*;
+import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
 import cn.mayu.yugioh.facade.sync.home.CardProto;
 import cn.mayu.yugioh.facade.sync.home.LimitProto;
 import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
-import cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity;
+import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.home.entity.CardDataEntity;
 import cn.mayu.yugioh.sync.home.entity.IncludeInfo;
@@ -31,21 +33,34 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 	private LimitRepository limitRepository;
 
 	@Override
-	@PostMapping(value = "/card", consumes = "application/x-protobuf", produces = "application/x-protobuf")
-	public SaveInMongoResultEntity saveCardInMongo(@RequestBody CardEntity cardEntity) {
+	@PostMapping(value = "/card", consumes = CONSUMES, produces = PRODUCES)
+	public SaveResultEntity saveCardInMongo(@RequestBody CardEntity cardEntity) {
 		CardDataEntity cardDataEntity = initCardDataEntity(cardEntity);
 		try {
 			persistent(cardDataEntity);
 		} catch (Exception e) {
 			log.error("persistent card [{}] error [{}]",cardDataEntity, e);
-			return SaveInMongoResultEntity.getDefaultInstance().toBuilder()
-                    					  .setCode(1000)
-                                          .setMsg("error").build();
+			return build(FAILURE);
 		}
 		
-		return SaveInMongoResultEntity.getDefaultInstance().toBuilder()
-				                      .setCode(0)
-				                      .setMsg("success").build();
+		return build(SUCCESS);
+	}
+	
+	@Override
+	@PostMapping(value = "/limit", consumes = CONSUMES, produces = PRODUCES)
+	public SaveResultEntity saveLimitInMongo(@RequestBody LimitProto.LimitEntity limitEntity) {
+		LimitEntity entity = new LimitEntity();
+		BeanUtils.copyProperties(limitEntity, entity);
+		LimitEntity saved = limitRepository.findByName(entity.getName()).block();
+		if (saved == null) {
+			limitRepository.save(entity);
+		}
+		
+		return build(SUCCESS);
+	}
+	
+	private SaveResultEntity build(ResultCodeEnum codeEnum) {
+		return SaveResultEntity.getDefaultInstance().toBuilder().setCode(codeEnum.getCode()).setMsg(codeEnum.getMsg()).build();
 	}
 	
 	private CardDataEntity initCardDataEntity(CardEntity cardEntity) {
@@ -77,16 +92,5 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 			cardDataEntity.setState(0);
 			cardRepository.save(cardDataEntity).subscribe();// update
 		}
-	}
-
-	@Override
-	@PostMapping(value = "/limit", consumes = "application/x-protobuf", produces = "application/x-protobuf")
-	public SaveInMongoResultEntity saveLimitInMongo(@RequestBody LimitProto.LimitEntity limitEntity) {
-		LimitEntity entity = new LimitEntity();
-		BeanUtils.copyProperties(limitEntity, entity);
-		limitRepository.save(entity);
-		return SaveInMongoResultEntity.getDefaultInstance().toBuilder()
-                .setCode(0)
-                .setMsg("success").build();
 	}
 }
