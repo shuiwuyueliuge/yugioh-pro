@@ -1,11 +1,11 @@
 package cn.mayu.yugioh.sync.ourocg.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import cn.mayu.yugioh.sync.ourocg.config.OurocgCardDeserializer;
+import cn.mayu.yugioh.sync.ourocg.config.OurocgCardDeserializerConfig;
 import lombok.Data;
 
 @Data
-@JsonDeserialize(using = OurocgCardDeserializer.class)
+@JsonDeserialize(using = OurocgCardDeserializerConfig.class)
 public class OurocgCard {
 	
 	private String id;
