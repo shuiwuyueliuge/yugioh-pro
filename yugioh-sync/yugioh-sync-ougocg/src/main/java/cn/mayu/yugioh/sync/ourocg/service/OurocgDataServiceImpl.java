@@ -6,33 +6,25 @@ import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
 import cn.mayu.yugioh.facade.sync.home.CardProto;
+import cn.mayu.yugioh.facade.sync.home.SaveInMongoResultProto.SaveInMongoResultEntity;
+import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
-import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgMetaData;
-import cn.mayu.yugioh.sync.ourocg.repository.CardRepository;
-import cn.mayu.yugioh.sync.ourocg.repository.LimitRepository;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
-@Slf4j
 public class OurocgDataServiceImpl implements OurocgDataService {
 
 	@Autowired
 	private CardDataFindManager dataFindManager;
 	
 	@Autowired
-	private CardRepository repository;
+	DomainConverterFactory<OurocgCard, CardProto.CardEntity> factory;
 	
 	@Autowired
-	private LimitRepository limitRepository;
-	
-	@Autowired
-	private DomainConverterFactory<OurocgCard, CardDataEntity> modelFactory;
+	private SyncHomeService syncHomeService;
 	
 	private static final String TOTAL_PAGE = "total_page";
 	
@@ -59,7 +51,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			String str = null;
 			while((str = reader.readLine()) != null) {
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				metaData.getCards().stream().map(card -> modelToEntity(card)).forEach(entity -> persistent(entity));
+				metaData.getCards().stream().forEach(card -> persistent(card));
 			}
 		}
 	}
@@ -72,39 +64,13 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 	}
 	
-	private CardDataEntity modelToEntity(OurocgCard card) {
-		CardDetil cardDetil = findIncludeDetilAndAdjust(card.getHref());
-		card.setIncludeInfos(cardDetil.getIncludeInfos());
-		card.setAdjust(cardDetil.getAdjust());
-		return modelFactory.convert(card);
-	}
-	
-	private CardDetil findIncludeDetilAndAdjust(String href) {
-		try {
-			return dataFindManager.findIncludeInfo(href);
-		} catch (Exception e) {
-			log.error("OurocgCard findPackageData error [{}]", e);
-			return null;
-		}
-	}
-	
-	private void persistent(CardDataEntity entity) {
-		CardDataEntity cardInfoEntity = repository.findByHashId(entity.getHashId()).block();
-		if (cardInfoEntity == null) {
-			entity.setState(1);
-			repository.save(entity).subscribe();
-			return;
-		}
-		
-		if (!entity.getVersion().equals(cardInfoEntity.getVersion())) {
-			entity.setId(cardInfoEntity.getId());
-			entity.setState(0);
-			repository.save(entity).subscribe();// update
-		}
+	private void persistent(OurocgCard card) {
+		CardProto.CardEntity entity = factory.convert(card);
+		SaveInMongoResultEntity result = syncHomeService.saveCardInMongo(entity);
 	}
 
 	@Override
 	public void limitInfoSave(String latestUrl) throws Exception {
-		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> limitRepository.save(data).subscribe());
+		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> syncHomeService.saveLimitInMongo(data));
 	}
 }

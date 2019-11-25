@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.sync.ourocg.model;
 
 import java.util.List;
-import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
+import cn.mayu.yugioh.facade.sync.home.CardProto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class CardDetil {
 
-	private List<IncludeInfo> includeInfos;
+	private List<CardProto.IncludeInfo> includeInfos;
 	
 	private String adjust;
 }

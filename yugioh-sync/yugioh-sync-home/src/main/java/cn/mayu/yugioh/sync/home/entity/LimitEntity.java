@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.common.mongo.entity;
+package cn.mayu.yugioh.sync.home.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;

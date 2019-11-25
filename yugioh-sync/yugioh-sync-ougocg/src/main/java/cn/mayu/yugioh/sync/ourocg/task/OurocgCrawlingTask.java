@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.sync.ourocg.service.OurocgDataService;
 import lombok.extern.slf4j.Slf4j;
 
-//@Component
+@Component
 @Slf4j
 public class OurocgCrawlingTask {
 

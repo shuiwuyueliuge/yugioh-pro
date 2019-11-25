@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.sync.ourocg.manager;
 
 import java.util.List;
-import cn.mayu.yugioh.common.mongo.entity.LimitEntity;
+import cn.mayu.yugioh.facade.sync.home.LimitProto;
 import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 
 public interface CardDataFindManager {
@@ -10,5 +10,5 @@ public interface CardDataFindManager {
 	
 	CardDetil findIncludeInfo(String url) throws Exception;
 
-	List<LimitEntity> findLimitData(String latestUrl) throws Exception;
+	List<LimitProto.LimitEntity> findLimitData(String latestUrl) throws Exception;
 }

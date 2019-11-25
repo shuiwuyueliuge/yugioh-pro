@@ -1,11 +1,11 @@
 package cn.mayu.yugioh.sync.ourocg.model;
 
-import java.util.List;
-
-import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import cn.mayu.yugioh.sync.ourocg.config.OurocgCardDeserializer;
 import lombok.Data;
 
 @Data
+@JsonDeserialize(using = OurocgCardDeserializer.class)
 public class OurocgCard {
 	
 	private String id;
@@ -57,8 +57,5 @@ public class OurocgCard {
 	private String packages;
 	
 	private String href;
-	
-	private String adjust;
-	
-	private List<IncludeInfo> includeInfos;
+
 }

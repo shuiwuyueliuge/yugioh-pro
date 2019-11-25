@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-@EnableFeignClients
+@EnableFeignClients(basePackages = "cn.mayu.yugioh.facade.sync.home")
 public class App {
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(App.class);
