@@ -1,13 +1,12 @@
 package cn.mayu.yugioh.sync.local.async;
 
 import java.io.File;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.util.Base64Util;
 import cn.mayu.yugioh.common.core.util.FtpHelper;
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.AsyncConfig;
 import cn.mayu.yugioh.sync.local.config.FtpImgConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +17,9 @@ public class AsyncBoondock {
 	
 	@Autowired
 	private FtpImgConfig ftpImgConfig;
-
+	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
-	public void saveInDisk(CardDataEntity entity) {
+	public void saveImageInDisk(CardEntity entity) {
 		if (entity.getImgUrl() == null) {
 			return;
 		}

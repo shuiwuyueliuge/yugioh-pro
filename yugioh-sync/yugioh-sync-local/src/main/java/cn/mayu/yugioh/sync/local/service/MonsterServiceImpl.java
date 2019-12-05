@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.LinkEntity;
 import cn.mayu.yugioh.sync.local.entity.MonsterEntity;
 import cn.mayu.yugioh.sync.local.entity.TypeEntity;
@@ -26,25 +27,37 @@ public class MonsterServiceImpl implements MonsterService {
 	private TypeRepository typeRepository;
 	
 	@Autowired
-	private DomainConverterFactory<CardDataEntity, MonsterEntity> monsterConverterFactory;
+	private CardIdThreadLocal threadLocal;
 	
 	@Autowired
-	private DomainConverterFactory<CardDataEntity, List<TypeEntity>> typeConverterFactory;
+	private DomainConverterFactory<CardEntity, MonsterEntity> monsterConverterFactory;
 	
 	@Autowired
-	private DomainConverterFactory<CardDataEntity, List<LinkEntity>> linkConverterFactory;
+	private DomainConverterFactory<CardEntity, List<TypeEntity>> typeConverterFactory;
+	
+	@Autowired
+	private DomainConverterFactory<CardEntity, List<LinkEntity>> linkConverterFactory;
 
 	@Override
 	@Transactional
-	public void saveMonsterInfo(CardDataEntity entity) {
-		if (entity.getState() == 0) {
-			MonsterEntity saved = monsterRepository.findByNameAndPassword(entity.getName(), entity.getPassword());
-			entity.setId(saved.getId() + "");
-		}
-		
+	public void saveMonsterInfo(CardEntity entity) {	
 		MonsterEntity monster = monsterConverterFactory.convert(entity);
 		MonsterEntity saved = monsterRepository.save(monster);
-		entity.setId(saved.getId() + "");
+		threadLocal.setId(saved.getId());
+		List<TypeEntity> monsterTypes = typeConverterFactory.convert(entity);
+		typeRepository.saveAll(monsterTypes);
+		List<LinkEntity> links = linkConverterFactory.convert(entity);
+		linkRepository.saveAll(links);
+	}
+
+	@Override
+	@Transactional
+	public void updateMonsterInfo(CardEntity entity) {
+		MonsterEntity saved = monsterRepository.findByNameAndPassword(entity.getName(), entity.getPassword());
+		MonsterEntity monster = monsterConverterFactory.convert(entity);
+		monster.setId(saved.getId());
+		saved = monsterRepository.save(monster);
+		threadLocal.setId(saved.getId());
 		List<TypeEntity> monsterTypes = typeConverterFactory.convert(entity);
 		typeRepository.saveAll(monsterTypes);
 		List<LinkEntity> links = linkConverterFactory.convert(entity);

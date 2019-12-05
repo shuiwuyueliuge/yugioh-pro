@@ -1,8 +1,10 @@
 package cn.mayu.yugioh.sync.local.service;
 
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
 
 public interface MagicTrapService {
 
-	void saveMagicTrapInfo(CardDataEntity entity);
+	void saveMagicTrapInfo(CardEntity entity);
+	
+	void updateMagicTrapInfo(CardEntity entity);
 }

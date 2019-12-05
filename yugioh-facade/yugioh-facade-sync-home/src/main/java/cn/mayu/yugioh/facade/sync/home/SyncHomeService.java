@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "sync-home")
+@FeignClient(name = "sync-home", fallback = SyncHomeServiceFallbackFactory.class)
 public interface SyncHomeService {
 	
 	String CONSUMES = "application/x-protobuf";

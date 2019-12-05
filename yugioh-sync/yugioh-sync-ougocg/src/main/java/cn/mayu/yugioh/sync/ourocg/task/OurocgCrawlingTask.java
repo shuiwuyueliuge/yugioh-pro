@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OurocgCrawlingTask {
 
 	private static final String BASE_ULR = "https://www.ourocg.cn/card/list-5/%s";
-	
+
 	private static final String LIMIT_LATRST_URL = "https://www.ourocg.cn/Limit-Latest";
 
 	@Autowired
@@ -28,34 +28,34 @@ public class OurocgCrawlingTask {
 
 	@Scheduled(cron = "*/1 * * * * ?")
 	public void crawing() {
-		//find card data
-		if (!new File(genTodayFileName()).exists()) {
-			metaDataCrawing();
-		}
-		
-		//package info
-		try {
-			ourocgDataService.packageDetilSave();
-		} catch (Exception e) {
-			log.error("OurocgCard packageDetilSave error [{}]", e);
-		}
-		
-		//limit info
+		// limit info
 		try {
 			ourocgDataService.limitInfoSave(LIMIT_LATRST_URL);
 		} catch (Exception e) {
 			log.error("OurocgCard limitInfo error [{}]", e);
 		}
+
+		// find card data
+		metaDataCrawing();
+		
+		// package info
+		try {
+			ourocgDataService.packageDetilSave();
+		} catch (Exception e) {
+			log.error("OurocgCard packageDetilSave error [{}]", e);
+		}
 	}
-	
+
 	private void metaDataCrawing() {
+		File file = new File(genTodayFileName());
+		if (file.exists()) file.delete();
 		int num = 1;
 		while (true) {
 			if (num % count != lable) {
 				num++;
 				continue;
 			}
-			
+
 			String url = String.format(BASE_ULR, num);
 			try {
 				if (!ourocgDataService.ourocgDataInFile(url)) {
@@ -66,7 +66,7 @@ public class OurocgCrawlingTask {
 				num++;
 				continue;
 			}
-			
+
 			num++;
 		}
 	}

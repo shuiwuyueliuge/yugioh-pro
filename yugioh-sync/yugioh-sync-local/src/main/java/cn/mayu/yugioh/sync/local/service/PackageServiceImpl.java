@@ -1,11 +1,12 @@
 package cn.mayu.yugioh.sync.local.service;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
-import cn.mayu.yugioh.common.mongo.entity.IncludeInfo;
+import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto.IncludeInfo;
+import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.PackageEntity;
 import cn.mayu.yugioh.sync.local.entity.PackageInfoEntity;
 import cn.mayu.yugioh.sync.local.entity.RareEntity;
@@ -24,18 +25,22 @@ public class PackageServiceImpl implements PackageService {
 	
 	@Autowired
 	private PackageInfoRepository packageInfoRepository;
+	
+	@Autowired
+	private CardIdThreadLocal threadLocal;
 
 	@Override
 	@Transactional
-	public void savePackageInfo(CardDataEntity entity) {
-		if (entity.getIncludeInfos() == null || entity.getIncludeInfos().size() <= 0) {
+	public void savePackageInfo(CardEntity entity) {
+		List<IncludeInfo> list = entity.getIncludeInfosList();
+		if (list == null || list.size() <= 0) {
 			return;
 		}
 		
-		for (IncludeInfo info : entity.getIncludeInfos()) {
+		for (IncludeInfo info : list) {
 			int savedRareId = saveRare(info);
 			int savedPackageId = savePackage(info);
-			savePackageDetil(info, savedRareId, savedPackageId, Integer.valueOf(entity.getId()), entity.getTypeVal());
+			savePackageDetil(info, savedRareId, savedPackageId, threadLocal.getId(), entity.getTypeVal());
 		}
 	}
 	

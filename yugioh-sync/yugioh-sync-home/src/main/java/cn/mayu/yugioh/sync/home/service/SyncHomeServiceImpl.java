@@ -15,6 +15,7 @@ import cn.mayu.yugioh.facade.sync.home.LimitProto;
 import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
+import cn.mayu.yugioh.sync.home.async.DataTransformer;
 import cn.mayu.yugioh.sync.home.entity.CardDataEntity;
 import cn.mayu.yugioh.sync.home.entity.IncludeInfo;
 import cn.mayu.yugioh.sync.home.entity.LimitEntity;
@@ -31,15 +32,17 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 	
 	@Autowired
 	private LimitRepository limitRepository;
+	
+	@Autowired
+	private DataTransformer dataTransformer;
 
 	@Override
 	@PostMapping(value = "/card", consumes = CONSUMES, produces = PRODUCES)
 	public SaveResultEntity saveCardInMongo(@RequestBody CardEntity cardEntity) {
-		CardDataEntity cardDataEntity = initCardDataEntity(cardEntity);
 		try {
-			persistent(cardDataEntity);
+			persistent(cardEntity);
 		} catch (Exception e) {
-			log.error("persistent card [{}] error [{}]",cardDataEntity, e);
+			log.error("persistent card [{}] error [{}]", cardEntity, e);
 			return build(FAILURE);
 		}
 		
@@ -49,13 +52,15 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 	@Override
 	@PostMapping(value = "/limit", consumes = CONSUMES, produces = PRODUCES)
 	public SaveResultEntity saveLimitInMongo(@RequestBody LimitProto.LimitEntity limitEntity) {
-		LimitEntity entity = new LimitEntity();
-		BeanUtils.copyProperties(limitEntity, entity);
+ 		LimitEntity entity = new LimitEntity();
+		entity.setName(limitEntity.getName());
+		entity.setCreateTime(LocalDateTime.now());
+		entity.setModifyTime(LocalDateTime.now());
+		entity.setForbidden(limitEntity.getForbiddenList());
+		entity.setLimited(limitEntity.getLimitedList());
+		entity.setSemiLimited(limitEntity.getSemiLimitedList());
 		LimitEntity saved = limitRepository.findByName(entity.getName()).block();
-		if (saved == null) {
-			limitRepository.save(entity);
-		}
-		
+		if (saved == null) limitRepository.save(entity).subscribe();
 		return build(SUCCESS);
 	}
 	
@@ -79,18 +84,17 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 		return includeInfo;
 	}
 	
-	private void persistent(CardDataEntity cardDataEntity) throws Exception {
+	private void persistent(CardEntity cardEntity) throws Exception {
+		CardDataEntity cardDataEntity = initCardDataEntity(cardEntity);
 		CardDataEntity cardInfoEntity = cardRepository.findByHashId(cardDataEntity.getHashId()).block();
 		if (cardInfoEntity == null) {
-			cardDataEntity.setState(1);
-			cardRepository.save(cardDataEntity).subscribe();
+			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardSave(cardEntity));
 			return;
 		}
 		
 		if (!cardDataEntity.getVersion().equals(cardInfoEntity.getVersion())) {
 			cardDataEntity.setId(cardInfoEntity.getId());
-			cardDataEntity.setState(0);
-			cardRepository.save(cardDataEntity).subscribe();// update
+			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardUpdate(cardEntity));
 		}
 	}
 }

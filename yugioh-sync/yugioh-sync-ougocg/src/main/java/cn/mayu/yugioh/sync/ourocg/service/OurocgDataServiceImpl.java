@@ -6,15 +6,20 @@ import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
+
+import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.facade.sync.home.CardProto;
+import cn.mayu.yugioh.facade.sync.home.LimitProto.LimitEntity;
 import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgMetaData;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class OurocgDataServiceImpl implements OurocgDataService {
 
 	@Autowired
@@ -51,7 +56,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			String str = null;
 			while((str = reader.readLine()) != null) {
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				metaData.getCards().stream().forEach(card -> persistent(card));
+				metaData.getCards().stream().forEach(card -> persistentCard(card));
 			}
 		}
 	}
@@ -64,14 +69,23 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		}
 	}
 	
-	private void persistent(OurocgCard card) {
+	private void persistentCard(OurocgCard card) {
 		CardProto.CardEntity entity = factory.convert(card);
 		SaveResultEntity result = syncHomeService.saveCardInMongo(entity);
-		System.out.println(result);
+		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
+			log.error("persistent card error, card: [{}], code: [{}], msg: [{}]", card, result.getCode(), result.getMsg());
+		}
 	}
 
 	@Override
 	public void limitInfoSave(String latestUrl) throws Exception {
-		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> syncHomeService.saveLimitInMongo(data));
+		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> persistentLimit(data));
+	}
+	
+	private void persistentLimit(LimitEntity data) {
+		SaveResultEntity result = syncHomeService.saveLimitInMongo(data);
+		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
+			log.error("persistent card error, limit: [{}], msg: [{}]", data.getName(), result.getCode(), result.getMsg());
+		}
 	}
 }

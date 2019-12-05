@@ -4,18 +4,18 @@ import static cn.mayu.yugioh.common.core.util.StringUtil.generateHashId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.domain.AbstractDomainConverterFactory;
-import cn.mayu.yugioh.common.mongo.entity.CardDataEntity;
+import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.entity.MagicTrapEntity;
 import cn.mayu.yugioh.sync.local.service.IndexService;
 
 @Component
-public class MagicTrapEntityConverterFactory extends AbstractDomainConverterFactory<CardDataEntity, MagicTrapEntity> {
+public class MagicTrapEntityConverterFactory extends AbstractDomainConverterFactory<CardEntity, MagicTrapEntity> {
 
 	@Autowired
 	private IndexService indexService;
 	
 	@Override
-	protected MagicTrapEntity doConvert(CardDataEntity entity) {
+	protected MagicTrapEntity doConvert(CardEntity entity) {
 		MagicTrapEntity magicTrap = new MagicTrapEntity();
 		copyProperties(entity, magicTrap);
 		magicTrap.setHashId(generateHashId());
