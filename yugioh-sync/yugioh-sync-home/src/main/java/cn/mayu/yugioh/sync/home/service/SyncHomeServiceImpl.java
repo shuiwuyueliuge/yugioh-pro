@@ -13,6 +13,7 @@ import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
 import cn.mayu.yugioh.facade.sync.home.CardProto;
 import cn.mayu.yugioh.facade.sync.home.LimitProto;
 import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.facade.sync.home.LimitDetilProto.LimitDetilEntity;
 import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.home.async.DataTransformer;
@@ -60,7 +61,41 @@ public class SyncHomeServiceImpl implements SyncHomeService {
 		entity.setLimited(limitEntity.getLimitedList());
 		entity.setSemiLimited(limitEntity.getSemiLimitedList());
 		LimitEntity saved = limitRepository.findByName(entity.getName()).block();
-		if (saved == null) limitRepository.save(entity).subscribe();
+		if (saved == null) limitRepository.save(entity).subscribe(data -> {
+			data.getForbidden().stream().forEach(hashId -> {
+				CardDataEntity cardDataEntity = cardRepository.findByHashId(hashId).block();
+				LimitDetilEntity.Builder builder = LimitDetilEntity.newBuilder();
+				builder.setCardName(cardDataEntity.getName());
+				builder.setPsw(cardDataEntity.getPassword());
+				builder.setLimitVal(0);
+				builder.setTypeVal(cardDataEntity.getTypeVal());
+				builder.setName(data.getName());
+				dataTransformer.transformLimitSave(builder.build());
+			});
+			
+			data.getLimited().stream().forEach(hashId -> {
+				CardDataEntity cardDataEntity = cardRepository.findByHashId(hashId).block();
+				LimitDetilEntity.Builder builder = LimitDetilEntity.newBuilder();
+				builder.setCardName(cardDataEntity.getName());
+				builder.setPsw(cardDataEntity.getPassword());
+				builder.setLimitVal(1);
+				builder.setTypeVal(cardDataEntity.getTypeVal());
+				builder.setName(data.getName());
+				dataTransformer.transformLimitSave(builder.build());
+			});
+			
+			data.getSemiLimited().stream().forEach(hashId -> {
+				CardDataEntity cardDataEntity = cardRepository.findByHashId(hashId).block();
+				LimitDetilEntity.Builder builder = LimitDetilEntity.newBuilder();
+				builder.setCardName(cardDataEntity.getName());
+				builder.setPsw(cardDataEntity.getPassword());
+				builder.setLimitVal(2);
+				builder.setTypeVal(cardDataEntity.getTypeVal());
+				builder.setName(data.getName());
+				dataTransformer.transformLimitSave(builder.build());
+			});
+		});
+		
 		return build(SUCCESS);
 	}
 	

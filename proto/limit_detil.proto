@@ -1,0 +1,10 @@
+package cn.mayu.yugioh.facade.sync.home;
+option java_outer_classname = "LimitDetilProto";
+
+message LimitDetilEntity {
+	optional string name = 1;
+	optional int32 limitVal = 2;
+	optional string cardName = 3;
+	optional string psw = 4;
+	optional int32 typeVal = 5;
+}

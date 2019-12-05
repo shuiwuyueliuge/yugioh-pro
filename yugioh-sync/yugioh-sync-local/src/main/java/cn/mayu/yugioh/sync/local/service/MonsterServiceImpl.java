@@ -63,4 +63,9 @@ public class MonsterServiceImpl implements MonsterService {
 		List<LinkEntity> links = linkConverterFactory.convert(entity);
 		linkRepository.saveAll(links);
 	}
+
+	@Override
+	public MonsterEntity findByNameAndPassword(String name, String password) {
+		return monsterRepository.findByNameAndPassword(name, password);
+	}
 }

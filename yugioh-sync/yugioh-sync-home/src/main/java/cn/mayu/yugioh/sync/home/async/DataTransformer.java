@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
-import cn.mayu.yugioh.facade.sync.home.LimitProto.LimitEntity;
+import cn.mayu.yugioh.facade.sync.home.LimitDetilProto.LimitDetilEntity;
 import cn.mayu.yugioh.sync.home.config.AsyncConfig;
 import cn.mayu.yugioh.sync.home.stream.CardSender;
 import cn.mayu.yugioh.sync.home.stream.LimitSender;
@@ -29,12 +29,7 @@ public class DataTransformer {
 	}
 	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
-	public void transformLimitUpdate(LimitEntity entity) {
-		limitSender.update(entity);
-	}
-	
-	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
-	public void transformLimitSave(LimitEntity entity) {
+	public void transformLimitSave(LimitDetilEntity entity) {
 		limitSender.save(entity);
 	}
 }

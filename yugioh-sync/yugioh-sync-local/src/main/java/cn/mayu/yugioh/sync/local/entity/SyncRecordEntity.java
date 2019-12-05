@@ -18,15 +18,11 @@ public class SyncRecordEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "card_name")
-    private String cardName;
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "status", insertable = false, columnDefinition = "TINYINT DEFAULT 0")
     private Integer status;
 
-    @Column(name = "update_content")
-    private String updateContent;
-
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 }

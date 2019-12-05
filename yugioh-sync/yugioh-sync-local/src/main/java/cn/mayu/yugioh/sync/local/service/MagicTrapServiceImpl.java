@@ -38,4 +38,9 @@ public class MagicTrapServiceImpl implements MagicTrapService {
 		Integer cardId = magicTrapRepository.save(magicTrap).getId();
 		threadLocal.setId(cardId);
 	}
+
+	@Override
+	public MagicTrapEntity findByNameAndPassword(String name, String password) {
+		return magicTrapRepository.findByNameAndPassword(name, password);
+	}
 }

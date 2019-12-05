@@ -29,7 +29,7 @@ public class ForbiddenEntity {
     private Integer limitVal;
 
     @Column(name = "limit_time")
-    private LocalDateTime limitTime;
+    private String limitTime;
 
     @UpdateTimestamp
     @Column(name = "modify_time")

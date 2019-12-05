@@ -3,7 +3,6 @@ package cn.mayu.yugioh.sync.ourocg.task;
 import static cn.mayu.yugioh.common.core.util.FileUtil.genTodayFileName;
 import java.io.File;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.sync.ourocg.service.OurocgDataService;
@@ -20,29 +19,23 @@ public class OurocgCrawlingTask {
 	@Autowired
 	private OurocgDataService ourocgDataService;
 
-	@Value("${spring.cloud.config.label}")
-	private int lable;
-
-	@Value("${reptileOurocg.count}")
-	private int count;
-
 	@Scheduled(cron = "*/1 * * * * ?")
 	public void crawing() {
-		// limit info
-		try {
-			ourocgDataService.limitInfoSave(LIMIT_LATRST_URL);
-		} catch (Exception e) {
-			log.error("OurocgCard limitInfo error [{}]", e);
-		}
-
 		// find card data
 		metaDataCrawing();
-		
+
 		// package info
 		try {
 			ourocgDataService.packageDetilSave();
 		} catch (Exception e) {
 			log.error("OurocgCard packageDetilSave error [{}]", e);
+		}
+
+		// limit info
+		try {
+			ourocgDataService.limitInfoSave(LIMIT_LATRST_URL);
+		} catch (Exception e) {
+			log.error("OurocgCard limitInfo error [{}]", e);
 		}
 	}
 
@@ -51,11 +44,6 @@ public class OurocgCrawlingTask {
 		if (file.exists()) file.delete();
 		int num = 1;
 		while (true) {
-			if (num % count != lable) {
-				num++;
-				continue;
-			}
-
 			String url = String.format(BASE_ULR, num);
 			try {
 				if (!ourocgDataService.ourocgDataInFile(url)) {

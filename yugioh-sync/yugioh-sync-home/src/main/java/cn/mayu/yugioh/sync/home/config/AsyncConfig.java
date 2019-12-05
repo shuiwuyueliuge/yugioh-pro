@@ -1,6 +1,7 @@
 package cn.mayu.yugioh.sync.home.config;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ public class AsyncConfig {
 	@Bean(name = ASYNC_EXECUTOR_NAME)
 	public Executor asyncExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
 		executor.setCorePoolSize(taskConfig.getCoreSize());
 		executor.setMaxPoolSize(taskConfig.getMaxSize());
 		executor.setQueueCapacity(taskConfig.getQueueSize());

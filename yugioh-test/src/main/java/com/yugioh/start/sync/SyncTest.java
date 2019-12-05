@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
+
+//import cn.mayu.yugioh.common.core.util.Base64Util;
+import cn.mayu.yugioh.common.core.util.FtpHelper;
 import cn.mayu.yugioh.sync.local.App;
 import cn.mayu.yugioh.sync.local.repository.SyncRecordRepository;
 import cn.mayu.yugioh.sync.local.service.CardService;
@@ -27,6 +30,8 @@ public class SyncTest {
 
 	@Test
 	public void findData() throws Exception {
-		
+		FtpHelper.builder().host("192.168.15.156").port(21)
+		   .user("ygo").psw("ygo").build()
+		   .uploadFile("/img/123ss/", "123.txt", "312312".getBytes());
 	}
 }
