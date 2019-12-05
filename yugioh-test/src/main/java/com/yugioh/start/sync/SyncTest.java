@@ -1,5 +1,10 @@
 package com.yugioh.start.sync;
 
+import static org.junit.Assert.assertEquals;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 //import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.context.junit4.SpringRunner;
 
 //import cn.mayu.yugioh.common.core.util.Base64Util;
-import cn.mayu.yugioh.common.core.util.FtpHelper;
 import cn.mayu.yugioh.sync.local.App;
 import cn.mayu.yugioh.sync.local.repository.SyncRecordRepository;
 import cn.mayu.yugioh.sync.local.service.CardService;
@@ -30,8 +34,11 @@ public class SyncTest {
 
 	@Test
 	public void findData() throws Exception {
-		FtpHelper.builder().host("192.168.15.156").port(21)
-		   .user("ygo").psw("ygo").build()
-		   .uploadFile("/img/123ss/", "123.txt", "312312".getBytes());
+		String s = "2017年11月01日【TCG】 禁限卡表";
+		String[] arr = s.replace("【", " ").replace("】 ", " ").split(" ");
+		assertEquals(arr.length, 3);
+		assertEquals(arr[1], "TCG");
+		LocalDate date = LocalDate.parse(arr[0], DateTimeFormatter.ofPattern("yyyy年MM月dd日"));
+		assertEquals(date.toString(), "2017-11-01");
 	}
 }

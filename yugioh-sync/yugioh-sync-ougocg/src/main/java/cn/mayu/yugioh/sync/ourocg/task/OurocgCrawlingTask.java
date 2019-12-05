@@ -19,7 +19,7 @@ public class OurocgCrawlingTask {
 	@Autowired
 	private OurocgDataService ourocgDataService;
 
-	@Scheduled(cron = "*/1 * * * * ?")
+	@Scheduled(cron = "${crawing.corn}")
 	public void crawing() {
 		// find card data
 		metaDataCrawing();
