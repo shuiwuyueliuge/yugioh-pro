@@ -17,6 +17,10 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-facade-sync-home</artifactId>
 		</dependency>
 		<dependency>
@@ -38,12 +42,6 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.code.gson</groupId>
-					<artifactId>gson</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

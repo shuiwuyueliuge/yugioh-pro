@@ -21,4 +21,9 @@ public class RedisConfiguration<K, V> {
 				                                   .build();
 		return new ReactiveRedisTemplate<K, V>(context.getFactory(), ctx);
 	}
+	
+	public ReactiveRedisTemplate<String, String> reactiveRedisTemplateString() {
+		RedisSerializationContext<String, String> ctx = RedisSerializationContext.string();
+		return new ReactiveRedisTemplate<String, String>(context.getFactory(), ctx);
+	}
 }
