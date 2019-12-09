@@ -27,12 +27,12 @@
 			<!--这里的id需要和settings.xml中的server的id一致 -->
 			<id>ygo-release</id>
 			<name>Ygo release Repository</name>
-			<url>http://172.28.179.131:7001/repository/ygo-release/</url>
+			<url>http://127.0.0.1:8081/repository/ygo-release/</url>
 		</repository>
 		<snapshotRepository>
 			<id>ygo-snapshots</id>
 			<name>Ygo snapshots Repository</name>
-			<url>http://172.28.179.131:7001/repository/ygo-snapshot/</url>
+			<url>http://127.0.0.1:8081/repository/ygo-snapshot/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
