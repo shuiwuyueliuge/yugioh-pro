@@ -4,13 +4,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
+import cn.mayu.yugioh.common.redis.LongRedisSerializer;
+import cn.mayu.yugioh.common.redis.RedisConfigContext;
 import cn.mayu.yugioh.common.redis.YugiohRedisFactory;
 
 @Configuration
 public class RedisConfig {
 
 	@Bean
-	public ReactiveRedisTemplate<String, String> IndexEntityRedis(ReactiveRedisConnectionFactory factory) {
-		return YugiohRedisFactory.reactiveRedisTemplateString(factory);
+	public ReactiveRedisTemplate<String, Long> memoryRedis(ReactiveRedisConnectionFactory factory) {
+		RedisConfigContext<String, Long> context = new RedisConfigContext<String, Long>(new StringRedisSerializer(),
+				new LongRedisSerializer(), factory);
+		return YugiohRedisFactory.reactiveRedisTemplate(context);
 	}
 }

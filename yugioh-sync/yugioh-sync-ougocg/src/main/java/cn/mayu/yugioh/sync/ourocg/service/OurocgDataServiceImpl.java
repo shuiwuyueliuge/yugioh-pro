@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
 
@@ -31,9 +32,16 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	@Autowired
 	private SyncHomeService syncHomeService;
 	
+	@Autowired
+	private TaskMemoryService memoryService;
+	
+	private static final String SKIP_SIZE_KEY = "%s:card:skip";
+	
 	private static final String TOTAL_PAGE = "total_page";
 	
 	private static final String CUR_PAGE = "cur_page";
+	
+	private static final String LINE_FEED = "\r\n";
 	
 	private static StringBuffer stringBuffer;
 	
@@ -52,9 +60,15 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	@Override
 	public void packageDetilSave() throws Exception {
-		try (BufferedReader reader = new BufferedReader(new FileReader(genTodayFileName()))) {
+		File file = new File(genTodayFileName());
+		String key = String.format(SKIP_SIZE_KEY, file.getName());
+		long skip = memoryService.checkMemory(key);
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			reader.skip(skip);
 			String str = null;
 			while((str = reader.readLine()) != null) {
+				skip = skip + (str + LINE_FEED).length();
+				memoryService.markMemory(key, skip);
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
 				metaData.getCards().stream().forEach(card -> persistentCard(card));
 			}
@@ -62,7 +76,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 	
 	private void inFile(long currentPage, long total, String data) throws Exception {
-		stringBuffer.append(String.format("%s%s", data, "\r\n"));
+		stringBuffer.append(String.format("%s%s", data, LINE_FEED));
 		if (currentPage % 100 == 0 || currentPage == total) {
 			saveInFile(genTodayFileName(), stringBuffer.toString());
 			stringBuffer = new StringBuffer();
