@@ -9,20 +9,20 @@
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/yugioh?serverTimezone=GMT" driverClass="com.mysql.cj.jdbc.Driver" password="root" userId="root" />
-		<javaModelGenerator targetPackage="cn.mayu.yugioh.sync.entity" targetProject="yugioh-sync" />
+		<javaModelGenerator targetPackage="cn.mayu.yugioh.sync.local.entity" targetProject="yugioh-sync-local" />
 	<!--<table schema="yugioh-sync" tableName="t_card_adjust" domainObjectName="AdjustEntity"></table>
 		<table schema="yugioh-sync" tableName="t_card_effect" domainObjectName="EffectEntity"></table>
 		<table schema="yugioh-sync" tableName="t_card_img" domainObjectName="ImgEntity"></table>
 		<table schema="yugioh-sync" tableName="t_card_link" domainObjectName="LinkEntity"></table>
 		<table schema="yugioh-sync" tableName="t_card_package" domainObjectName="PackageInfoEntity"></table>
 		<table schema="yugioh-sync" tableName="t_card_type" domainObjectName="TypeEntity"></table>
-		<table schema="yugioh-sync" tableName="t_forbidden" domainObjectName="ForbiddenEntity"></table>
 		<table schema="yugioh-sync" tableName="t_index" domainObjectName="IndexEntity"></table>
 		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
 		<table schema="yugioh-sync" tableName="t_package" domainObjectName="PackageEntity"></table>
 		<table schema="yugioh-sync" tableName="t_monster" domainObjectName="MonsterEntity"></table>
 		<table schema="yugioh-sync" tableName="t_rare" domainObjectName="RareEntity"></table> 
-		<table schema="yugioh-sync" tableName="t_sync_record" domainObjectName="SyncRecordEntity"></table>-->
-		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
+		<table schema="yugioh-sync" tableName="t_sync_record" domainObjectName="SyncRecordEntity"></table>
+		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>-->
+		<table schema="yugioh-sync-local" tableName="t_forbidden" domainObjectName="ForbiddenEntity"></table>
 	</context>
 </generatorConfiguration>

@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.sync.local.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "t_forbidden")
 public class ForbiddenEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,19 +24,22 @@ public class ForbiddenEntity {
     @Column(name = "card_id")
     private Integer cardId;
 
-    @Column(name = "type_val", insertable = false, columnDefinition = "BIT DEFAULT 3")
+    @Column(name = "type_val")
     private Integer typeVal;
 
     @Column(name = "limit_val")
     private Integer limitVal;
 
     @Column(name = "limit_time")
-    private String limitTime;
+    private LocalDate limitTime;
+
+    @Column(name = "type")
+    private Integer type;
 
     @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(insertable = false, updatable = false, name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 }

@@ -11,6 +11,10 @@ public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 	public T handle(String url) throws Exception {
 		HtmlParser parser = initParser(url);
 		VisitResponse response = parser.getResponse();
+		if (log.isDebugEnabled()) {
+			log.debug("connect [{}] status code is [{}] and response-header is [{}]", url, response.getStatusCode(), response.getHeaders());
+		}
+		
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
