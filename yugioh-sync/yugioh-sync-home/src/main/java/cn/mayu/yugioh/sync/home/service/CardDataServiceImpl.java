@@ -21,6 +21,9 @@ public class CardDataServiceImpl implements CardDataService {
 	
 	@Autowired
 	private DataTransformer dataTransformer;
+	
+	@Autowired
+	private SyncRecordService recordService;
 
 	@Override
 	public void persistent(CardEntity cardEntity) {
@@ -28,12 +31,14 @@ public class CardDataServiceImpl implements CardDataService {
 		CardDataEntity cardInfoEntity = cardRepository.findByHashId(cardDataEntity.getHashId()).block();
 		if (cardInfoEntity == null) {
 			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardSave(cardEntity));
+			recordService.saveRecord(cardEntity, 1);
 			return;
 		}
 		
 		if (!cardDataEntity.getVersion().equals(cardInfoEntity.getVersion())) {
 			cardDataEntity.setId(cardInfoEntity.getId());
 			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardUpdate(cardEntity));
+			recordService.saveRecord(cardEntity, 0);
 		}
 	}
 	

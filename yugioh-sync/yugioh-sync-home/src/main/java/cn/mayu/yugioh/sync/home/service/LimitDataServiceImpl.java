@@ -23,6 +23,9 @@ public class LimitDataServiceImpl implements LimitDataService {
 	
 	@Autowired
 	private DataTransformer dataTransformer;
+	
+	@Autowired
+	private SyncRecordService recordService;
 
 	@Override
 	public void persistent(LimitProto.LimitEntity limitEntity) {
@@ -35,6 +38,7 @@ public class LimitDataServiceImpl implements LimitDataService {
 		entity.setSemiLimited(limitEntity.getSemiLimitedList());
 		LimitEntity saved = limitRepository.findByName(entity.getName()).block();
 		if (saved == null) limitRepository.save(entity).subscribe(data -> toLimitDetilEntityAndSave(data));
+		recordService.saveRecord(limitEntity, 1);
 	}
 	
 	private void toLimitDetilEntityAndSave(LimitEntity data) {
