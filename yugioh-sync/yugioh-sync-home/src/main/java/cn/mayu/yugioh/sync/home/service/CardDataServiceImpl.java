@@ -6,8 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.home.async.DataTransformer;
 import cn.mayu.yugioh.sync.home.entity.CardDataEntity;
 import cn.mayu.yugioh.sync.home.entity.IncludeInfo;

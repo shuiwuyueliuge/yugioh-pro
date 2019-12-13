@@ -3,7 +3,7 @@ package cn.mayu.yugioh.sync.home.stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
-import cn.mayu.yugioh.facade.sync.home.LimitDetilProto.LimitDetilEntity;
+import cn.mayu.yugioh.common.dto.sync.home.LimitDetilProto.LimitDetilEntity;
 
 @EnableBinding(LimitOutStream.class)
 public class LimitSender {

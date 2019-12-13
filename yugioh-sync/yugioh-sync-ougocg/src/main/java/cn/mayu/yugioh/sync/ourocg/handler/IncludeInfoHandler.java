@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.common.core.html.HtmlParser;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 
 @Component

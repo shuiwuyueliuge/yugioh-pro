@@ -7,12 +7,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import static cn.mayu.yugioh.common.core.util.FileUtil.*;
-
 import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
-import cn.mayu.yugioh.facade.sync.home.LimitProto.LimitEntity;
-import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto.LimitEntity;
+import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;

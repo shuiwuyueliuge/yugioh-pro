@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.sync.local.service;
 
-import cn.mayu.yugioh.facade.sync.home.LimitDetilProto.LimitDetilEntity;
+import cn.mayu.yugioh.common.dto.sync.home.LimitDetilProto.LimitDetilEntity;
 
 public interface ForbiddenService {
 

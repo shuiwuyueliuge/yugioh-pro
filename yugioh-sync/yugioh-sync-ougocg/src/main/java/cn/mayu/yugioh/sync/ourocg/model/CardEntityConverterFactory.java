@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.domain.AbstractDomainConverterFactory;
 import cn.mayu.yugioh.common.core.util.Md5Util;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import lombok.extern.slf4j.Slf4j;
 

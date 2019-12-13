@@ -4,11 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.domain.AbstractDomainConverterFactory;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.LinkEntity;
 

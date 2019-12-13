@@ -3,7 +3,8 @@ package cn.mayu.yugioh.sync.local.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

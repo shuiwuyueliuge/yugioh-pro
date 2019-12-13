@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.LinkEntity;
 import cn.mayu.yugioh.sync.local.entity.MonsterEntity;

@@ -49,6 +49,10 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-dto-sync-home</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-core</artifactId>
 		</dependency>
 		<dependency>

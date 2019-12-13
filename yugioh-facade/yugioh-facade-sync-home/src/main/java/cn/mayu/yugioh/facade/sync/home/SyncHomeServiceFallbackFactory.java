@@ -1,8 +1,8 @@
 package cn.mayu.yugioh.facade.sync.home;
 
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
-import cn.mayu.yugioh.facade.sync.home.LimitProto.LimitEntity;
-import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto.LimitEntity;
+import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto.SaveResultEntity;
 
 public class SyncHomeServiceFallbackFactory implements SyncHomeService {
 

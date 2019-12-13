@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.common.core.html.HtmlParser;
-import cn.mayu.yugioh.facade.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 
 @Component
 public class LimitDataHandler extends DefaultHtmlHandler<List<LimitProto.LimitEntity>> {

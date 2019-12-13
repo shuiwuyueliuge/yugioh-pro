@@ -4,7 +4,7 @@ import static cn.mayu.yugioh.common.core.util.StringUtil.effectFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.async.AsyncBoondock;
 import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.AdjustEntity;

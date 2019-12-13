@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.util.Base64Util;
 import cn.mayu.yugioh.common.core.util.FtpHelper;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.AsyncConfig;
 import cn.mayu.yugioh.sync.local.config.FtpImgConfig;
 import lombok.extern.slf4j.Slf4j;

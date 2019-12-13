@@ -2,10 +2,10 @@ package cn.mayu.yugioh.sync.local.service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import cn.mayu.yugioh.facade.sync.home.LimitDetilProto.LimitDetilEntity;
+
+import cn.mayu.yugioh.common.dto.sync.home.LimitDetilProto.LimitDetilEntity;
 import cn.mayu.yugioh.sync.local.entity.ForbiddenEntity;
 import cn.mayu.yugioh.sync.local.repository.ForbiddenRepository;
 

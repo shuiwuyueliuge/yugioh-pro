@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import static cn.mayu.yugioh.common.core.api.ResultCodeEnum.*;
 import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
-import cn.mayu.yugioh.facade.sync.home.LimitProto;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
-import cn.mayu.yugioh.facade.sync.home.SaveResultProto.SaveResultEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto.SaveResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import lombok.extern.slf4j.Slf4j;
 

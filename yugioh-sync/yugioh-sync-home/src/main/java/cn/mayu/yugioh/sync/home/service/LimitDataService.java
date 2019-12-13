@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.sync.home.service;
 
-import cn.mayu.yugioh.facade.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 
 public interface LimitDataService {
 

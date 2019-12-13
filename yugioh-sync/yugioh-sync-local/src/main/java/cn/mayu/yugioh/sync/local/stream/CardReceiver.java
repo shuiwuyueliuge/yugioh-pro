@@ -3,8 +3,8 @@ package cn.mayu.yugioh.sync.local.stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.async.MqDataConsomer;
 
 @EnableBinding(CardInputStream.class)

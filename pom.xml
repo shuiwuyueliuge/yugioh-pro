@@ -102,6 +102,11 @@
 				<artifactId>yugioh-common-redis</artifactId>
 				<version>${version}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-dto-sync-home</artifactId>
+				<version>${version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

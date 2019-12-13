@@ -3,6 +3,9 @@ package cn.mayu.yugioh.facade.sync.home;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto;
 
 @FeignClient(name = "sync-home", fallback = SyncHomeServiceFallbackFactory.class)
 public interface SyncHomeService {

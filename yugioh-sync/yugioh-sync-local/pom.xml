@@ -21,7 +21,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-facade-sync-home</artifactId>
+			<artifactId>yugioh-common-dto-sync-home</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>

@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.sync.ourocg.model;
 
 import java.util.List;
-import cn.mayu.yugioh.facade.sync.home.CardProto;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

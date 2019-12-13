@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.common.core.html.HtmlHandler;
-import cn.mayu.yugioh.facade.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 
 @Component

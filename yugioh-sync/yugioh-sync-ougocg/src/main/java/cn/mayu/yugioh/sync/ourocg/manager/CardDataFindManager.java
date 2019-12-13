@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.sync.ourocg.manager;
 
 import java.util.List;
-import cn.mayu.yugioh.facade.sync.home.LimitProto;
+import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 import cn.mayu.yugioh.sync.ourocg.model.CardDetil;
 
 public interface CardDataFindManager {

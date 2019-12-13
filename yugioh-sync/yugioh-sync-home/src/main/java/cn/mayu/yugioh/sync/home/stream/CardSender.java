@@ -3,7 +3,7 @@ package cn.mayu.yugioh.sync.home.stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
-import cn.mayu.yugioh.facade.sync.home.CardProto.CardEntity;
+import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 
 @EnableBinding(CardOutStream.class)
 public class CardSender {
