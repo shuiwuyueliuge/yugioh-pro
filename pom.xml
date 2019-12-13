@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>cn.mayu</groupId>
@@ -100,6 +102,16 @@
 				<artifactId>yugioh-common-dto-sync-home</artifactId>
 				<version>${version}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-security-browser</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-security-core</artifactId>
+				<version>${version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -109,8 +121,9 @@
 		<module>yugioh-test</module>
 		<module>yugioh-sync</module>
 		<module>yugioh-facade</module>
-    <module>yugioh-search</module>
-  </modules>
+		<module>yugioh-search</module>
+		<module>yugioh-security</module>
+	</modules>
 
 	<build>
 		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>

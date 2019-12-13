@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.mayu.yugioh.security.browser.config.BrowserSecurityConfig,\
+cn.mayu.yugioh.security.browser.property.LoginProperty
