@@ -4,5 +4,5 @@ import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 
 public interface LimitDataService {
 
-	void persistent(LimitProto.LimitEntity limitEntity) throws Exception;
+	void persistent(LimitProto.LimitEntity limitEntity);
 }

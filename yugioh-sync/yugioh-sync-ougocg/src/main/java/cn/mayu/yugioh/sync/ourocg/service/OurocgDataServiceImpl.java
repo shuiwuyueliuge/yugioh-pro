@@ -11,7 +11,7 @@ import cn.mayu.yugioh.common.core.api.ResultCodeEnum;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import cn.mayu.yugioh.common.dto.sync.home.LimitProto.LimitEntity;
-import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto.SaveResultEntity;
+import cn.mayu.yugioh.common.dto.sync.home.ResultProto.ResultEntity;
 import cn.mayu.yugioh.facade.sync.home.SyncHomeService;
 import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
@@ -84,7 +84,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	private void persistentCard(OurocgCard card) {
 		CardProto.CardEntity entity = factory.convert(card);
-		SaveResultEntity result = syncHomeService.saveCardInMongo(entity);
+		ResultEntity result = syncHomeService.saveCardInMongo(entity);
 		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
 			log.error("persistent card error, card: [{}], code: [{}], msg: [{}]", card, result.getCode(), result.getMsg());
 		}
@@ -96,7 +96,7 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	}
 	
 	private void persistentLimit(LimitEntity data) {
-		SaveResultEntity result = syncHomeService.saveLimitInMongo(data);
+		ResultEntity result = syncHomeService.saveLimitInMongo(data);
 		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
 			log.error("persistent card error, limit: [{}], msg: [{}]", data.getName(), result.getCode(), result.getMsg());
 		}

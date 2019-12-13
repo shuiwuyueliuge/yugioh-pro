@@ -1,18 +1,20 @@
 package cn.mayu.yugioh.facade.sync.home;
 
+import static cn.mayu.yugioh.common.core.api.ResultCodeEnum.FAILURE;
+import cn.mayu.yugioh.common.dto.sync.home.ResultProtoFactory;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.common.dto.sync.home.LimitProto.LimitEntity;
-import cn.mayu.yugioh.common.dto.sync.home.SaveResultProto.SaveResultEntity;
+import cn.mayu.yugioh.common.dto.sync.home.ResultProto.ResultEntity;
 
 public class SyncHomeServiceFallbackFactory implements SyncHomeService {
 
 	@Override
-	public SaveResultEntity saveCardInMongo(CardEntity cardEntity) {
-		return SaveResultEntity.getDefaultInstance().toBuilder().setCode(404).setMsg("err").build();
+	public ResultEntity saveCardInMongo(CardEntity cardEntity) {
+		return new ResultProtoFactory().createResultModel(FAILURE);
 	}
 
 	@Override
-	public SaveResultEntity saveLimitInMongo(LimitEntity limitEntity) {
-		return SaveResultEntity.getDefaultInstance().toBuilder().setCode(404).setMsg("err").build();
+	public ResultEntity saveLimitInMongo(LimitEntity limitEntity) {
+		return new ResultProtoFactory().createResultModel(FAILURE);
 	}
 }

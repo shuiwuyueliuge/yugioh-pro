@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.home.async.DataTransformer;
@@ -24,7 +23,7 @@ public class CardDataServiceImpl implements CardDataService {
 	private DataTransformer dataTransformer;
 
 	@Override
-	public void persistent(CardEntity cardEntity) throws Exception {
+	public void persistent(CardEntity cardEntity) {
 		CardDataEntity cardDataEntity = initCardDataEntity(cardEntity);
 		CardDataEntity cardInfoEntity = cardRepository.findByHashId(cardDataEntity.getHashId()).block();
 		if (cardInfoEntity == null) {

@@ -12,9 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CardServiceImpl implements CardService {
 
 	@Autowired
-	private IndexService indexservice;
-
-	@Autowired
 	private MonsterService monsterService;
 
 	@Autowired
@@ -28,9 +25,9 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public void saveCardData(CardEntity entity) {
-		indexservice.indexCache();
 		try {
 			doSave(entity);
+			saveData(entity);
 		} catch (Exception e) {
 			log.error("save card: [{}] error: [{}]", entity, e);
 		}
@@ -43,16 +40,13 @@ public class CardServiceImpl implements CardService {
 		} else {
 			magicTrapService.saveMagicTrapInfo(entity);
 		}
-
-		otherInfoService.saveOtherData(entity);
-		packageService.savePackageInfo(entity);
 	}
 
 	@Override
 	public void updateCardData(CardEntity entity) {
-		indexservice.indexCache();
 		try {
 			doUpdate(entity);
+			saveData(entity);
 		} catch (Exception e) {
 			log.error("update card: [{}] error: [{}]", entity, e);
 		}
@@ -65,7 +59,10 @@ public class CardServiceImpl implements CardService {
 		} else {
 			magicTrapService.updateMagicTrapInfo(entity);
 		}
-
+	}
+	
+	@Transactional
+	private void saveData(CardEntity entity) {
 		otherInfoService.saveOtherData(entity);
 		packageService.savePackageInfo(entity);
 	}

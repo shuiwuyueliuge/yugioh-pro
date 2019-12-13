@@ -25,7 +25,7 @@ public class LimitDataServiceImpl implements LimitDataService {
 	private DataTransformer dataTransformer;
 
 	@Override
-	public void persistent(LimitProto.LimitEntity limitEntity) throws Exception {
+	public void persistent(LimitProto.LimitEntity limitEntity) {
 		LimitEntity entity = new LimitEntity();
 		entity.setName(limitEntity.getName());
 		entity.setCreateTime(LocalDateTime.now());
