@@ -109,7 +109,7 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-security-core</artifactId>
+				<artifactId>yugioh-security-core-base</artifactId>
 				<version>${version}</version>
 			</dependency>
 		</dependencies>

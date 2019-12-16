@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core</artifactId>
+			<artifactId>yugioh-security-core-base</artifactId>
 		</dependency>
 	</dependencies>
 </project>
