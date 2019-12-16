@@ -5,13 +5,7 @@ import lombok.Data;
 
 @Data
 @ConfigurationProperties(prefix = "yugioh.security.browser")
-public class LoginProperty {
+public class RememberMeProperty {
 
-	private String loginPage;
-	
-	private String processingUrl = "/login";
-	
-	private String usernameParameter = "username";
-	
-	private String passwordParameter = "password";
+	private int tokenValiditySeconds = 1000 * 60 * 30;
 }
