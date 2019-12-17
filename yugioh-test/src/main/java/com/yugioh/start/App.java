@@ -14,14 +14,14 @@ public class App {
 	
 	//@Autowired
 	private DataSource dataSource;
-
+	
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(App.class);
 		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
 	
-	//@Bean （可以自定义 PersistentTokenRepository）
+	//@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
 		tokenRepository.setDataSource(dataSource);

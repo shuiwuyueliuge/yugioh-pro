@@ -3,4 +3,8 @@ cn.mayu.yugioh.security.browser.config.BrowserSecurityConfig,\
 cn.mayu.yugioh.security.browser.property.LoginProperty,\
 cn.mayu.yugioh.security.browser.config.LoginRequestProvider,\
 cn.mayu.yugioh.security.browser.property.RememberMeProperty,\
-cn.mayu.yugioh.security.browser.config.BrowserBeanConfig
+cn.mayu.yugioh.security.browser.config.BrowserBeanConfig,\
+cn.mayu.yugioh.security.browser.property.SessionProperty
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+cn.mayu.yugioh.security.browser.property.BrowserEnvironmentPostProcessor

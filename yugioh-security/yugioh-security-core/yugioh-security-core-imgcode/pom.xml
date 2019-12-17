@@ -9,11 +9,15 @@
 		<artifactId>yugioh-security-core</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>yugioh-security-core-base</artifactId>
+	<artifactId>yugioh-security-core-imgcode</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>org.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-security-core-base</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

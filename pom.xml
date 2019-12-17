@@ -84,6 +84,11 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-security-core-imgcode</artifactId>
+				<version>${version}</version>
+			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
 				<artifactId>yugioh-common-core</artifactId>
 				<version>${version}</version>
 			</dependency>

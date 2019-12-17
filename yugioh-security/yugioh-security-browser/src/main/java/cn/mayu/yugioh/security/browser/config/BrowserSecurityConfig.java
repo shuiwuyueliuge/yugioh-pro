@@ -14,12 +14,16 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
 import cn.mayu.yugioh.security.browser.property.LoginProperty;
 import cn.mayu.yugioh.security.browser.property.RememberMeProperty;
+import cn.mayu.yugioh.security.browser.property.SessionProperty;
 
 @EnableWebSecurity
 public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private LoginProperty loginProperty;
+	
+	@Autowired
+	private SessionProperty sessionProperty;
 	
 	@Autowired
 	private RequestManager requestManager;
@@ -86,8 +90,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 		if (invalidSessionStrategy != null) configurer.invalidSessionStrategy(invalidSessionStrategy);//session超时
 		
 		//并发登陆
-		configurer.maximumSessions(1)
-		          .maxSessionsPreventsLogin(false)
+		configurer.maximumSessions(sessionProperty.getMaximumSessions())
+		          .maxSessionsPreventsLogin(sessionProperty.isMaxSessionsPreventsLogin())
 		          .expiredSessionStrategy(sessionInformationExpiredStrategy);
 	}
 }
