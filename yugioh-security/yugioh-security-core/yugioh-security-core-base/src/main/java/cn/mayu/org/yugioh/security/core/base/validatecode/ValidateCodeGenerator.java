@@ -6,5 +6,5 @@ public interface ValidateCodeGenerator {
 	
 	String getKey(ValidateCodeContext codeContext);
 	
-	String send(ValidateCodeContext codeContext) throws Exception;
+	String send(ValidateCodeContext codeContext);
 }

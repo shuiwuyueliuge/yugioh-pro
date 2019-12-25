@@ -12,7 +12,7 @@ public abstract class AbstratValidateCodeProcessor implements ValidateCodeProces
 	}
 	
 	@Override
-	public void sendCode(ValidateCodeContext codeContext) throws Exception {
+	public void sendCode(ValidateCodeContext codeContext) {
 		codeContext.setCode(generator.createCode(codeContext));
 		codeContext.setKey(generator.getKey(codeContext));
 		codeContext.setSendRes(generator.send(codeContext));

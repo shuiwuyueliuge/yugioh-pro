@@ -12,13 +12,19 @@ public class ImgValidateCodeGenerator implements ValidateCodeGenerator {
 	}
 
 	@Override
-	public String send(ValidateCodeContext codeContext) throws Exception {
-		byte[] img = ImgCodeHelper.getWriteByteArray(codeContext.getCode());
+	public String send(ValidateCodeContext codeContext) {
+		byte[] img = null;
+		try {
+			img = ImgCodeHelper.getWriteByteArray(codeContext.getCode());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return Base64Util.encode(img);
 	}
 
 	@Override
 	public String getKey(ValidateCodeContext codeContext) {
-		return codeContext.getKeyByHeader("key");
+		return codeContext.getKeyByParameter("key");
 	}
 }
