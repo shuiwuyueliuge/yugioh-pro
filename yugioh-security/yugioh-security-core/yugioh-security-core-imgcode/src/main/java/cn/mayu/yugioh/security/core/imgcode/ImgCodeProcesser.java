@@ -15,16 +15,6 @@ public class ImgCodeProcesser extends AbstratValidateCodeProcessor {
 	}
 
 	@Override
-	public boolean sendCode(String key) {
-		try {
-			return manager.save(key, generator.createAndSend(key));
-		} catch (Exception e) {
-			logger.error("key:[" + key + "]发送图片验证码错误 ", e);
-			return false;
-		}
-	}
-
-	@Override
 	public boolean check(String key, String code) {
 		String cache = manager.get(key);
 		logger.debug("图片验证码,验证请求code[" + code + "]缓存code:[" + cache + "]");
@@ -33,5 +23,10 @@ public class ImgCodeProcesser extends AbstratValidateCodeProcessor {
 		}
 		
 		return true;
+	}
+
+	@Override
+	public String getType() {
+		return "img";
 	}
 }

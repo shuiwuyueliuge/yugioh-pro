@@ -19,6 +19,6 @@ public class DefaultValidateController extends AbstractView {
 			return;
 		}
 		
-		response.getOutputStream().write("send success".getBytes());
+		response.getOutputStream().write(model.get("sendResult").toString().getBytes());
 	}
 }

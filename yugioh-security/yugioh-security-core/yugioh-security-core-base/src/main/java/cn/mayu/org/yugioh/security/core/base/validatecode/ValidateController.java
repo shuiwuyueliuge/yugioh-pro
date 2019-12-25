@@ -23,9 +23,19 @@ public class ValidateController {
 	@RequestMapping("/code/{type}")
 	public String validateCode(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("type") String type) {
 		ValidateCodeProcessor processer = holder.getProcessor(type);
-		log.debug("validate code type: [{}]", type);
+		if (log.isDebugEnabled()) {
+			log.debug("validate code type: [{}]", type);
+		}
+		
+		ValidateCodeContext context = ValidateCodeContext.builder().request(request).build();
 		if (processer != null) {
-			model.addAttribute("sendResult", processer.sendCode(request.getParameter("key")));
+			try {
+				processer.sendCode(context);
+			} catch (Exception e) {
+				model.addAttribute("sendResult", Boolean.FALSE);
+			}
+			
+			model.addAttribute("sendResult", context.getSendRes());
 		} else {
 			model.addAttribute("sendResult", Boolean.FALSE);
 		}

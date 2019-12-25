@@ -33,15 +33,24 @@ public class ValidateFilter extends OncePerRequestFilter {
 	
 	private boolean verify(HttpServletRequest request, String uri) {
 		if (uri.indexOf("/login/") != -1) {
-			log.debug("验证码登陆url[" + uri + "]");
+			if (log.isDebugEnabled()) {
+				log.debug("验证码登陆url[" + uri + "]");
+			}
+			
 			ValidateCodeProcessor processor = holder.getProcessor(uri.replace("/login/", ""));
 		    if (processor == null) {
-		    	log.debug("验证码登陆url[" + uri + "]错误");
+		    	if (log.isDebugEnabled()) {
+		    		log.debug("验证码登陆url[" + uri + "]错误");
+				}
+		    	
 		    	return false;
 		    }
 		    
 		    if (!processor.check(getParameter(request, "key"), getParameter(request, "code"))) {
-		    	log.debug("验证码登陆url[" + uri + "]验证码验证失败");
+		    	if (log.isDebugEnabled()) {
+		    		log.debug("验证码登陆url[" + uri + "]验证码验证失败");
+				}
+		    	
 		    	return false;
 		    }
 		}
