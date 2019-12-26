@@ -1,18 +1,18 @@
 package com.yugioh.start;
 
 import javax.sql.DataSource;
-//import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 @SpringBootApplication
 public class App {
 	
-	//@Autowired
+	@Autowired
 	private DataSource dataSource;
 	
 	public static void main(String[] args) {
@@ -21,7 +21,7 @@ public class App {
 		app.run(args);
 	}
 	
-	//@Bean
+	@Bean
 	public PersistentTokenRepository persistentTokenRepository() {
 		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
 		tokenRepository.setDataSource(dataSource);

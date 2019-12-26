@@ -4,5 +4,5 @@ public interface ValidateCodeManager {
 
 	boolean save(ValidateCodeContext codeContext);
 	
-	String get(String key);
+	String getAndRemove(String key);
 }

@@ -2,7 +2,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.mayu.org.yugioh.security.core.base.validatecode.DefaultValidateCodeProcessorHolder,\
 cn.mayu.yugioh.security.core.imgcode.ImgCodeConfig,\
 cn.mayu.org.yugioh.security.core.base.adapter.ValidateConfigurerAdapter,\
-cn.mayu.yugioh.security.core.imgcode.ImgValidateCodeGenerator,\
 cn.mayu.org.yugioh.security.core.base.validatecode.ValidateController,\
-cn.mayu.yugioh.security.core.imgcode.ImgCodeProcesser,\
-cn.mayu.org.yugioh.security.core.base.validatecode.DefaultValidateCodeManager
+cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty,\
+cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty,\
+cn.mayu.org.yugioh.security.core.base.validatecode.ValidateCodeRequestProvider,\
+cn.mayu.org.yugioh.security.core.base.config.EhcacheConfig

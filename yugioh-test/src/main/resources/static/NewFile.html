@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="container">
-		<form class="form-signin" method="post" action="/login/img">
+		<form class="form-signin" method="post" action="/login/img?key=www">
 			<h2 class="form-signin-heading">Please sign in 124121</h2>
 			<p>
 				<label for="username" class="sr-only">Username</label> <input
@@ -31,10 +31,15 @@
 			</p>
 			<p>
 				<label for="password" class="sr-only">Password</label> <img id="imgbase"
-					src="" /> <input
+					src="" onclick="getImg()"/> <input
 					type="password" id="password" name="password" class="form-control"
 					placeholder="Password" value="ygo" required> <input
 					name="remember-me" type="checkbox" value="true" />记住我
+			</p>
+			<p>
+				<label for="code" class="sr-only">Code</label> <input
+					type="code" id="code" name="code" class="form-control"
+					placeholder="code" required>
 			</p>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
 				in</button>
@@ -42,10 +47,14 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-				$.get("/code/img?key=www", function(data, status) {
-					document.getElementById('imgbase').src = 'data:image/jpeg;base64,' + data;
-				});
+				getImg();
 		});
+		
+		function getImg() {
+			$.get("/code/img?key=www", function(data, status) {
+				document.getElementById('imgbase').src = 'data:image/jpeg;base64,' + data;
+			});
+		}
 	</script>
 </body>
 </html>

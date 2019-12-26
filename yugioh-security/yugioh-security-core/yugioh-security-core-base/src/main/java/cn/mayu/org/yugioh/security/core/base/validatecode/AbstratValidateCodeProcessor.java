@@ -14,7 +14,7 @@ public abstract class AbstratValidateCodeProcessor implements ValidateCodeProces
 	@Override
 	public void sendCode(ValidateCodeContext codeContext) {
 		codeContext.setCode(generator.createCode(codeContext));
-		codeContext.setKey(generator.getKey(codeContext));
+		codeContext.setKey(codeContext.getKey());
 		codeContext.setSendRes(generator.send(codeContext));
 		manager.save(codeContext);
 	}

@@ -4,7 +4,5 @@ public interface ValidateCodeProcessor {
 
 	void sendCode(ValidateCodeContext codeContext);
 	
-	boolean check(String key, String code);
-	
 	String getType();
 }

@@ -4,7 +4,5 @@ public interface ValidateCodeGenerator {
 
 	String createCode(ValidateCodeContext codeContext);
 	
-	String getKey(ValidateCodeContext codeContext);
-	
 	String send(ValidateCodeContext codeContext);
 }

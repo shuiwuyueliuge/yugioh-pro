@@ -15,16 +15,4 @@ public class ValidateCodeContext {
 	private HttpServletRequest request;
 	
 	private String key;
-	
-	public String getKeyByParameter(String paramName) {
-		String key = request.getParameter(paramName);
-		this.key = key;
-		return key;
-	}
-	
-	public String getKeyByHeader(String headerName) {
-		String key =  request.getHeader(headerName);
-		this.key = key;
-		return key;
-	}
 }

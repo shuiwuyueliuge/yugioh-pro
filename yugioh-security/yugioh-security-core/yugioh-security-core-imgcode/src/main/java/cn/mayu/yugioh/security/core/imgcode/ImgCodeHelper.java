@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public class ImgCodeHelper {
 
@@ -17,9 +18,13 @@ public class ImgCodeHelper {
 		return Singleton.INSTANCE.init();
 	}
 
-	public static byte[] getWriteByteArray(String code) throws Exception {
+	public static byte[] getWriteByteArray(String code) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		ImageIO.write(getInstance().drawImg(code), "JPEG", out);
+		try {
+			ImageIO.write(getInstance().drawImg(code), "JPEG", out);
+		} catch (IOException e) {
+		}
+		
 		return out.toByteArray();
 	}
 
