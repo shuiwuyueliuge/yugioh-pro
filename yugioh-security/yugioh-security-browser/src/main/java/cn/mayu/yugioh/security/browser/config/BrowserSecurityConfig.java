@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-
+import cn.mayu.org.yugioh.security.core.base.adapter.UserNameConfigurerAdapter;
 import cn.mayu.org.yugioh.security.core.base.adapter.ValidateConfigurerAdapter;
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
 import cn.mayu.yugioh.security.browser.property.LoginProperty;
@@ -53,6 +53,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired(required = false)
 	private ValidateConfigurerAdapter validateConfigurerAdapter;
+	
+	@Autowired(required = false)
+	private UserNameConfigurerAdapter userNameConfigurerAdapter;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -65,6 +68,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 			http.apply(validateConfigurerAdapter);
 		}
 		
+		if (userNameConfigurerAdapter != null) {
+			http.apply(userNameConfigurerAdapter);
+		}
 	}
 	
 	private void loginConfig(HttpSecurity http) throws Exception {

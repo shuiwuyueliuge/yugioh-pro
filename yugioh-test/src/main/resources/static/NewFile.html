@@ -44,6 +44,29 @@
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
 				in</button>
 		</form>
+		
+		
+		
+		
+		
+		<form class="form-signin" method="post" action="/login/userName/sms">
+			<h2 class="form-signin-heading">Please sign in 124121</h2>
+			<p>
+				<label for="username" class="sr-only">Username</label> <input
+					type="text" id="username" name="key" class="form-control"
+					placeholder="Username" value="ygo" required autofocus>
+			</p>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="button" onclick="but()">but</button>
+			
+			<p>
+				<label for="code" class="sr-only">Code</label> <input
+					type="code" id="code" name="code" class="form-control"
+					placeholder="code" required>
+			</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+				in</button>
+		</form>
 	</div>
 	<script>
 		$(document).ready(function() {
@@ -51,8 +74,14 @@
 		});
 		
 		function getImg() {
-			$.get("/code/img?key=www", function(data, status) {
+			$.get("/validate_code/img?key=www", function(data, status) {
 				document.getElementById('imgbase').src = 'data:image/jpeg;base64,' + data;
+			});
+		}
+		
+		function but() {
+			$.get("/validate_code/sms?key=ygo", function(data, status) {
+				
 			});
 		}
 	</script>

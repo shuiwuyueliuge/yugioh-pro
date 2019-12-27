@@ -10,4 +10,6 @@ public class ValidateCodeLoginProperty {
 	private String codeValueParam = "code";
 	
 	private String keyParam = "key";
+	
+	private String userNameProcessingUrl = "/login/userName/**";
 }

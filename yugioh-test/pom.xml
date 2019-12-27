@@ -15,22 +15,10 @@
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-logbbok</artifactId>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-sync-ourocg</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-sleuth</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.cloud</groupId>
-					<artifactId>spring-cloud-starter-zipkin</artifactId>
-				</exclusion>
-			</exclusions>
-			<version>1.0-SNAPSHOT</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>cn.mayu</groupId> <artifactId>yugioh-sync-ourocg</artifactId> 
+			<exclusions> <exclusion> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-sleuth</artifactId> 
+			</exclusion> <exclusion> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-zipkin</artifactId> 
+			</exclusion> </exclusions> <version>1.0-SNAPSHOT</version> </dependency> -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -50,6 +38,11 @@
 		<dependency>
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-security-core-imgcode</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-security-core-sms</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
