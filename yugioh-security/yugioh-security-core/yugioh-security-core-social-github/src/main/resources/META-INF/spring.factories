@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.mayu.yugioh.security.core.social.SocialConfigAdapter
+cn.mayu.yugioh.security.core.social.github.GitHubSocialConfigurerAdapter,\
+cn.mayu.yugioh.security.core.social.SocialConfig,\
+cn.mayu.yugioh.security.core.social.SocialRequestProvider

@@ -37,11 +37,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core-imgcode</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core-sms</artifactId>
+			<artifactId>yugioh-security-core-social-github</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>

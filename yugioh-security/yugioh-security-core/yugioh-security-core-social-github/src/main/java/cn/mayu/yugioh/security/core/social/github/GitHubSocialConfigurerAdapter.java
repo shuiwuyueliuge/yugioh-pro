@@ -2,6 +2,7 @@ package cn.mayu.yugioh.security.core.social.github;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
@@ -24,6 +25,7 @@ public class GitHubSocialConfigurerAdapter extends SocialConfigurerAdapter {
 	}
 	
 	@Override
+	@Bean
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
 		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
 	}
