@@ -44,7 +44,7 @@
 	<script>
 		function but() {
 			$.get("/validate_code/sms?mobile=ygo", function(data, status) {
-				alert('send sms success');
+				alert(data);
 			});
 		}
 	</script>

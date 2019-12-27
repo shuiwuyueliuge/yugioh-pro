@@ -16,12 +16,12 @@ public class ImgCodeProcesser extends AbstratValidateCodeProcessor {
 	}
 
 	@Override
-	public String getValidateCodeKey() {
+	public String getValidateCodeKeyParam() {
 		return "key";
 	}
 
 	@Override
-	public String getValidateCode() {
+	public String getValidateCodeParam() {
 		return "imgcode";
 	}
 }

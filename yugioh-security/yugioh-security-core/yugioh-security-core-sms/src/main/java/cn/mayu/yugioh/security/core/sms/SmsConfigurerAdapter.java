@@ -10,8 +10,8 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameAuthenticationFilter;
-import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameAuthenticationProvider;
+import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameOnlyAuthenticationFilter;
+import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameOnlyAuthenticationProvider;
 import cn.mayu.org.yugioh.security.core.base.validatecode.ValidateFilter;
 
 public class SmsConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
@@ -39,7 +39,7 @@ public class SmsConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecur
 
 	@Override
     public void configure(HttpSecurity builder) throws Exception {
-        UserNameAuthenticationFilter userNameCodeAuthenticationFilter = new UserNameAuthenticationFilter(smsValidateCodeProperty.getProcessingUrl(), smsCodeProcesser.getValidateCodeKey());
+        UserNameOnlyAuthenticationFilter userNameCodeAuthenticationFilter = new UserNameOnlyAuthenticationFilter(smsValidateCodeProperty.getProcessingUrl(), smsCodeProcesser.getValidateCodeKeyParam());
         userNameCodeAuthenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
         if (success != null) {
         	userNameCodeAuthenticationFilter.setAuthenticationSuccessHandler(success);
@@ -49,7 +49,7 @@ public class SmsConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecur
         	userNameCodeAuthenticationFilter.setAuthenticationFailureHandler(failer);
         }
         
-        UserNameAuthenticationProvider userNameCodeAuthenticationProvider = new UserNameAuthenticationProvider();
+        UserNameOnlyAuthenticationProvider userNameCodeAuthenticationProvider = new UserNameOnlyAuthenticationProvider();
         userNameCodeAuthenticationProvider.setUserDetailsService(user);
         builder.authenticationProvider(userNameCodeAuthenticationProvider)
                .addFilterAfter(userNameCodeAuthenticationFilter, ValidateFilter.class)

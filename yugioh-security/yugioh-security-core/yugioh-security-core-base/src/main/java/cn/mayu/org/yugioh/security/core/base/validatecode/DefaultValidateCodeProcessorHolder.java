@@ -32,11 +32,11 @@ public class DefaultValidateCodeProcessorHolder implements ValidateCodeProcessor
 
 	@Override
 	public Set<String> getValidateCodeKey() {
-		return map.values().stream().map(processor -> processor.getValidateCodeKey()).collect(Collectors.toSet());
+		return map.values().stream().map(processor -> processor.getValidateCodeKeyParam()).collect(Collectors.toSet());
 	}
 
 	@Override
 	public Set<String> getValidateCode() {
-		return map.values().stream().map(processor -> processor.getValidateCode()).collect(Collectors.toSet());
+		return map.values().stream().map(processor -> processor.getValidateCodeParam()).collect(Collectors.toSet());
 	}
 }

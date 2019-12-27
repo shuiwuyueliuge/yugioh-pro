@@ -42,26 +42,17 @@ public class ValidateFilter extends OncePerRequestFilter {
 	}
 
 	private boolean verify(HttpServletRequest request, String uri) {
-		if (matches(request)) {
-			String key = getKeyParameter(request);
-			if (key == null) return false;
-			String cached = codeManager.getAndRemove(key);
-			String code = getValueParameter(request);
-			if (code == null) return false;
-			if (log.isDebugEnabled()) {
-				log.debug("validate code checking cached: [{}], code: [{}]", cached, code);
-			}
-			
-			if (code == null || cached == null || !cached.equals(code)) {
-				if (log.isDebugEnabled()) {
-					log.debug("validate code check code error uri: [{}]", uri);
-				}
-
-				return false;
-			}
+		if (!matches(request)) return true;
+		String key = getKeyParameter(request);
+		if (key == null) return false;
+		String cached = codeManager.getAndRemove(key);
+		String code = getValueParameter(request);
+		if (code == null) return false;
+		if (log.isDebugEnabled()) {
+			log.debug("validate code checking cached: [{}], code: [{}]", cached, code);
 		}
-
-		return true;
+		
+		return (code == null || cached == null || !cached.equals(code)) ? false : true;
 	}
 
 	private String getValueParameter(HttpServletRequest request) {

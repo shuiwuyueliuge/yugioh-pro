@@ -16,12 +16,12 @@ public class SmsCodeProcesser extends AbstratValidateCodeProcessor {
 	}
 
 	@Override
-	public String getValidateCodeKey() {
+	public String getValidateCodeKeyParam() {
 		return "mobile";
 	}
 
 	@Override
-	public String getValidateCode() {
+	public String getValidateCodeParam() {
 		return "mobilecode";
 	}
 }

@@ -6,7 +6,7 @@ public interface ValidateCodeProcessor {
 	
 	String getType();
 	
-	String getValidateCodeKey();
+	String getValidateCodeKeyParam();
 	
-	String getValidateCode();
+	String getValidateCodeParam();
 }

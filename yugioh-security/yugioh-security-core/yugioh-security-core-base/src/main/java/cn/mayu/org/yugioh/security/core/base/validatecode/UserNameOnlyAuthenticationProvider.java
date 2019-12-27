@@ -7,26 +7,26 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class UserNameAuthenticationProvider implements AuthenticationProvider {
+public class UserNameOnlyAuthenticationProvider implements AuthenticationProvider {
 
 	private UserDetailsService userDetailsService;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		UserNameAuthenticationToken authenticationToken = (UserNameAuthenticationToken) authentication;
+		UserNameOnlyAuthenticationToken authenticationToken = (UserNameOnlyAuthenticationToken) authentication;
 		UserDetails user = userDetailsService.loadUserByUsername((String) authenticationToken.getPrincipal());
 		if (user == null) {
 			throw new InternalAuthenticationServiceException("无法获取用户信息");
 		}
 
-		UserNameAuthenticationToken authenticationResult = new UserNameAuthenticationToken(user, user.getAuthorities());
+		UserNameOnlyAuthenticationToken authenticationResult = new UserNameOnlyAuthenticationToken(user, user.getAuthorities());
 		authenticationResult.setDetails(authenticationToken.getDetails());
 		return authenticationResult;
 	}
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return UserNameAuthenticationToken.class.isAssignableFrom(authentication);
+		return UserNameOnlyAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 	public UserDetailsService getUserDetailsService() {

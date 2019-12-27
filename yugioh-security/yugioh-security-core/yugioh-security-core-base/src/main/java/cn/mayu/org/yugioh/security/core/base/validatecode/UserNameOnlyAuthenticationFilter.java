@@ -9,12 +9,12 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.util.Assert;
 
-public class UserNameAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+public class UserNameOnlyAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
 	private String mobile;
 	private boolean postOnly = true;
 
-	public UserNameAuthenticationFilter(String processingUrl, String mobile) {
+	public UserNameOnlyAuthenticationFilter(String processingUrl, String mobile) {
 		super(new AntPathRequestMatcher(processingUrl, "POST"));
 		this.mobile = mobile;
 	}
@@ -31,7 +31,7 @@ public class UserNameAuthenticationFilter extends AbstractAuthenticationProcessi
 		}
 
 		mobile = mobile.trim();
-		UserNameAuthenticationToken authRequest = new UserNameAuthenticationToken(mobile);
+		UserNameOnlyAuthenticationToken authRequest = new UserNameOnlyAuthenticationToken(mobile);
 		setDetails(request, authRequest);
 		return this.getAuthenticationManager().authenticate(authRequest);
 	}
@@ -40,7 +40,7 @@ public class UserNameAuthenticationFilter extends AbstractAuthenticationProcessi
 		return request.getParameter(mobile);
 	}
 
-	protected void setDetails(HttpServletRequest request, UserNameAuthenticationToken authRequest) {
+	protected void setDetails(HttpServletRequest request, UserNameOnlyAuthenticationToken authRequest) {
 		authRequest.setDetails(authenticationDetailsSource.buildDetails(request));
 	}
 	
