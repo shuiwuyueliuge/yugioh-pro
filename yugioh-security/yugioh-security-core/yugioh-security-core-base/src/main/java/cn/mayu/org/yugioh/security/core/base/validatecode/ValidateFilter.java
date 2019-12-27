@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 import cn.mayu.org.yugioh.security.core.base.exception.ValidateCodeException;
-import cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -20,15 +19,15 @@ public class ValidateFilter extends OncePerRequestFilter {
 	private Set<RequestMatcher> requestMatcher;
 
 	private VaildateCodeFailureHandler failureHandler;
+	
+	private ValidateCodeProcessorHolder processorHolder;
 
-	private ValidateCodeLoginProperty loginProperty;
-
-	public ValidateFilter(ValidateCodeLoginProperty loginProperty, ValidateCodeManager codeManager,
+	public ValidateFilter(ValidateCodeProcessorHolder processorHolder, ValidateCodeManager codeManager,
 			VaildateCodeFailureHandler failureHandler, Set<RequestMatcher> requestMatcher) {
 		this.codeManager = codeManager;
 		this.failureHandler = failureHandler;
-		this.loginProperty = loginProperty;
 		this.requestMatcher = requestMatcher;
+		this.processorHolder = processorHolder;
 	}
 
 	@Override
@@ -44,8 +43,11 @@ public class ValidateFilter extends OncePerRequestFilter {
 
 	private boolean verify(HttpServletRequest request, String uri) {
 		if (matches(request)) {
-			String cached = codeManager.getAndRemove(getKeyParameter(request));
+			String key = getKeyParameter(request);
+			if (key == null) return false;
+			String cached = codeManager.getAndRemove(key);
 			String code = getValueParameter(request);
+			if (code == null) return false;
 			if (log.isDebugEnabled()) {
 				log.debug("validate code checking cached: [{}], code: [{}]", cached, code);
 			}
@@ -62,16 +64,30 @@ public class ValidateFilter extends OncePerRequestFilter {
 		return true;
 	}
 
-	private String getRequestURI(HttpServletRequest request) {
-		return request.getRequestURI();
-	}
-
 	private String getValueParameter(HttpServletRequest request) {
-		return request.getParameter(loginProperty.getCodeValueParam());
+		Set<String> keys = processorHolder.getValidateCode();
+		for (String string : keys) {
+			String key = request.getParameter(string);
+			if (key == null) continue;
+			return key;
+		}
+		
+		return null;
 	}
 
 	private String getKeyParameter(HttpServletRequest request) {
-		return request.getParameter(loginProperty.getKeyParam());
+		Set<String> keys = processorHolder.getValidateCodeKey();
+		for (String string : keys) {
+			String key = request.getParameter(string);
+			if (key == null) continue;
+			return key;
+		}
+		
+		return null; 
+	}
+
+	private String getRequestURI(HttpServletRequest request) {
+		return request.getRequestURI();
 	}
 
 	private boolean matches(HttpServletRequest request) {

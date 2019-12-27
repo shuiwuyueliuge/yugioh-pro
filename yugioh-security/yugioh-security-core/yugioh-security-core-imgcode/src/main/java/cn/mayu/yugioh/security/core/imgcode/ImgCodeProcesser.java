@@ -14,4 +14,14 @@ public class ImgCodeProcesser extends AbstratValidateCodeProcessor {
 	public String getType() {
 		return "img";
 	}
+
+	@Override
+	public String getValidateCodeKey() {
+		return "key";
+	}
+
+	@Override
+	public String getValidateCode() {
+		return "imgcode";
+	}
 }

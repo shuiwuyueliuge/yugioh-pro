@@ -1,4 +1,4 @@
-package cn.mayu.org.yugioh.security.core.base.adapter;
+package cn.mayu.yugioh.security.core.sms;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -10,13 +10,11 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty;
 import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameAuthenticationFilter;
 import cn.mayu.org.yugioh.security.core.base.validatecode.UserNameAuthenticationProvider;
 import cn.mayu.org.yugioh.security.core.base.validatecode.ValidateFilter;
 
-public class UserNameConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
+public class SmsConfigurerAdapter extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
 
 	@Nullable
 	private AuthenticationSuccessHandler success;
@@ -26,19 +24,22 @@ public class UserNameConfigurerAdapter extends SecurityConfigurerAdapter<Default
     
     private UserDetailsService user;
     
-    private ValidateCodeLoginProperty validateCodeLoginProperty;
+    private SmsCodeProcesser smsCodeProcesser;
+    
+    private SmsValidateCodeProperty smsValidateCodeProperty;
 
-    public UserNameConfigurerAdapter(@Autowired(required = false) AuthenticationSuccessHandler success, @Autowired(required = false) AuthenticationFailureHandler failer,
-			UserDetailsService user, ValidateCodeLoginProperty validateCodeLoginProperty) {
+    public SmsConfigurerAdapter(@Autowired(required = false) AuthenticationSuccessHandler success, @Autowired(required = false) AuthenticationFailureHandler failer,
+			UserDetailsService user, SmsCodeProcesser smsCodeProcesser, SmsValidateCodeProperty smsValidateCodeProperty) {
 		this.success = success;
 		this.failer = failer;
 		this.user = user;
-		this.validateCodeLoginProperty = validateCodeLoginProperty;
+		this.smsCodeProcesser = smsCodeProcesser;
+		this.smsValidateCodeProperty = smsValidateCodeProperty;
 	}
 
 	@Override
     public void configure(HttpSecurity builder) throws Exception {
-        UserNameAuthenticationFilter userNameCodeAuthenticationFilter = new UserNameAuthenticationFilter(validateCodeLoginProperty.getUserNameProcessingUrl(), validateCodeLoginProperty.getKeyParam());
+        UserNameAuthenticationFilter userNameCodeAuthenticationFilter = new UserNameAuthenticationFilter(smsValidateCodeProperty.getProcessingUrl(), smsCodeProcesser.getValidateCodeKey());
         userNameCodeAuthenticationFilter.setAuthenticationManager(builder.getSharedObject(AuthenticationManager.class));
         if (success != null) {
         	userNameCodeAuthenticationFilter.setAuthenticationSuccessHandler(success);

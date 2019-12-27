@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -17,17 +16,14 @@ public class ValidateController {
 	@Autowired
 	private ValidateCodeProcessorHolder holder;
 	
-	@Autowired
-	private ValidateCodeLoginProperty loginProperty;
-	
 	@RequestMapping("/validate_code/{type}")
 	public String validateCode(Model model, HttpServletRequest request, HttpServletResponse response, @PathVariable("type") String type) {
 		ValidateCodeProcessor processer = holder.getProcessor(type);
 		if (log.isDebugEnabled()) {
 			log.debug("validate code type: [{}]", type);
 		}
-		
-		ValidateCodeContext context = ValidateCodeContext.builder().request(request).key(getValueParameter(request)).build();
+
+		ValidateCodeContext context = ValidateCodeContext.builder().request(request).build();
 		if (processer != null) {
 			processer.sendCode(context);
 			model.addAttribute(ValidateCodeConstants.CODE_SEND_RESULT, context.getSendRes());
@@ -38,9 +34,5 @@ public class ValidateController {
 	
 	private String createView() {
 		return ValidateCodeConstants.RESULT_VIEW;
-	}
-	
-	private String getValueParameter(HttpServletRequest request) {
-		return request.getParameter(loginProperty.getKeyParam());
 	}
 }

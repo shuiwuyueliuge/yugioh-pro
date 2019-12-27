@@ -5,4 +5,8 @@ public interface ValidateCodeProcessor {
 	void sendCode(ValidateCodeContext codeContext);
 	
 	String getType();
+	
+	String getValidateCodeKey();
+	
+	String getValidateCode();
 }

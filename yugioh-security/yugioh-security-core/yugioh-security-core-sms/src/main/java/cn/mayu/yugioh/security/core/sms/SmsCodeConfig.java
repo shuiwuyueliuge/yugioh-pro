@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import cn.mayu.org.yugioh.security.core.base.config.EhcacheConfig;
-import cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty;
 import cn.mayu.org.yugioh.security.core.base.validatecode.EhcacheValidateCodeManager;
 import cn.mayu.org.yugioh.security.core.base.validatecode.VaildateCodeFailureHandler;
 import cn.mayu.org.yugioh.security.core.base.validatecode.ValidateCodeManager;
@@ -13,8 +12,8 @@ import cn.mayu.org.yugioh.security.core.base.validatecode.ValidateCodeManager;
 public class SmsCodeConfig {
 	
 	@Bean
-	public RequestMatcher smsRequestMatcher(ValidateCodeLoginProperty loginProperty) {
-		return new AntPathRequestMatcher(loginProperty.getUserNameProcessingUrl(), "POST");
+	public RequestMatcher smsRequestMatcher(SmsValidateCodeProperty loginProperty) {
+		return new AntPathRequestMatcher(loginProperty.getProcessingUrl(), "POST");
 	}
 
 	@Bean

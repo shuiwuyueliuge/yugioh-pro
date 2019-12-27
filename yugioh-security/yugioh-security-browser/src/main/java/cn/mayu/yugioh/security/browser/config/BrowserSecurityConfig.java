@@ -1,18 +1,19 @@
 package cn.mayu.yugioh.security.browser.config;
 
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-import cn.mayu.org.yugioh.security.core.base.adapter.UserNameConfigurerAdapter;
-import cn.mayu.org.yugioh.security.core.base.adapter.ValidateConfigurerAdapter;
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
 import cn.mayu.yugioh.security.browser.property.LoginProperty;
 import cn.mayu.yugioh.security.browser.property.RememberMeProperty;
@@ -52,10 +53,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
 	
 	@Autowired(required = false)
-	private ValidateConfigurerAdapter validateConfigurerAdapter;
-	
-	@Autowired(required = false)
-	private UserNameConfigurerAdapter userNameConfigurerAdapter;
+	private Set<SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>> securityConfigurerAdapter;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -64,13 +62,7 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 		loginConfig(http);
 		rememberMeConfig(http);
 		sessionConfig(http);
-		if (validateConfigurerAdapter != null) {
-			http.apply(validateConfigurerAdapter);
-		}
-		
-		if (userNameConfigurerAdapter != null) {
-			http.apply(userNameConfigurerAdapter);
-		}
+		apply(http);
 	}
 	
 	private void loginConfig(HttpSecurity http) throws Exception {
@@ -108,5 +100,15 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 		configurer.maximumSessions(sessionProperty.getMaximumSessions())
 		          .maxSessionsPreventsLogin(sessionProperty.isMaxSessionsPreventsLogin())
 		          .expiredSessionStrategy(sessionInformationExpiredStrategy);
+	}
+	
+	private void apply(HttpSecurity http) throws Exception {
+		if (securityConfigurerAdapter == null || securityConfigurerAdapter.size() == 0) {
+			return;
+		}
+		
+		for (SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> adapter : securityConfigurerAdapter) {
+			http.apply(adapter);
+		}
 	}
 }

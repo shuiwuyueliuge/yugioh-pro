@@ -4,6 +4,5 @@ cn.mayu.yugioh.security.core.imgcode.ImgCodeConfig,\
 cn.mayu.org.yugioh.security.core.base.adapter.ValidateConfigurerAdapter,\
 cn.mayu.org.yugioh.security.core.base.validatecode.ValidateController,\
 cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty,\
-cn.mayu.org.yugioh.security.core.base.property.ValidateCodeLoginProperty,\
 cn.mayu.org.yugioh.security.core.base.validatecode.ValidateCodeRequestProvider,\
 cn.mayu.org.yugioh.security.core.base.config.EhcacheConfig

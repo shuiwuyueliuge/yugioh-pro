@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Please sign in</title>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+	
+</script>
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+	crossorigin="anonymous">
+<link
+	href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css"
+	rel="stylesheet" crossorigin="anonymous" />
+</head>
+<body>
+	<div class="container">
+		<form class="form-signin" method="post" action="/login/smscode">
+			<h2 class="form-signin-heading">Please sign in 124121</h2>
+			<p>
+				<label for="mobile" class="sr-only">mobile</label> <input
+					type="text" id="mobile" name="mobile" class="form-control"
+					placeholder="mobile" value="ygo" required autofocus>
+			</p>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="button" onclick="but()">but</button>
+			
+			<p>
+				<label for="mobilecode" class="sr-only">mobilecode</label> <input
+					type="mobilecode" id="mobilecode" name="mobilecode" class="form-control"
+					placeholder="mobilecode" required>
+			</p>
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign
+				in</button>
+		</form>
+	</div>
+	<script>
+		function but() {
+			$.get("/validate_code/sms?mobile=ygo", function(data, status) {
+				alert('send sms success');
+			});
+		}
+	</script>
+</body>
+</html>

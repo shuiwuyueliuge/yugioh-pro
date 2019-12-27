@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,5 +28,15 @@ public class DefaultValidateCodeProcessorHolder implements ValidateCodeProcessor
 	@Override
 	public ValidateCodeProcessor getProcessor(String type) {
 		return map.get(type);
+	}
+
+	@Override
+	public Set<String> getValidateCodeKey() {
+		return map.values().stream().map(processor -> processor.getValidateCodeKey()).collect(Collectors.toSet());
+	}
+
+	@Override
+	public Set<String> getValidateCode() {
+		return map.values().stream().map(processor -> processor.getValidateCode()).collect(Collectors.toSet());
 	}
 }
