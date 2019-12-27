@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.security.browser.property;
+package cn.mayu.org.yugioh.security.core.base.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;

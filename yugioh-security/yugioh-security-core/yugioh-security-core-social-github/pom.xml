@@ -9,15 +9,12 @@
 		<artifactId>yugioh-security-core</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>yugioh-security-core-imgcode</artifactId>
+	<artifactId>yugioh-security-core-social-github</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core-base</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-core</artifactId>
+			<artifactId>yugioh-security-core-social</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

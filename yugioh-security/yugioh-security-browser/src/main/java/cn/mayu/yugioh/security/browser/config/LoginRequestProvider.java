@@ -3,9 +3,8 @@ package cn.mayu.yugioh.security.browser.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestProvider;
-import cn.mayu.yugioh.security.browser.property.LoginProperty;
+import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
 
 public class LoginRequestProvider implements RequestProvider {
 	

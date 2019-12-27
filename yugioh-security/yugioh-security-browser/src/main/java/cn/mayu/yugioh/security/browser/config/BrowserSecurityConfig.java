@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
-import cn.mayu.yugioh.security.browser.property.LoginProperty;
+import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
 import cn.mayu.yugioh.security.browser.property.RememberMeProperty;
 import cn.mayu.yugioh.security.browser.property.SessionProperty;
 
