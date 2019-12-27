@@ -34,7 +34,7 @@ public class ValidateFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		if (!verify(request, getRequestURI(request))) {
-			failureHandler.onCheckCodeFailure(request, response, new ValidateCodeException("code error"));
+			failureHandler.onCheckCodeFailure(request, response, new ValidateCodeException("validate code error"));
 			return;
 		}
 
