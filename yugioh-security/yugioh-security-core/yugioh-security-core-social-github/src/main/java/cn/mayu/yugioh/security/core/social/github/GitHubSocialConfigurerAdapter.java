@@ -2,21 +2,26 @@ package cn.mayu.yugioh.security.core.social.github;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
+import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
+import cn.mayu.yugioh.security.core.social.SocialJdbcUsersConnectionRepository;
+import cn.mayu.yugioh.security.core.social.SocialProperty;
 
+@EnableSocial
 public class GitHubSocialConfigurerAdapter extends SocialConfigurerAdapter {
 	
 	@Autowired
 	private DataSource dataSource;
+	
+	@Autowired
+	private SocialProperty socialProperty;
 
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer,
@@ -25,9 +30,10 @@ public class GitHubSocialConfigurerAdapter extends SocialConfigurerAdapter {
 	}
 	
 	@Override
-	@Bean
 	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-		return new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+		SocialJdbcUsersConnectionRepository jdbcUsersConnectionRepository = new SocialJdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
+		jdbcUsersConnectionRepository.setTablePrefix(socialProperty.getTablePrefix());
+		return jdbcUsersConnectionRepository;
 	}
 	
 	@Override
