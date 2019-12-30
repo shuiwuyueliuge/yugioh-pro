@@ -1,8 +1,6 @@
 package cn.mayu.yugioh.security.core.social;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
@@ -13,21 +11,10 @@ import org.springframework.social.security.SpringSocialConfigurer;
 public class SocialConfig {
 	
 	@Bean
-	@ConditionalOnMissingBean(value = { AuthenticationSuccessHandler.class })
-	public AuthenticationSuccessHandler a() {
-		return (request, response, authentication) -> {
-			System.out.println(authentication.getName());
-		};
-	}
-	
-	@Bean
-	public SpringSocialConfigurer socialSecurityConfig(SocialProperty socialProperty, AuthenticationSuccessHandler successHandler) {
-//		SocialConfigAdapter springSocialConfigurer = new SocialConfigAdapter(successHandler);
-//		springSocialConfigurer.signupUrl(socialProperty.getSignupUrl());
-//		return springSocialConfigurer;
-		SpringSocialConfigurer a = new SpringSocialConfigurer();
-		a.signupUrl(socialProperty.getSignupUrl());
-		return a;
+	public SpringSocialConfigurer socialSecurityConfig(SocialProperty socialProperty) {
+		SpringSocialConfigurer springSocialConfigurer = new SpringSocialConfigurer();
+		springSocialConfigurer.signupUrl(socialProperty.getSignupUrl());
+		return springSocialConfigurer;
 	}
 
 	@Bean

@@ -1,11 +1,12 @@
 package com.yugioh.start;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,9 @@ public class TestController {
 	    Connection<?> conn = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
 	    providerSignInUtils.doPostSignUp("1234", new ServletWebRequest(request));
 	    try {
-	    	request.getSession().setAttribute("name", conn.getDisplayName());
-			response.sendRedirect("http://www.baidu.com");
+	    	RequestCache requestCache = new HttpSessionRequestCache();
+	    	SavedRequest savedRequest = requestCache.getRequest(request, response);
+			response.sendRedirect(savedRequest.getRedirectUrl());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
