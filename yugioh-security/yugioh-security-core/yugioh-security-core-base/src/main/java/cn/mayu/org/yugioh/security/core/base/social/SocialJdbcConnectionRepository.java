@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.security.core.social;
+package cn.mayu.org.yugioh.security.core.base.social;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

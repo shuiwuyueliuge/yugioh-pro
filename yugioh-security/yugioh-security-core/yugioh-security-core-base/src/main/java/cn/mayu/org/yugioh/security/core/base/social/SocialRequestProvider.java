@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.security.core.social;
+package cn.mayu.org.yugioh.security.core.base.social;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

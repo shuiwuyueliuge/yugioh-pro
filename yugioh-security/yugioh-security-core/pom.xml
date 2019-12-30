@@ -24,5 +24,6 @@
     <module>yugioh-security-core-sms</module>
     <module>yugioh-security-core-social</module>
     <module>yugioh-security-core-social-github</module>
+    <module>yugioh-security-core-social-qq</module>
   </modules>
 </project>
