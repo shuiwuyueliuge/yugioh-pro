@@ -10,3 +10,5 @@ sync-local
 9400-9499
 sync-home
 9500-9599
+authorize
+9600-9699
