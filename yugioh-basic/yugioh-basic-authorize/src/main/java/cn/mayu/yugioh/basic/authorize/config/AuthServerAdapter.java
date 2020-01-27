@@ -81,11 +81,11 @@ public class AuthServerAdapter extends AuthorizationServerConfigurerAdapter {
 		// 密码模式必须有这个参数
 		endpoints.authenticationManager(authenticationManager);
     		TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-            List<TokenEnhancer> enhancerList = new ArrayList<TokenEnhancer>();//TokenEndpoint
+            List<TokenEnhancer> enhancerList = new ArrayList<TokenEnhancer>();
             enhancerList.add(tokenEnhancer);
-            //enhancerList.add(jwtAccessTokenConverter);
+            enhancerList.add(jwtAccessTokenConverter);
             enhancerChain.setTokenEnhancers(enhancerList);
-            endpoints//.accessTokenConverter(jwtAccessTokenConverter)
+            endpoints.accessTokenConverter(jwtAccessTokenConverter)
                      .tokenStore(tokenStore)
                      .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                      .tokenEnhancer(enhancerChain);

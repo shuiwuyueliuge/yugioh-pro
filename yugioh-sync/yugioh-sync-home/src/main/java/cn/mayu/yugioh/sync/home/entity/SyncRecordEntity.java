@@ -11,7 +11,7 @@ public class SyncRecordEntity {
 	@Id
 	private String id;
 	
-	private Object data;
+	private String data;
 	
 	private Integer operate;//0 update, 1 save
 }

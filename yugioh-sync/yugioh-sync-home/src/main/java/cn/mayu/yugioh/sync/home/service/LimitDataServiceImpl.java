@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.protobuf.TextFormat;
+
 import cn.mayu.yugioh.common.dto.sync.home.LimitDetilProto.LimitDetilEntity;
 import cn.mayu.yugioh.common.dto.sync.home.LimitProto;
 import cn.mayu.yugioh.sync.home.async.DataTransformer;
@@ -38,7 +41,7 @@ public class LimitDataServiceImpl implements LimitDataService {
 		entity.setSemiLimited(limitEntity.getSemiLimitedList());
 		LimitEntity saved = limitRepository.findByName(entity.getName()).block();
 		if (saved == null) limitRepository.save(entity).subscribe(data -> toLimitDetilEntityAndSave(data));
-		recordService.saveRecord(limitEntity, 1);
+		recordService.saveRecord(TextFormat.printToUnicodeString(limitEntity), 1);
 	}
 	
 	private void toLimitDetilEntityAndSave(LimitEntity data) {

@@ -11,6 +11,10 @@ import cn.mayu.yugioh.common.redis.YugiohRedisFactory;
 
 @Configuration
 public class RedisConfig {
+	
+	public static final String OUROCG_PAGE_KEY = "crawing:ourocg:page";
+	
+	public static final String SKIP_SIZE_KEY = "%s:card:skip";
 
 	@Bean
 	public ReactiveRedisTemplate<String, Long> memoryRedis(ReactiveRedisConnectionFactory factory) {

@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.protobuf.TextFormat;
+
 import cn.mayu.yugioh.common.dto.sync.home.CardProto;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.home.async.DataTransformer;
@@ -31,14 +34,14 @@ public class CardDataServiceImpl implements CardDataService {
 		CardDataEntity cardInfoEntity = cardRepository.findByHashId(cardDataEntity.getHashId()).block();
 		if (cardInfoEntity == null) {
 			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardSave(cardEntity));
-			recordService.saveRecord(cardEntity, 1);
+			recordService.saveRecord(TextFormat.printToUnicodeString(cardEntity), 1);
 			return;
 		}
 		
 		if (!cardDataEntity.getVersion().equals(cardInfoEntity.getVersion())) {
 			cardDataEntity.setId(cardInfoEntity.getId());
 			cardRepository.save(cardDataEntity).subscribe(data -> dataTransformer.transformCardUpdate(cardEntity));
-			recordService.saveRecord(cardEntity, 0);
+			recordService.saveRecord(TextFormat.printToUnicodeString(cardEntity), 0);
 		}
 	}
 	

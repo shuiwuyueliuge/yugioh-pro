@@ -14,7 +14,7 @@ public class SyncRecordServiceImpl implements SyncRecordService {
 
 	@Override
 	@Async
-	public void saveRecord(Object data, Integer operate) {
+	public void saveRecord(String data, Integer operate) {
 		SyncRecordEntity entity = new SyncRecordEntity();
 		entity.setData(data);
 		entity.setOperate(operate);

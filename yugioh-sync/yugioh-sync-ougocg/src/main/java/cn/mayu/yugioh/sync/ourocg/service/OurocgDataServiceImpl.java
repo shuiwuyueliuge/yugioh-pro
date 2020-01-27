@@ -17,6 +17,7 @@ import cn.mayu.yugioh.sync.ourocg.manager.CardDataFindManager;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.sync.ourocg.model.OurocgMetaData;
 import lombok.extern.slf4j.Slf4j;
+import static cn.mayu.yugioh.sync.ourocg.config.RedisConfig.*;
 
 @Service
 @Slf4j
@@ -33,8 +34,6 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	@Autowired
 	private TaskMemoryService memoryService;
-	
-	private static final String SKIP_SIZE_KEY = "%s:card:skip";
 	
 	private static final String TOTAL_PAGE = "total_page";
 	
@@ -60,16 +59,17 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	@Override
 	public void packageDetilSave() throws Exception {
 		File file = new File(genTodayFileName());
-		String key = String.format(SKIP_SIZE_KEY, file.getName());
+		String key = String.format(SKIP_SIZE_KEY, file.getName()).toLowerCase();
 		long skip = memoryService.checkMemory(key);
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			reader.skip(skip);
 			String str = null;
 			while((str = reader.readLine()) != null) {
 				skip = skip + (str + LINE_FEED).length();
-				memoryService.markMemory(key, skip);
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				metaData.getCards().stream().forEach(card -> persistentCard(card));
+				for (OurocgCard card : metaData.getCards()) {
+					persistentCard(card, key, skip);
+				}
 			}
 		}
 	}
@@ -78,21 +78,25 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		stringBuffer.append(String.format("%s%s", data, LINE_FEED));
 		if (currentPage % 100 == 0 || currentPage == total) {
 			saveInFile(genTodayFileName(), stringBuffer.toString());
+			memoryService.markSyncPage(OUROCG_PAGE_KEY, currentPage);
 			stringBuffer = new StringBuffer();
 		}
 	}
 	
-	private void persistentCard(OurocgCard card) {
+	private void persistentCard(OurocgCard card, String key, long skip) {
 		CardProto.CardEntity entity = factory.convert(card);
 		ResultEntity result = syncHomeService.saveCardInMongo(entity);
 		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
 			log.error("persistent card error, card: [{}], code: [{}], msg: [{}]", card, result.getCode(), result.getMsg());
+		    return;
 		}
+		
+		memoryService.markMemory(key, skip);
 	}
 
 	@Override
 	public void limitInfoSave(String latestUrl) throws Exception {
-		dataFindManager.findLimitData(latestUrl).stream().forEach(data -> persistentLimit(data));
+		dataFindManager.findLimitData(latestUrl).stream().forEach(this::persistentLimit);
 	}
 	
 	private void persistentLimit(LimitEntity data) {

@@ -2,12 +2,10 @@ package cn.mayu.yugioh.basic.authorize.config;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -16,6 +14,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,9 +26,6 @@ public class ResourceServerConfigAdapter extends ResourceServerConfigurerAdapter
 	
 	@Value("${config.oauth2.publicKey}")
 	private String publicKey;
-
-	@Autowired
-	RedisTemplate<String, String> rt;
 	
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
@@ -56,7 +52,7 @@ public class ResourceServerConfigAdapter extends ResourceServerConfigurerAdapter
 	
 	@Bean
 	public TokenStore redisTokenStore(RedisConnectionFactory connectionFactory) {
-		return new AuthRedisTokenStore(connectionFactory, rt);
+		return new RedisTokenStore(connectionFactory);
 	}
 	
 	@Bean
@@ -65,12 +61,10 @@ public class ResourceServerConfigAdapter extends ResourceServerConfigurerAdapter
 			
 			@Override
 			public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-//				Map<String, Object> map = new HashMap<String, Object>();
-//				map.put("test", "test1");
-//				DefaultOAuth2AccessToken token = ((DefaultOAuth2AccessToken) accessToken);
-//				token.setAdditionalInformation(map);
-//				return token;
-				DefaultOAuth2AccessToken token = new DefaultOAuth2AccessToken("123");
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("test", "test1");
+				DefaultOAuth2AccessToken token = ((DefaultOAuth2AccessToken) accessToken);
+				token.setAdditionalInformation(map);
 				return token;
 			}
 		};

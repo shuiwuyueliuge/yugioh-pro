@@ -12,7 +12,7 @@ public class TaskMemoryServiceImpl implements TaskMemoryService {
 	@Autowired
 	private ReactiveRedisTemplate<String, Long> redisTemplate;
 	
-	private static final Duration TIMEOUT = Duration.ofDays(1L); 
+	private static final Duration TIMEOUT = Duration.ofDays(1L);
 
 	@Override
 	public void markMemory(String key, Long value) {
@@ -26,8 +26,8 @@ public class TaskMemoryServiceImpl implements TaskMemoryService {
 	}
 
 	@Override
-	public void increaseBy(String key) {
-		redisTemplate.opsForValue().increment(key).subscribe();
+	public void markSyncPage(String key, long currentPage) {
+		redisTemplate.opsForValue().set(key, currentPage).subscribe();
 	}
 
 	@Override

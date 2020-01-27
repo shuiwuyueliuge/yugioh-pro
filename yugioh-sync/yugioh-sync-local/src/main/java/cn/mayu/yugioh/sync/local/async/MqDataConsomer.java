@@ -24,14 +24,20 @@ public class MqDataConsomer {
 	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
 	public void saveCard(CardEntity entity) {
-		cardService.saveCardData(entity);
-		threadLocal.remove();
+		try {
+			cardService.saveCardData(entity);
+		} finally {
+			threadLocal.remove();
+		}
 	}
 	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
 	public void updateCard(CardEntity entity) {
-		cardService.updateCardData(entity);
-		threadLocal.remove();
+		try {
+			cardService.updateCardData(entity);
+		} finally {
+			threadLocal.remove();
+		}
 	}
 	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)

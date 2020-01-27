@@ -6,7 +6,7 @@ public interface TaskMemoryService {
 	
 	Long checkMemory(String key);
 	
-	void increaseBy(String key);
+	void markSyncPage(String key, long currentPage);
 	
 	void remove(String key);
 }
