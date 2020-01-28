@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import cn.mayu.yugioh.common.core.util.DateUtil;
 import cn.mayu.yugioh.common.redis.LongRedisSerializer;
 import cn.mayu.yugioh.common.redis.RedisConfigContext;
 import cn.mayu.yugioh.common.redis.YugiohRedisFactory;
@@ -12,7 +14,7 @@ import cn.mayu.yugioh.common.redis.YugiohRedisFactory;
 @Configuration
 public class RedisConfig {
 	
-	public static final String OUROCG_PAGE_KEY = "crawing:ourocg:page";
+	private static final String OUROCG_PAGE_KEY = "%s:ourocg:page";
 	
 	public static final String SKIP_SIZE_KEY = "%s:card:skip";
 
@@ -21,5 +23,9 @@ public class RedisConfig {
 		RedisConfigContext<String, Long> context = new RedisConfigContext<String, Long>(new StringRedisSerializer(),
 				new LongRedisSerializer(), factory);
 		return YugiohRedisFactory.reactiveRedisTemplate(context);
+	}
+	
+	public static String todayOurocgPageKey() {
+		return String.format(OUROCG_PAGE_KEY, DateUtil.dayNow());
 	}
 }

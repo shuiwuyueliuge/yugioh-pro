@@ -43,9 +43,10 @@ public class OurocgCrawlingTask {
 	}
 
 	private void metaDataCrawing() {
-		long num = memoryService.checkMemory(OUROCG_PAGE_KEY);
+		String todayOurocgPageKey = todayOurocgPageKey();
+		long num = memoryService.checkMemory(todayOurocgPageKey);
 		if (num == 0L) {
-			memoryService.markMemory(OUROCG_PAGE_KEY, 1L);
+			memoryService.markMemory(todayOurocgPageKey, 1L);
 			num = 1L;
 		}
 		
@@ -53,7 +54,6 @@ public class OurocgCrawlingTask {
 			String url = String.format(BASE_ULR, num);
 			try {
 				if (!ourocgDataService.ourocgDataInFile(url)) {
-					memoryService.remove(OUROCG_PAGE_KEY);
 					break;
 				}
 			} catch (Exception e) {

@@ -5,7 +5,7 @@
 	<property value="logs" name="USER_HOME" />
 	<timestamp datePattern="yyyy-MM-dd" key="byDay" />
 	
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){"^(Caller[+]0\t at )|(\r?\n)$",""} - %msg%n</pattern>
 		</encoder>
@@ -46,7 +46,7 @@
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</Pattern>
 		</layout>
 	</appender>
-	
+	<!--
 	<appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">            
 			    <level>DEBUG</level>            
@@ -82,7 +82,7 @@
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</Pattern>
 		</layout>
 	</appender>
-	
+	 
 	<appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">            
 			    <level>TRACE</level>            
@@ -99,7 +99,7 @@
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</Pattern>
 		</layout>
-	</appender>
+	</appender> -->
 	
 	<appender name="ASYNC_INFO" class="ch.qos.logback.classic.AsyncAppender"> 
 	    <discardingThreshold>0</discardingThreshold> 
@@ -108,11 +108,8 @@
 	</appender>
 	
 	<root level="info">
-		<appender-ref ref="STDOUT" />
+		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="ASYNC_INFO" />
 		<appender-ref ref="ERROR" />
-		<appender-ref ref="DEBUG" />
-		<appender-ref ref="WARN" />
-		<appender-ref ref="TRACE" />
 	</root>
 </configuration>

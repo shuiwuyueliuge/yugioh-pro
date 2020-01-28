@@ -20,12 +20,12 @@ public class AsyncBoondock {
 	
 	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
 	public void saveImageInDisk(CardEntity entity) {
-		if (entity.getImgUrl() == null) {
+		if (entity.getImgUrl().equals("")) {
 			return;
 		}
 
 		String imgPath = String.format("%simg%s", File.separator, File.separator);
-		String imgName = String.format("%s.jpg", entity.getId());
+		String imgName = String.format("%s.jpg", entity.getHashId());
 		try {
 			FtpHelper.builder().host(ftpImgConfig.getHost()).port(ftpImgConfig.getPort())
 							   .user(ftpImgConfig.getUser()).psw(ftpImgConfig.getPsw()).build()

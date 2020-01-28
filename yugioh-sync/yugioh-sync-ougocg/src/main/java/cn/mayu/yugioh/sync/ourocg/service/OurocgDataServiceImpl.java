@@ -41,6 +41,8 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 	
 	private static final String LINE_FEED = "\r\n";
 	
+	private static final long LINE_FEED_LEN = 2L;
+	
 	private static StringBuffer stringBuffer;
 	
 	static {
@@ -65,11 +67,10 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 			reader.skip(skip);
 			String str = null;
 			while((str = reader.readLine()) != null) {
-				skip = skip + (str + LINE_FEED).length();
+				skip = skip + LINE_FEED_LEN + str.length();
 				OurocgMetaData metaData = readValue(str, OurocgMetaData.class);
-				for (OurocgCard card : metaData.getCards()) {
-					persistentCard(card, key, skip);
-				}
+				metaData.getCards().stream().forEach(this::persistentCard);
+				memoryService.markMemory(key, skip);
 			}
 		}
 	}
@@ -78,20 +79,17 @@ public class OurocgDataServiceImpl implements OurocgDataService {
 		stringBuffer.append(String.format("%s%s", data, LINE_FEED));
 		if (currentPage % 100 == 0 || currentPage == total) {
 			saveInFile(genTodayFileName(), stringBuffer.toString());
-			memoryService.markSyncPage(OUROCG_PAGE_KEY, currentPage);
+			memoryService.markSyncPage(todayOurocgPageKey(), currentPage);
 			stringBuffer = new StringBuffer();
 		}
 	}
 	
-	private void persistentCard(OurocgCard card, String key, long skip) {
+	private void persistentCard(OurocgCard card) {
 		CardProto.CardEntity entity = factory.convert(card);
 		ResultEntity result = syncHomeService.saveCardInMongo(entity);
 		if (result.getCode() != ResultCodeEnum.SUCCESS.getCode()) {
 			log.error("persistent card error, card: [{}], code: [{}], msg: [{}]", card, result.getCode(), result.getMsg());
-		    return;
 		}
-		
-		memoryService.markMemory(key, skip);
 	}
 
 	@Override
