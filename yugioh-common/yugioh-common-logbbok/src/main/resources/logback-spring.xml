@@ -112,4 +112,8 @@
 		<appender-ref ref="ASYNC_INFO" />
 		<appender-ref ref="ERROR" />
 	</root>
+	 
+	<logger name="cn.mayu.yugioh.common.core.html.DefaultHtmlHandler" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
 </configuration>

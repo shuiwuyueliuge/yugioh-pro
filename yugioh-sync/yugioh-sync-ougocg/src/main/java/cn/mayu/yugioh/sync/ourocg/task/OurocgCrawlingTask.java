@@ -1,29 +1,39 @@
 package cn.mayu.yugioh.sync.ourocg.task;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import cn.mayu.yugioh.sync.ourocg.property.ScheduleTaskProperty;
 import cn.mayu.yugioh.sync.ourocg.service.OurocgDataService;
 import cn.mayu.yugioh.sync.ourocg.service.TaskMemoryService;
 import lombok.extern.slf4j.Slf4j;
 import static cn.mayu.yugioh.sync.ourocg.config.RedisConfig.*;
 
-@Component
 @Slf4j
-public class OurocgCrawlingTask {
+public class OurocgCrawlingTask implements Runnable {
 
 	private static final String BASE_ULR = "https://www.ourocg.cn/card/list-5/%s";
 
 	private static final String LIMIT_LATRST_URL = "https://www.ourocg.cn/Limit-Latest";
 
-	@Autowired
 	private OurocgDataService ourocgDataService;
-	
-	@Autowired
-	private TaskMemoryService memoryService;
 
-	@Scheduled(cron = "${crawing.corn}")
-	public void crawing() {
+	private TaskMemoryService memoryService;
+	
+	private ScheduleTaskProperty taskProperty;
+
+	public OurocgCrawlingTask(OurocgDataService ourocgDataService, 
+							  TaskMemoryService memoryService,
+							  ScheduleTaskProperty taskProperty) {
+		this.memoryService = memoryService;
+		this.ourocgDataService = ourocgDataService;
+		this.taskProperty = taskProperty;
+	}
+
+	@Override
+	public void run() {
+		if (!taskProperty.isEnabled()) {
+			log.info("Task Property enabled is [{}]", taskProperty.isEnabled());
+			return;
+		}
+		
 		// card info
 		metaDataCrawing();
 
@@ -49,7 +59,7 @@ public class OurocgCrawlingTask {
 			memoryService.markMemory(todayOurocgPageKey, 1L);
 			num = 1L;
 		}
-		
+
 		while (true) {
 			String url = String.format(BASE_ULR, num);
 			try {

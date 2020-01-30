@@ -9,11 +9,6 @@ public abstract class AbstractDomainConverterFactory<S, T> implements DomainConv
 		return doConvert(source);
 	}
 	
-	@Override
-	public T apply(S source) {
-		return doConvert(source);
-	}
-	
 	protected void copyProperties(S source, T target) {
 		BeanUtils.copyProperties(source, target);
 	}
