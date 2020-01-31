@@ -19,9 +19,9 @@ public class IndexServiceImpl implements IndexService {
 
 	@Override
 	public void indexCache() {
-		indexRepository.findAll().stream().forEach(entity -> {
-			redisTemplate.opsForSet().add(indexCacheKey(entity.getType()), entity).subscribe();
-		});
+		indexRepository.findAll().stream().forEach(entity -> 
+			redisTemplate.opsForSet().add(indexCacheKey(entity.getType()), entity).subscribe()
+		);
 	}
 
 	@Override

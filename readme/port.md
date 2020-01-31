@@ -12,3 +12,5 @@ sync-home
 9500-9599
 authorize
 9600-9699
+admin
+9700-9799

@@ -25,11 +25,7 @@ public class LimitDataHandler extends DefaultHtmlHandler<List<LimitProto.LimitEn
 		String[] tbodys = parser.setHtml(html).parseByTag("tbody");
 		List<List<String>> hashIds = parseLimitList(tbodys, parser);
 		entity.setName(tatile);
-		try {
-			entity.addAllForbidden(hashIds.get(0));
-		} catch (Exception e) {
-			System.out.println(hashIds);
-		}
+		entity.addAllForbidden(hashIds.get(0));
 		entity.addAllLimited(hashIds.get(1));
 		entity.addAllSemiLimited(hashIds.get(2));
 		return entity.build();
