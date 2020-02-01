@@ -9,7 +9,7 @@
 	<artifactId>yugioh-common</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>yugioh-common-logbbok</module>
+		<module>yugioh-common-propertie</module>
     <module>yugioh-common-core</module>
     <module>yugioh-common-mybatis-generator</module>
     <module>yugioh-common-redis</module>

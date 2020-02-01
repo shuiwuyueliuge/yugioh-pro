@@ -13,7 +13,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-logbbok</artifactId>
+			<artifactId>yugioh-common-propertie</artifactId>
 		</dependency>
 		<!-- <dependency> <groupId>cn.mayu</groupId> <artifactId>yugioh-sync-ourocg</artifactId> 
 			<exclusions> <exclusion> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-sleuth</artifactId> 

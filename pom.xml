@@ -102,7 +102,7 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-logbbok</artifactId>
+				<artifactId>yugioh-common-propertie</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>

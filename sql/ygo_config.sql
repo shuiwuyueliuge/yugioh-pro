@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-01-30 19:49:59
+Date: 2020-02-01 14:06:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,7 +31,7 @@ CREATE TABLE `t_properties` (
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_properties
@@ -42,19 +42,19 @@ INSERT INTO `t_properties` VALUES ('9', 'spring.zipkin.sender.type', 'web', 'syn
 INSERT INTO `t_properties` VALUES ('10', 'spring.zipkin.base-url', 'http://127.0.0.1:9411', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('11', 'management.endpoint.bus-refresh.enabled', 'true', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('12', 'spring.cloud.bus.trace.enabled', 'true', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
-INSERT INTO `t_properties` VALUES ('13', 'eureka.client.serviceUrl.defaultZone', 'http://127.0.0.1:9000/eureka/', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
+INSERT INTO `t_properties` VALUES ('13', 'eureka.client.serviceUrl.defaultZone', 'http://ygo:ygo@127.0.0.1:9000/eureka/', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-02-01 13:41:44', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('14', 'spring.rabbitmq.host', '127.0.0.1', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('15', 'spring.rabbitmq.port', '5672', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('16', 'spring.rabbitmq.username', 'guest', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('17', 'spring.rabbitmq.password', 'guest', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('18', 'feign.hystrix.enabled', 'true', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
-INSERT INTO `t_properties` VALUES ('19', 'feign.client.config.default.loggerLevel', 'full', 'sync-ourocg', 'stage', 'develop', '0', null, '2020-01-30 19:23:28', '2019-10-09 13:39:11');
+INSERT INTO `t_properties` VALUES ('19', 'feign.client.config.default.loggerLevel', 'full', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-01-30 19:23:28', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('20', 'server.port', '9500', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-10-09 13:39:11');
 INSERT INTO `t_properties` VALUES ('21', 'management.endpoint.bus-refresh.enabled', 'true', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:11:54');
 INSERT INTO `t_properties` VALUES ('22', 'spring.sleuth.sampler.probability', '1.0', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:12:17');
 INSERT INTO `t_properties` VALUES ('23', 'spring.zipkin.base-url', 'http://127.0.0.1:9411', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:12:43');
 INSERT INTO `t_properties` VALUES ('24', 'spring.cloud.bus.trace.enabled', 'true', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:12:59');
-INSERT INTO `t_properties` VALUES ('25', 'eureka.client.serviceUrl.defaultZone', 'http://127.0.0.1:9000/eureka/', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:13:16');
+INSERT INTO `t_properties` VALUES ('25', 'eureka.client.serviceUrl.defaultZone', 'http://ygo:ygo@127.0.0.1:9000/eureka/', 'sync-home', 'stage', 'develop', '0', null, '2020-02-01 13:41:44', '2019-12-03 11:13:16');
 INSERT INTO `t_properties` VALUES ('26', 'async.pool.core-size', '3', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:13:30');
 INSERT INTO `t_properties` VALUES ('27', 'async.pool.max-size', '5', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:13:43');
 INSERT INTO `t_properties` VALUES ('28', 'async.pool.queue-size', '100', 'sync-home', 'stage', 'develop', '0', null, '2020-01-29 15:53:46', '2019-12-03 11:13:58');
@@ -104,7 +104,7 @@ INSERT INTO `t_properties` VALUES ('79', 'management.endpoint.bus-refresh.enable
 INSERT INTO `t_properties` VALUES ('80', 'spring.sleuth.sampler.probability', '1.0', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
 INSERT INTO `t_properties` VALUES ('81', 'spring.zipkin.base-url', 'http://127.0.0.1:9411', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
 INSERT INTO `t_properties` VALUES ('82', 'spring.cloud.bus.trace.enabled', 'true', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
-INSERT INTO `t_properties` VALUES ('83', 'eureka.client.serviceUrl.defaultZone', 'http://127.0.0.1:9000/eureka/', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
+INSERT INTO `t_properties` VALUES ('83', 'eureka.client.serviceUrl.defaultZone', 'http://ygo:ygo@127.0.0.1:9000/eureka/', 'sync-local', 'stage', 'develop', '0', '', '2020-02-01 13:41:44', '2020-01-30 19:41:04');
 INSERT INTO `t_properties` VALUES ('84', 'async.pool.core-size', '3', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
 INSERT INTO `t_properties` VALUES ('85', 'async.pool.max-size', '5', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
 INSERT INTO `t_properties` VALUES ('86', 'async.pool.queue-size', '100', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:41:04');
@@ -133,3 +133,20 @@ INSERT INTO `t_properties` VALUES ('108', 'spring.datasource.hikari.minimum-idle
 INSERT INTO `t_properties` VALUES ('109', 'spring.jpa.database-platform', 'org.hibernate.dialect.MySQL5InnoDBDialect', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:49:27');
 INSERT INTO `t_properties` VALUES ('110', 'spring.jpa.show-sql', 'true', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:49:27');
 INSERT INTO `t_properties` VALUES ('111', 'spring.jpa.hibernate.ddl-auto', 'none', 'sync-local', 'stage', 'develop', '0', '', null, '2020-01-30 19:49:27');
+INSERT INTO `t_properties` VALUES ('112', 'spring.boot.admin.client.instance.service-base-url', 'http://localhost:9700', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-01-31 12:01:45', '2019-10-09 13:39:11');
+INSERT INTO `t_properties` VALUES ('113', 'spring.boot.admin.client.instance.service-base-url', 'http://localhost:9700', 'sync-home', 'stage', 'develop', '0', '', '2020-01-31 12:34:38', '2019-12-03 11:16:26');
+INSERT INTO `t_properties` VALUES ('114', 'server.port', '9300', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('115', 'management.endpoints.web.exposure.include', '*', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('116', 'spring.boot.admin.client.instance.service-base-url', 'http://127.0.0.1:9700', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('117', 'management.endpoints.web.exposure.include', '*', 'sync-local', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('118', 'spring.boot.admin.client.instance.service-base-url', 'http://127.0.0.1:9700', 'sync-local', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('119', 'management.endpoints.web.exposure.include', '*', 'sync-home', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('120', 'management.endpoints.web.exposure.include', '*', 'monitor', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('121', 'eureka.client.serviceUrl.defaultZone', 'http://ygo:ygo@127.0.0.1:9000/eureka/', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:45:05', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('122', 'server.port', '9700', 'monitor', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('123', 'management.endpoint.bus-refresh.enabled', 'true', 'monitor', 'stage', 'develop', '0', '', '2020-01-31 13:18:38', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('124', 'spring.cloud.bus.trace.enabled', 'true', 'monitor', 'stage', 'develop', '0', '', '2020-01-31 13:12:52', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('125', 'eureka.instance.prefer-ip-address', 'true', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('126', 'eureka.instance.prefer-ip-address', 'true', 'sync-home', 'stage', 'develop', '0', '', '2020-02-01 13:42:45', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('127', 'eureka.instance.prefer-ip-address', 'true', 'sync-local', 'stage', 'develop', '0', '', '2020-02-01 13:43:05', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('128', 'eureka.instance.prefer-ip-address', 'true', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-02-01 13:43:23', '2020-01-30 19:37:40');
