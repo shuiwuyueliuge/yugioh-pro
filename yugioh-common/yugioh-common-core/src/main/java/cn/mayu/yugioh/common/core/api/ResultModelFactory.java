@@ -9,8 +9,8 @@ public abstract class ResultModelFactory<T, D> {
 	public T createResultModel(ResultCodeEnum resultCodeEnum) {
 		return doCreateNoData(resultCodeEnum.code, resultCodeEnum.msg);
 	}
-	
-	protected abstract T doCreateNoData(int code, String msg);
 
 	protected abstract T doCreateFull(int code, String msg, D data);
+	
+	protected abstract T doCreateNoData(int code, String msg);
 }

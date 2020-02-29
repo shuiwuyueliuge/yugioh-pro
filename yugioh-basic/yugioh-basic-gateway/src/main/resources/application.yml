@@ -6,7 +6,9 @@ spring:
     name: gateway
 
 eureka:  
+  instance:
+    prefer-ip-address: true
   client:    
     serviceUrl:
-      defaultZone: http://127.0.0.1:9000/eureka/
+      defaultZone: http://ygo:ygo@127.0.0.1:9000/eureka/
     registerWithEureka: true

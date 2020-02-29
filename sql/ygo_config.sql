@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80017
 File Encoding         : 65001
 
-Date: 2020-02-01 14:06:37
+Date: 2020-02-02 16:17:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,11 +27,11 @@ CREATE TABLE `t_properties` (
   `profile` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件名online/stage',
   `label` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分支master/develop',
   `auto_refresh` tinyint(2) unsigned DEFAULT '0' COMMENT '0不可以自动刷新，1可以自动刷新',
-  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
+  `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '',
   `modify_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of t_properties
@@ -150,3 +150,9 @@ INSERT INTO `t_properties` VALUES ('125', 'eureka.instance.prefer-ip-address', '
 INSERT INTO `t_properties` VALUES ('126', 'eureka.instance.prefer-ip-address', 'true', 'sync-home', 'stage', 'develop', '0', '', '2020-02-01 13:42:45', '2020-01-30 19:37:40');
 INSERT INTO `t_properties` VALUES ('127', 'eureka.instance.prefer-ip-address', 'true', 'sync-local', 'stage', 'develop', '0', '', '2020-02-01 13:43:05', '2020-01-30 19:37:40');
 INSERT INTO `t_properties` VALUES ('128', 'eureka.instance.prefer-ip-address', 'true', 'sync-ourocg', 'stage', 'develop', '0', '', '2020-02-01 13:43:23', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('129', 'yugioh.security.browser.ignoring-ant', '/instances,/actuator/**', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('130', 'yugioh.security.browser.maximumSessions', '1000', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('131', 'yugioh.security.browser.maxSessionsPreventsLogin', 'true', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('132', 'yugioh.security.browser.login-page', '/login', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('133', 'eureka.instance.metadata-map.user.name', 'ygo', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');
+INSERT INTO `t_properties` VALUES ('134', 'eureka.instance.metadata-map.user.password', 'ygo', 'monitor', 'stage', 'develop', '0', '', '2020-02-01 13:42:18', '2020-01-30 19:37:40');

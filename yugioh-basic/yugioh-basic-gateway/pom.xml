@@ -23,6 +23,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-redis</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

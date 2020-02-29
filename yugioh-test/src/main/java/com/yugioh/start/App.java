@@ -12,8 +12,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @SpringBootApplication
 public class App {
 	
-	@Autowired
-	private DataSource dataSource;
+//	@Autowired
+//	private DataSource dataSource;
 	
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(App.class);
@@ -21,11 +21,11 @@ public class App {
 		app.run(args);
 	}
 	
-	@Bean
-	public PersistentTokenRepository persistentTokenRepository() {
-		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
-		tokenRepository.setDataSource(dataSource);
-		tokenRepository.setCreateTableOnStartup(false);
-		return tokenRepository;
-	}
+//	@Bean
+//	public PersistentTokenRepository persistentTokenRepository() {
+//		JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+//		tokenRepository.setDataSource(dataSource);
+//		tokenRepository.setCreateTableOnStartup(false);
+//		return tokenRepository;
+//	}
 }

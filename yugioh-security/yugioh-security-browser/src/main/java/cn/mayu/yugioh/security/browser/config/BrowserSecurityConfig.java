@@ -1,21 +1,30 @@
 package cn.mayu.yugioh.security.browser.config;
 
 import java.util.Set;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
 import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
+import cn.mayu.yugioh.security.browser.property.CsrfProperty;
+import cn.mayu.yugioh.security.browser.property.LogoutProperty;
 import cn.mayu.yugioh.security.browser.property.RememberMeProperty;
 import cn.mayu.yugioh.security.browser.property.SessionProperty;
 
@@ -27,6 +36,12 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private SessionProperty sessionProperty;
+	
+	@Autowired
+	private LogoutProperty logoutProperty;
+	
+	@Autowired
+	private CsrfProperty csrfProperty;
 	
 	@Autowired
 	private RequestManager requestManager;
@@ -58,11 +73,41 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		requestManager.config(http.authorizeRequests());
-		http.csrf().disable();
+		csrfConfig(http);
 		loginConfig(http);
+		logoutConfig(http);
 		rememberMeConfig(http);
 		sessionConfig(http);
 		apply(http);
+	}
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+	
+	private void logoutConfig(HttpSecurity http) throws Exception {
+		http.logout().logoutUrl(logoutProperty.getLogoutUrl());
+	}
+
+	private void csrfConfig(HttpSecurity http) throws Exception {
+		if (csrfProperty.isCsrfDisable()) {
+			http.httpBasic().and().csrf().disable();
+			return;
+		}
+		
+		if (csrfProperty.isCsrfTokenRepositoryWithHttpOnlyFalse()) {
+			CsrfConfigurer<HttpSecurity> configurer = http.httpBasic().and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+		    if (csrfProperty.getCsrfIgnoringAnt()!= null) {
+		    	String[] ants = csrfProperty.getCsrfIgnoringAnt().split(",");
+		    	Stream.of(ants).forEach(ant -> configurer.ignoringAntMatchers(ants));
+		    }
+		}
 	}
 	
 	private void loginConfig(HttpSecurity http) throws Exception {

@@ -13,41 +13,16 @@
 	<dependencies>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-propertie</artifactId>
-		</dependency>
-		<!-- <dependency> <groupId>cn.mayu</groupId> <artifactId>yugioh-sync-ourocg</artifactId> 
-			<exclusions> <exclusion> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-sleuth</artifactId> 
-			</exclusion> <exclusion> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-zipkin</artifactId> 
-			</exclusion> </exclusions> <version>1.0-SNAPSHOT</version> </dependency> -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-browser</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core-social-github</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-security-core-social-qq</artifactId>
+			<artifactId>yugioh-basic-authorize</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 	</dependencies>
 </project>

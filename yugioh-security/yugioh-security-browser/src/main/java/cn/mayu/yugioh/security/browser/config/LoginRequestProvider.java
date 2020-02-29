@@ -14,7 +14,7 @@ public class LoginRequestProvider implements RequestProvider {
 	@Override
 	public void config(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
 		if (loginProperty.getLoginPage() != null) {
-			registry.antMatchers(loginProperty.getLoginPage()).permitAll();
+			registry.antMatchers(loginProperty.getLoginPage(), loginProperty.getProcessingUrl()).permitAll();
 			return;
 		}
 		
