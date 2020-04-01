@@ -4,6 +4,15 @@ server:
 spring:
   application:    
     name: gateway
+    
+  cloud:
+    gateway:
+      routes:
+        - id: blog
+          uri: http://www.baidu.com
+          predicates:
+            - Method=GET,POST
+            - Path=/**  
 
 eureka:  
   instance:
@@ -12,7 +21,15 @@ eureka:
     serviceUrl:
       defaultZone: http://ygo:ygo@127.0.0.1:9000/eureka/
     registerWithEureka: true
-    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always   
     
 config:
     oauth2:

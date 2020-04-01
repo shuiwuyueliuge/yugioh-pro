@@ -17,7 +17,7 @@ import cn.mayu.yugioh.common.core.util.JwtUtil;
 import cn.mayu.yugioh.common.core.util.RSAUtil;
 import reactor.core.publisher.Mono;
 
-@Component
+//@Component
 public class Test implements GlobalFilter, Ordered {
 	
 	@Autowired

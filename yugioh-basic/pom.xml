@@ -15,5 +15,6 @@
 		<module>yugioh-basic-gateway</module>
     <module>yugioh-basic-authorize</module>
     <module>yugioh-basic-monitor</module>
+    <module>yugioh-basic-route-manage</module>
   </modules>
 </project>
