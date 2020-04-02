@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 01/04/2020 16:55:02
+ Date: 02/04/2020 17:14:13
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `t_dict`  (
   `value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `value_id` tinyint(10) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_dict
@@ -41,8 +41,9 @@ INSERT INTO `t_dict` VALUES (5, 'Header Route Predicate Factory', 1, 'Header', 4
 INSERT INTO `t_dict` VALUES (6, 'Host Route Predicate Factory', 1, 'Host', 5);
 INSERT INTO `t_dict` VALUES (7, 'Method Route Predicate Factory', 1, 'Method', 6);
 INSERT INTO `t_dict` VALUES (8, 'Path Route Predicate Factory', 1, 'Path', 7);
-INSERT INTO `t_dict` VALUES (9, ' Query Route Predicate Factory', 1, 'Query', 8);
+INSERT INTO `t_dict` VALUES (9, 'Query Route Predicate Factory', 1, 'Query', 8);
 INSERT INTO `t_dict` VALUES (10, 'RemoteAddr Route Predicate Factory', 1, 'RemoteAddr', 9);
+INSERT INTO `t_dict` VALUES (11, 'Weight Route Predicate Factory', 1, 'Weight', 10);
 
 -- ----------------------------
 -- Table structure for t_predicates
@@ -56,13 +57,22 @@ CREATE TABLE `t_predicates`  (
   `modify_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_predicates
 -- ----------------------------
-INSERT INTO `t_predicates` VALUES (1, 1, 7, '/**', '2020-04-01 16:41:24', '2020-04-01 13:46:57');
-INSERT INTO `t_predicates` VALUES (2, 1, 6, 'POST,GET', '2020-04-01 16:42:51', '2020-04-01 16:16:50');
+INSERT INTO `t_predicates` VALUES (1, 1, 7, '/**', '2020-04-02 15:29:39', '2020-04-01 13:46:57');
+INSERT INTO `t_predicates` VALUES (2, 1, 6, 'POST,GET', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
+INSERT INTO `t_predicates` VALUES (3, 1, 0, '2017-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
+INSERT INTO `t_predicates` VALUES (4, 1, 1, '2021-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
+INSERT INTO `t_predicates` VALUES (5, 1, 2, '2017-01-20T17:42:47.789-07:00[America/Denver],2017-01-21T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (6, 1, 3, 'chocolate,ch.p', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (7, 1, 4, 'X-Request-Id,\\d+', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (8, 1, 5, '**.somehost.org,**.anotherhost.org', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (9, 1, 8, 'red,gree.', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (10, 1, 9, '192.168.1.1/24', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (11, 1, 10, 'group1,8', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
 
 -- ----------------------------
 -- Table structure for t_route
