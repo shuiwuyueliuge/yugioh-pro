@@ -4,7 +4,7 @@ import cn.mayu.yugioh.basic.gateway.route.dto.RouteDTO;
 
 public interface RouteService {
 
-	void redisCached() throws Exception;
+	void initRoute();
 
 	Integer addRoute(RouteDTO route);
 

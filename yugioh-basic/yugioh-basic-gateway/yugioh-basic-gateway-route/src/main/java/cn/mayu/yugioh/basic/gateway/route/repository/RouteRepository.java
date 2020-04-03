@@ -6,5 +6,7 @@ import cn.mayu.yugioh.basic.gateway.route.entity.RouteEntity;
 
 public interface RouteRepository extends JpaRepository<RouteEntity, Integer> {
 
-	List<RouteEntity> findByStatus(Integer status);
+	List<RouteEntity> findByState(Integer status);
+
+	RouteEntity findByServiceId(String serviceId);
 }

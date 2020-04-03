@@ -1,6 +1,5 @@
 package cn.mayu.yugioh.basic.gateway.daedalus.route;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
@@ -10,8 +9,8 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.mayu.yugioh.common.core.util.JsonUtil;
+import lombok.Data;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -22,7 +21,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
 	@Autowired
 	private RedisConnectionFactory redisConnectionFactory;
-	
+
 	private ApplicationEventPublisher publisher;
 
 	@Override
@@ -30,7 +29,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 		this.publisher = applicationEventPublisher;
 		newThread(this).start();
 	}
-	
+
 	@Override
 	public Thread newThread(Runnable r) {
 		Thread thread = new Thread(r);
@@ -40,7 +39,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
 	@Override
 	public void run() {
-		while(true) {
+		while (true) {
 			loadRouteTask();
 			try {
 				TimeUnit.SECONDS.sleep(10L);
@@ -51,23 +50,36 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
 	@Override
 	public void loadRouteTask() {
-		byte[] authKey = "gateway:routes".getBytes();
+		byte[] routeKey = "gateway:routes".getBytes();
 		RedisConnection conn = redisConnectionFactory.getConnection();
-		byte[] res = null;
 		try {
-			res = conn.get(authKey);
+			byte[] res = conn.rPop(routeKey);
+			while (res != null) {
+				try {
+					RouteDefinitionWrapper wrapper = JsonUtil.readValue(res, RouteDefinitionWrapper.class);
+					RouteDefinition data = wrapper.getRouteDefinition();
+					if (data.getFilters().size() > 0 && data.getPredicates().size() > 0) {
+						if (wrapper.getStatus() == 1) {
+							add(data);
+						}
+						
+						if (wrapper.getStatus() == 0) {
+							update(data);
+						}
+						
+						if (wrapper.getStatus() == -1) {
+							delete(data.getId());
+						}
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				res = conn.rPop(routeKey);
+			}
 		} finally {
 			conn.close();
-		}
-		
-		try {
-			new ObjectMapper().readValue(res, new TypeReference<List<RouteDefinition>>() { }).stream().forEach(data -> {
-				if (data.getFilters().size() > 0 && data.getPredicates().size() > 0) {
-					add(data);
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -86,8 +98,16 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 		this.routeDefinitionWriter.delete(Mono.just(id));
 		publishEvent();
 	}
-	
+
 	private void publishEvent() {
 		this.publisher.publishEvent(new RefreshRoutesEvent(this));
+	}
+
+	@Data
+	public static class RouteDefinitionWrapper {
+
+		private RouteDefinition routeDefinition;
+
+		private int status;
 	}
 }

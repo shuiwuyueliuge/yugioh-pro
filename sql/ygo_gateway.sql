@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 02/04/2020 17:14:13
+ Date: 03/04/2020 15:17:42
 */
 
 SET NAMES utf8mb4;
@@ -51,28 +51,39 @@ INSERT INTO `t_dict` VALUES (11, 'Weight Route Predicate Factory', 1, 'Weight', 
 DROP TABLE IF EXISTS `t_predicates`;
 CREATE TABLE `t_predicates`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `route_id` int(11) NOT NULL,
+  `route_id` int(11) NULL DEFAULT NULL,
   `arg_name` tinyint(10) NULL DEFAULT NULL,
   `arg_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `modify_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 144 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_predicates
 -- ----------------------------
-INSERT INTO `t_predicates` VALUES (1, 1, 7, '/**', '2020-04-02 15:29:39', '2020-04-01 13:46:57');
-INSERT INTO `t_predicates` VALUES (2, 1, 6, 'POST,GET', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
-INSERT INTO `t_predicates` VALUES (3, 1, 0, '2017-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
-INSERT INTO `t_predicates` VALUES (4, 1, 1, '2021-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-01 16:16:50');
-INSERT INTO `t_predicates` VALUES (5, 1, 2, '2017-01-20T17:42:47.789-07:00[America/Denver],2017-01-21T17:42:47.789-07:00[America/Denver]', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (6, 1, 3, 'chocolate,ch.p', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (7, 1, 4, 'X-Request-Id,\\d+', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (8, 1, 5, '**.somehost.org,**.anotherhost.org', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (9, 1, 8, 'red,gree.', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (10, 1, 9, '192.168.1.1/24', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
-INSERT INTO `t_predicates` VALUES (11, 1, 10, 'group1,8', '2020-04-02 15:29:39', '2020-04-02 10:40:22');
+INSERT INTO `t_predicates` VALUES (122, 18, 7, '/**', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (123, 18, 6, 'POST,GET', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (124, 18, 0, '2017-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (125, 18, 1, '2021-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (126, 18, 2, '2017-01-20T17:42:47.789-07:00[America/Denver],2017-01-21T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (127, 18, 3, 'chocolate,ch.p', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (128, 18, 4, 'X-Request-Id,\\d+', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (129, 18, 5, '**.somehost.org,**.anotherhost.org', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (130, 18, 8, 'red,gree.', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (131, 18, 9, '192.168.1.1/24', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (132, 18, 10, 'group1,8', '2020-04-03 15:10:39', '2020-04-03 15:10:39');
+INSERT INTO `t_predicates` VALUES (133, 19, 7, '/**', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (134, 19, 6, 'POST,GET', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (135, 19, 0, '2017-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (136, 19, 1, '2021-01-20T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (137, 19, 2, '2017-01-20T17:42:47.789-07:00[America/Denver],2017-01-21T17:42:47.789-07:00[America/Denver]', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (138, 19, 3, 'chocolate,ch.p', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (139, 19, 4, 'X-Request-Id,\\d+', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (140, 19, 5, '**.somehost.org,**.anotherhost.org', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (141, 19, 8, 'red,gree.', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (142, 19, 9, '192.168.1.1/24', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
+INSERT INTO `t_predicates` VALUES (143, 19, 10, 'group1,8', '2020-04-03 15:12:42', '2020-04-03 15:12:42');
 
 -- ----------------------------
 -- Table structure for t_route
@@ -80,18 +91,20 @@ INSERT INTO `t_predicates` VALUES (11, 1, 10, 'group1,8', '2020-04-02 15:29:39',
 DROP TABLE IF EXISTS `t_route`;
 CREATE TABLE `t_route`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `setvice_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `service_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `uri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `order` int(11) NULL DEFAULT NULL,
-  `status` int(11) NULL DEFAULT NULL,
+  `sort` int(11) NULL DEFAULT NULL,
+  `state` tinyint(11) NULL DEFAULT 0,
   `modify_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `service`(`service_id`, `uri`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_route
 -- ----------------------------
-INSERT INTO `t_route` VALUES (1, 'test', 'http://www.baidu.com', 1, 0, NULL, '2020-04-01 13:45:57');
+INSERT INTO `t_route` VALUES (18, 'test2', 'http://www.baidu.com', 1, 0, '2020-04-03 15:10:40', '2020-04-03 15:10:39');
+INSERT INTO `t_route` VALUES (19, 'test3', 'http://www.baidu.com', 1, 0, '2020-04-03 15:12:42', '2020-04-03 15:12:42');
 
 SET FOREIGN_KEY_CHECKS = 1;

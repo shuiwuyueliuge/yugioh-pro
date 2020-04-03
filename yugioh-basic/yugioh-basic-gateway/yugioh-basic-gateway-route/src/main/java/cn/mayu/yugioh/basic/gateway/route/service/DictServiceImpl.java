@@ -16,7 +16,7 @@ public class DictServiceImpl implements DictService {
 	
 	private DictCache dictCache;
 	
-	private static final long RELOAD_TIME = 60L;
+	private static final long RELOAD_MINUTES_TIME = 30L;
 	
 	@Autowired
 	public DictServiceImpl(CacheManager cacheManager, DictRepository dictRepository) {
@@ -31,11 +31,16 @@ public class DictServiceImpl implements DictService {
 	}
 	
 	@Override
+	public Integer getName(int type, String value) {
+		return dictCache.getName(type, value);
+	}
+	
+	@Override
 	public void run() {
 		while(true) {
 			dictCache.doCache(dictRepository.findAll());
 			try {
-				TimeUnit.SECONDS.sleep(RELOAD_TIME);
+				TimeUnit.MINUTES.sleep(RELOAD_MINUTES_TIME);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -60,21 +65,27 @@ public class DictServiceImpl implements DictService {
 			cache = cacheManager.getCache(CACHE_NAME);
 		}
 		
+		private Integer getName(int type, String value) {
+			Integer name = cache.get(getKey(type, value), Integer.class);
+			return name == null ? null : name;
+		}
+		
+		private String getValue(int type, int valueId) {
+			String value = cache.get(getKey(type, valueId), String.class);
+			return value == null ? null : value;
+		}
+
 		private void doCache(List<DictEntity> list) {
 			list.stream().forEach(this::put);
 		}
 		
 		private void put(DictEntity dict) {
-			cache.put(getKey(dict.getType(), dict.getValueId()), dict);
+			cache.put(getKey(dict.getType(), dict.getValueId()), dict.getValue());
+			cache.put(getKey(dict.getType(), dict.getValue()), dict.getValueId());
 		}
 		
-		private String getKey(int type, int valueId) {
+		private String getKey(int type, Object valueId) {
 			return String.format(CACHE_KEY_TEMPLATE, type, valueId);
-		}
-		
-		private String getValue(int type, int valueId) {
-			DictEntity dict = cache.get(getKey(type, valueId), DictEntity.class);
-			return dict == null ? null : dict.getValue();
 		}
 	}
 }

@@ -12,12 +12,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "t_route")
+@DynamicInsert
 public class RouteEntity {
 
     @Id
@@ -25,17 +28,17 @@ public class RouteEntity {
     @Column(name = "id")
 	private Integer id;
 	
-    @Column(name = "setvice_id")
-	private String setviceId;
+    @Column(name = "service_id")
+	private String serviceId;
 	
     @Column(name = "uri")
 	private String uri;
 	
-    @Column(name = "order")
-	private Integer order;
+    @Column(name = "sort")
+	private Integer sort;
 	
-    @Column(name = "status")
-	private Integer status;
+    @Column(name = "state", columnDefinition="tinyint default 0")
+	private Integer state;
     
     @Column(name = "modify_time")
     @UpdateTimestamp
