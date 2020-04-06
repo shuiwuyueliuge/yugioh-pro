@@ -46,7 +46,6 @@ public class RouteServiceImpl implements RouteService {
 		RouteEntity routeEntity = convert(routeConverter, route);
 		routeEntity = routeRepository.save(routeEntity);
 		route.setStatus(CREATE.getStatus());
-		route.getRouteDefinition().setId(routeEntity.getServiceId());
 		lPush(ROUTE_KEY, getRouteByte(route));
 		return routeEntity.getId();
 	}

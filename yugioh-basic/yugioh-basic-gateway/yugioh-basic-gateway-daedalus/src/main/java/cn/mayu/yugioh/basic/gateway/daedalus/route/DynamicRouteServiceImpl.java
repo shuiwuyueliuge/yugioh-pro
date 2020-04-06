@@ -13,7 +13,7 @@ import cn.mayu.yugioh.common.core.util.JsonUtil;
 import lombok.Data;
 import reactor.core.publisher.Mono;
 
-@Service
+//@Service
 public class DynamicRouteServiceImpl implements DynamicRouteService {
 
 	@Autowired
@@ -55,25 +55,20 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 		try {
 			byte[] res = conn.rPop(routeKey);
 			while (res != null) {
-				try {
-					RouteDefinitionWrapper wrapper = JsonUtil.readValue(res, RouteDefinitionWrapper.class);
-					RouteDefinition data = wrapper.getRouteDefinition();
-					if (data.getFilters().size() > 0 && data.getPredicates().size() > 0) {
-						if (wrapper.getStatus() == 1) {
-							add(data);
-						}
-						
-						if (wrapper.getStatus() == 0) {
-							update(data);
-						}
-						
-						if (wrapper.getStatus() == -1) {
-							delete(data.getId());
-						}
-						
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+				RouteDefinitionWrapper wrapper = RouteDefinitionWrapper.readValue(res);
+				RouteDefinition data = wrapper.getRouteDefinition();
+				if (wrapper.getStatus() == 1) {
+					add(data);
+					continue;
+				}
+
+				if (wrapper.getStatus() == 0) {
+					update(data);
+					continue;
+				}
+
+				if (wrapper.getStatus() == -1) {
+					delete(data.getId());
 				}
 
 				res = conn.rPop(routeKey);
@@ -83,19 +78,19 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 		}
 	}
 
-	public void add(RouteDefinition definition) {
+	private void add(RouteDefinition definition) {
 		routeDefinitionWriter.save(Mono.just(definition)).subscribe();
 		publishEvent();
 	}
 
-	public void update(RouteDefinition definition) {
+	private void update(RouteDefinition definition) {
 		routeDefinitionWriter.delete(Mono.just(definition.getId()));
 		routeDefinitionWriter.save(Mono.just(definition)).subscribe();
 		publishEvent();
 	}
 
-	public void delete(String id) {
-		this.routeDefinitionWriter.delete(Mono.just(id));
+	private void delete(String id) {
+		this.routeDefinitionWriter.delete(Mono.just(id)).subscribe();
 		publishEvent();
 	}
 
@@ -109,5 +104,13 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 		private RouteDefinition routeDefinition;
 
 		private int status;
+
+		public static RouteDefinitionWrapper readValue(byte[] res) {
+			try {
+				return JsonUtil.readValue(res, RouteDefinitionWrapper.class);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 	}
 }

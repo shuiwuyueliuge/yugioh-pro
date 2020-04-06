@@ -54,9 +54,9 @@ public class App implements CommandLineRunner {
 /**
 {
 	"status": 1,
-	"route_definition": {
+	"routeDefinition": {
 		"id": "test2",
-		"service_id": null,
+		"tableId": null,
 		"predicates": [{
 			"name": "Path",
 			"args": {

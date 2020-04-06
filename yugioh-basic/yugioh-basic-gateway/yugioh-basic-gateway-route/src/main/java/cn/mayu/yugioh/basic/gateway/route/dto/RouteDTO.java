@@ -1,6 +1,5 @@
 package cn.mayu.yugioh.basic.gateway.route.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,11 +17,11 @@ public class RouteDTO {
 	  
 	  private String id;
 	  
-	  private String serviceId;
+	  private Integer tableId;
 
-	  private List<PredicateDTO> predicates = new ArrayList<PredicateDTO>();
+	  private List<PredicateDTO> predicates;
 
-	  private List<FilterDTO> filters = new ArrayList<FilterDTO>();
+	  private List<FilterDTO> filters;
 
 	  private String uri;
 
