@@ -13,7 +13,7 @@ import cn.mayu.yugioh.common.core.util.JsonUtil;
 import lombok.Data;
 import reactor.core.publisher.Mono;
 
-//@Service
+@Service
 public class DynamicRouteServiceImpl implements DynamicRouteService {
 
 	@Autowired

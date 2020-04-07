@@ -2,6 +2,7 @@ package cn.mayu.yugioh.basic.gateway.route.entity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,34 +14,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "t_route")
-@DynamicInsert
-public class RouteEntity {
+@Table(name = "t_filter")
+public class FilterEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
 	private Integer id;
 	
-    @Column(name = "service_id")
-	private String serviceId;
+    @Column(name = "route_id")
+	private Integer route_id;
 	
-    @Column(name = "uri")
-	private String uri;
-	
-    @Column(name = "sort")
-	private Integer sort;
-	
-    @Column(name = "state", columnDefinition="tinyint default 0")
-	private Integer state;
+    @Column(name = "filter_name")
+	private int filterName;
     
     @Column(name = "modify_time")
     @UpdateTimestamp
@@ -50,12 +42,6 @@ public class RouteEntity {
     private LocalDateTime createTime;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "route_id")
-    private List<PredicatesEntity> predicatesEntities;
-    
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "route_id")
-    private List<FilterEntity> filterEntities;
+    @JoinColumn(name = "filter_id")
+    private List<FilterArgEntity> filterArgEntities;
 }

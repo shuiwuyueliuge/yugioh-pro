@@ -1,8 +1,5 @@
 package cn.mayu.yugioh.basic.gateway.route.convert;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import cn.mayu.yugioh.basic.gateway.route.dto.FilterDTO;
 import cn.mayu.yugioh.basic.gateway.route.dto.RouteDTO;
 import cn.mayu.yugioh.basic.gateway.route.dto.RouteDTO.RouteDefinition;
 import cn.mayu.yugioh.basic.gateway.route.entity.RouteEntity;
@@ -12,8 +9,11 @@ public class RouteConverter implements Converter<RouteDTO, RouteEntity> {
 	
 	private PredicatesConverter predicatesConverter;
 	
+	private FilterConverter filterConverter;
+	
 	public RouteConverter(DictService dictService) {
 		this.predicatesConverter = new PredicatesConverter(dictService);
+		this.filterConverter = new FilterConverter(dictService);
 	}
 
 	@Override
@@ -25,24 +25,18 @@ public class RouteConverter implements Converter<RouteDTO, RouteEntity> {
 		routeEntity.setServiceId(source.getId());
 		routeEntity.setSort(source.getOrder());
 		routeEntity.setPredicatesEntities(predicatesConverter.applyList(source.getPredicates()));
+		routeEntity.setFilterEntities(filterConverter.applyList(source.getFilters()));
 		return routeEntity;
 	}
 
 	@Override
 	public RouteDTO reverse(RouteEntity route) {
-		FilterDTO filter = new FilterDTO();
-		filter.setName("StripPrefix");
-		filter.setArgs(new LinkedHashMap<String, String>());
-		filter.getArgs().put("_genkey_0", "1");
-		
 		RouteDefinition definition = new RouteDefinition();
-		definition.setFilters(new ArrayList<FilterDTO>());
-		definition.getFilters().add(filter);
+		definition.setFilters(filterConverter.reverseList(route.getFilterEntities()));
 		definition.setPredicates(predicatesConverter.reverseList(route.getPredicatesEntities()));
 		definition.setId(route.getServiceId());
 		definition.setOrder(route.getSort());
 		definition.setUri(route.getUri());
-		
 		RouteDTO routeDTO = new RouteDTO();
 		routeDTO.setRouteDefinition(definition);
 		return routeDTO;
