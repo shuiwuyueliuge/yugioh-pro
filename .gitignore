@@ -2,6 +2,7 @@
 .project
 *.cmd
 *.class
+.gitignore
 /classes
 **/target/**
 **/logs/**
