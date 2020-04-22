@@ -32,7 +32,7 @@ public class ScheduleConfig implements SchedulingConfigurer {
 	
 	private ThreadPoolTaskScheduler initThreadPoolTaskScheduler() {
 		ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
-		taskScheduler.setPoolSize(Runtime.getRuntime().availableProcessors() * 2);
+		taskScheduler.setPoolSize(1);
 		taskScheduler.initialize();
 		return taskScheduler;
 	}

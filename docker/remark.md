@@ -1,4 +1,12 @@
 Ô¶³Ì²Ö¿â:https://t5t8q6wn.mirror.aliyuncs.com
+vi /etc/docker/daemon.json
+{
+    "registry-mirrors": [
+        "https://t5t8q6wn.mirror.aliyuncs.com"
+    ]
+}
+
+systemctl restart docker
 ##############################################################
 ÍÆËÍ¾µÏñµ½nexus£º
 1¡¢µÇÂ¼
