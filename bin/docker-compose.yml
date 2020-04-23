@@ -52,3 +52,12 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - TZ=Asia/Shanghai
+  nginx:
+    container_name: nginx
+    privileged: true
+    image: nginx
+    ports:
+       - 8080:80
+    volumes:
+      - /usr/local/docker/nginx/conf:/etc/nginx/conf.d
+      - /usr/local/docker/nginx/logs:/var/log/nginx

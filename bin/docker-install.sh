@@ -101,3 +101,8 @@ docker run -p 3306:3306 -e TZ="Asia/Shanghai" --name mysql --privileged=true -v 
 #flush privileges;
 ##########################################################################################################
 docker ps
+
+
+
+
+docker run --name nginx -d -p 8080:80 -v /usr/local/docker/nginx/conf:/etc/nginx/conf.d --privileged=true  -v /usr/local/docker/nginx/logs:/var/log/nginx nginx

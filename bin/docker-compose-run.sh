@@ -38,9 +38,10 @@ echo "}" >> /etc/docker/daemon.json
 systemctl restart docker
 
 echo -e "\033[33m 创建docker挂载文件夹 -> /usr/local/docker \033[0m"
-mkdir -p /usr/local/docker/redis/conf /usr/local/docker/redis/data /usr/local/docker/nexus3/nexus-data /usr/local/docker/mongo/data /usr/local/docker/mongo/config /usr/local/docker/mysql/conf /usr/local/docker/mysql/logs /usr/local/docker/mysql/data
+mkdir -p /usr/local/docker/redis/conf /usr/local/docker/redis/data /usr/local/docker/nexus3/nexus-data /usr/local/docker/mongo/data /usr/local/docker/mongo/config /usr/local/docker/mysql/conf /usr/local/docker/mysql/logs /usr/local/docker/mysql/data /usr/local/docker/nginx/conf /usr/local/docker/nginx/logs
 cp redis.conf /usr/local/docker/redis/conf
 cp my.cnf /usr/local/docker/mysql/conf
+cp default.conf /usr/local/docker/nginx/conf
 chmod 777 /usr/local/docker
 chmod 777 /usr/local/docker/nexus3/nexus-data
 
