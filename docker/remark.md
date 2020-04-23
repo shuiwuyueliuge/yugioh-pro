@@ -32,3 +32,14 @@ docker login http://xxxxx.com
 
 systemctl daemon-reload
 systemctl restart docker
+
+5、安装docker-compose
+cd /usr/local/bin/
+wget https://github.com/docker/compose/releases/download/1.14.0-rc2/docker-compose-Linux-x86_64
+rename docker-compose-Linux-x86_64 docker-compose docker-compose-Linux-x86_64
+chmod +x /usr/local/bin/docker-compose
+docker-compose version
+
+6、开启启动docker
+crontab -e
+@reboot sh /home/docker-run.sh

@@ -1,0 +1,54 @@
+version: "3"
+services:
+  redis:
+    container_name: redis
+    privileged: true
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - /usr/local/docker/redis/conf/redis.conf:/etc/redis/redis.conf
+      - /usr/local/docker/redis/data:/data
+    command: 
+      redis-server /etc/redis/redis.conf --appendonly yes
+  rabbitmq:
+     container_name: rabbitmq
+     hostname: my-rabbit
+     image: rabbitmq:management
+     ports:
+       - 5672:5672
+       - 15672:15672
+  nexus3:
+    container_name: nexus3
+    privileged: true
+    image: docker.io/sonatype/nexus3
+    ports:
+       - 8081:8081
+    volumes:
+      - /usr/local/docker/nexus3/nexus-data:/nexus-data
+  mongodb: 
+    container_name: mongodb
+    privileged: true
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /usr/local/docker/mongo/config:/data/configdb
+      - /usr/local/docker/mongo/data:/data/db
+    command:
+      --auth
+  mysql:
+    container_name: mysql
+    privileged: true
+    image: mysql
+    ports:
+       - 3306:3306
+    volumes:
+      - /usr/local/docker/mysql/conf:/etc/mysql/conf.d
+      - /usr/local/docker/mysql/logs:/logs
+      - /usr/local/docker/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Shanghai
