@@ -166,6 +166,7 @@
 		<module>yugioh-facade</module>
 		<module>yugioh-search</module>
 		<module>yugioh-security</module>
+		<module>yugioh-cardsource</module>
 	</modules>
 
 	<build>

@@ -106,3 +106,5 @@ docker ps
 
 
 docker run --name nginx -d -p 8080:80 -v /usr/local/docker/nginx/conf:/etc/nginx/conf.d --privileged=true  -v /usr/local/docker/nginx/logs:/var/log/nginx nginx
+
+docker run --name es -d -e ES_JAVA_OPTS="-Xms512m -Xmx512m" -p 9200:9200 -p 9300:9300 elasticsearch:6.5.0
