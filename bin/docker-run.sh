@@ -13,3 +13,5 @@ docker start rabbitmq
 docker start mysql
 
 docker start nexus3
+
+docker start nginx
