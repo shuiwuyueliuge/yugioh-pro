@@ -69,7 +69,7 @@ public class OurocgCardDeserializerConfig extends JsonDeserializer<OurocgCard> {
 		return map;
 	}
 	
-	public void invoke(Method method, OurocgCard card, JsonNode node, Class<?> parameterClass) {
+	private void invoke(Method method, OurocgCard card, JsonNode node, Class<?> parameterClass) {
 		Object arg = null;
 		if (node != null) {
 			if (parameterClass == String.class) {
