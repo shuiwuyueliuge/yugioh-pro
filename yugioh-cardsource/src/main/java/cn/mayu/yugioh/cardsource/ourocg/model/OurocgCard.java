@@ -14,18 +14,40 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 @JsonDeserialize(using = OurocgCardDeserializer.class)
 public class OurocgCard extends BasicCardDetail {
-	
+
 	private String id;
-	
+
 	private String hashId;
-	
+
 	private String typeSt;
-	
+
 	private String linkArrow;
-	
+
 	private String rare;
+
+	private String type;
+
+	private String state;
+
+	private String createdAt;
+
+	private String updatedAt;
+
+	private String deletedAt;
+
+	private String rdType;
 	
-	private String packages;
+	private String effectKW;
 	
+	private String iCardType;
+	
+	private String sCardType;
+	
+	private String keyword;
+	
+	private String locale;
+
 	private String href;
+	
+	private String typeVal;
 }

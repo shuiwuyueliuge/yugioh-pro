@@ -12,4 +12,10 @@ public class Meta {
 	private int totalPage;
 	
 	private int curPage;
+	
+	private String title;
+	
+	private String metaDesc;
+	
+	private String metaKw;
 }

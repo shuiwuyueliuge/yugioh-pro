@@ -73,7 +73,7 @@ public class OurocgCardDeserializer extends JsonDeserializer<OurocgCard> {
 		Object arg = null;
 		if (node != null) {
 			if (parameterClass == String.class) {
-				String value = node.asText();
+				String value = node.asText().trim();
 				arg = value.equals("null") ? "" : value;
 			}
 			

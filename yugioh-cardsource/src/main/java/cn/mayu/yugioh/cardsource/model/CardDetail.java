@@ -12,11 +12,15 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class CardDetail extends BasicCardDetail {
 	
+	// 卡片类型
 	private List<String> typeSt;
 	
+	// 连接方向
 	private List<String> linkArrow;
 	
+	// 罕贵度
 	private List<String> rare;
 	
-	private List<String> packages;
+	// wiki
+	private String wiki;
 }
