@@ -18,6 +18,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
 		List<IncludeInfo> infos = new ArrayList<IncludeInfo>();
 		collectToList(infos, res, parser);
 		String adjust = parseAdjust(parser.setHtml(html));
+		System.out.println(adjust.equals("　　　　"));
 		return new CardDetil(infos, adjust);
 	}
 	
@@ -30,16 +31,18 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
 			}
 			
 			builder.setPackName(parser.setHtml(res[i - 3]).parseByTagIndex("a", 0).toString());
+			builder.setHref(parser.setHtml(res[i - 3]).parseByTagAttr("a", "href")[0]);
 			builder.setSellTime(parser.setHtml(res[i - 3]).parseByTagIndex("small", 0).toString());
 			builder.setNumber(number);
-			builder.setRace(res[i - 1]);
+			builder.setRare(res[i - 1]);
 			infos.add(builder);
 		}
 	}
 	
 	private String parseAdjust(HtmlParser parser) {
 		try {
-			return parser.parseByClassIndex("wiki", 0).parseByTagIndex("li", 1).toString();
+			String adjust = parser.parseByClassIndex("wiki", 0).parseByTagIndex("li", 1).toString();
+		    return adjust.equals("　　　　") ? "" : adjust;
 		} catch (Exception e) {
 			return "";
 		}

@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.cardsource.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +20,8 @@ public class CardDetail extends BasicCardDetail {
 	private List<String> linkArrow;
 	
 	// 罕贵度
-	private List<String> rare;
+	private List<String> rare = new ArrayList<String>();
 	
 	// wiki
-	private String wiki;
+	private String adjust;
 }

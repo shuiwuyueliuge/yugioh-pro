@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IncludeInfo {
 
-	private String race;
+	private String rare;
 	
 	private String packName;
 	
@@ -18,4 +18,6 @@ public class IncludeInfo {
 	private String shortName;
 	
 	private String sellTime;
+	
+	private String href;
 }
