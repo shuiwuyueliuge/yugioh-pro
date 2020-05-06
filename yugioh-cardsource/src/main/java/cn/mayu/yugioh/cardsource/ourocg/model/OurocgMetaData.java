@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.cardsource.ourocg.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,4 +20,6 @@ public class OurocgMetaData {
 	private List<OurocgCard> cards;
 	
 	private Meta meta;
+	
+	private LocalDateTime createTime = LocalDateTime.now();
 }

@@ -10,6 +10,7 @@ import cn.mayu.yugioh.cardsource.model.CardDetail;
 import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.ourocg.html.CardDataHtmlHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.IncludeInfoHandler;
+import cn.mayu.yugioh.cardsource.ourocg.html.PackageListHandler;
 import cn.mayu.yugioh.cardsource.ourocg.model.CardDetil;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
 import cn.mayu.yugioh.cardsource.ourocg.model.OurocgMetaData;
@@ -24,14 +25,15 @@ public class OurocgDataCenter implements PackageCenter {
 	
 	private HtmlHandler<CardDetil> includeTranslater;
 	
-	private OurocgRepository ourocgRepository;
+	private HtmlHandler<List<String>> packageListTranslater;
 	
-	private String expectProcessPack;
+	private OurocgRepository ourocgRepository;
 	
 	public OurocgDataCenter(OurocgRepository ourocgRepository) {
 		this.ourocgRepository = ourocgRepository;
 		this.cardDataTranslater = new CardDataHtmlHandler();
 		this.includeTranslater = new IncludeInfoHandler();
+		this.packageListTranslater = new PackageListHandler();
 		this.description = "https://www.ourocg.cn/package";
 	}
 
@@ -49,7 +51,7 @@ public class OurocgDataCenter implements PackageCenter {
 	public PackageDetail gainPackageDetail(String resources) throws Exception {
 		String data = cardDataTranslater.handle(resources);
 		OurocgMetaData metaData = readValue(data, OurocgMetaData.class);
-		ourocgRepository.save(metaData).subscribe();
+		ourocgRepository.save(metaData).subscribe(System.out::println);
 		String[] packageItml = metaData.getMeta().getMetaKw().split(",");
 		PackageDetail packageDetail = new PackageDetail();
 		packageDetail.setCardCount(metaData.getMeta().getCount());
@@ -73,7 +75,7 @@ public class OurocgDataCenter implements PackageCenter {
 						cardDetail.setSerial(info.getNumber());
 						cardDetail.getRare().add(info.getRare());
 					} else {// 英文版
-						this.expectProcessPack = "https://www.ourocg.cn" + info.getHref();
+						OurocgQueueGuardian.syncAdd("https://www.ourocg.cn" + info.getHref(), 0);
 					}
 				}
 				
@@ -86,10 +88,9 @@ public class OurocgDataCenter implements PackageCenter {
 		packageDetail.setCards(cardDetails);
 		return packageDetail;
 	}
-	
-	public static void main(String[] args) throws Exception {
-		//new OurocgCardDataCenter().gainCardDetail("https://www.ourocg.cn/package/LTGY/AVSJP");
-//		new OurocgCardDataCenter().gainCardDetail("https://www.ourocg.cn/package/LTGY-EN/zDSo9");
-		new OurocgDataCenter(null).gainPackageDetail("https://www.ourocg.cn/package/LTGY/P1Sva");
+
+	@Override
+	public List<String> gainPackageList(String resources) throws Exception {
+		return packageListTranslater.handle(resources);
 	}
 }

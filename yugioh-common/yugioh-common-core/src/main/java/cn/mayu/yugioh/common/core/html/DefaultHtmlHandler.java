@@ -17,6 +17,10 @@ public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 		
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
+		if (statusCode == 404) {
+			throw new RuntimeException("404");
+		}
+		
 		if (retry(statusCode, url, retryAfter)) {
 			return handle(url);
 		}

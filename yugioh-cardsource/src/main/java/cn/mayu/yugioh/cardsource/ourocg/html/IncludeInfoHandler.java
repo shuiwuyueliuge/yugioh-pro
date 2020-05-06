@@ -18,7 +18,6 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
 		List<IncludeInfo> infos = new ArrayList<IncludeInfo>();
 		collectToList(infos, res, parser);
 		String adjust = parseAdjust(parser.setHtml(html));
-		System.out.println(adjust.equals("　　　　"));
 		return new CardDetil(infos, adjust);
 	}
 	
