@@ -16,7 +16,7 @@ public class RetryStatusCodeInterceptor implements HttpStatusCodeInterceptor {
 		int statusCode = response.getStatusCode();
 		String retryAfter = response.getHeaders().get(RETRY_AFTER);
 		if (retry(statusCode, url, retryAfter)) {
-			parser = new HtmlParser(url);
+			parser.connUrl(url);
 		}
 	}
 	

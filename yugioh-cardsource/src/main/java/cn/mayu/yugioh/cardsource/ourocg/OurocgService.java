@@ -1,27 +1,42 @@
 package cn.mayu.yugioh.cardsource.ourocg;
 
+import java.util.List;
 import java.util.concurrent.ThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import cn.mayu.yugioh.cardsource.datacenter.LimitCenter;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
+import cn.mayu.yugioh.cardsource.model.LimitDetail;
 import cn.mayu.yugioh.cardsource.model.PackageDetail;
-import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
-import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgIncludeRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgLimitRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgPackageRepository;
+import cn.mayu.yugioh.cardsource.stream.LimitPublisher;
 import cn.mayu.yugioh.cardsource.stream.PackagePublisher;
+import static cn.mayu.yugioh.cardsource.ourocg.OurocgQueueGuardian.*;
 
 @Service
 public class OurocgService implements Runnable, ThreadFactory {
 
 	private PackageCenter packageCenter;
+	
+	private LimitCenter limitCenter;
 
 	private static final String OUROCG_URL = "https://www.ourocg.cn%s";
 
 	@Autowired
 	private PackagePublisher packagePublisher;
+	
+	@Autowired
+	private LimitPublisher limitPublisher;
 
 	@Autowired
-	public OurocgService(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
-		this.packageCenter = new OurocgDataCenter(ourocgRepository, includeRepository);
+	public OurocgService(OurocgPackageRepository ourocgRepository, 
+						 OurocgIncludeRepository includeRepository, 
+						 OurocgLimitRepository limitRepository) {
+		OurocgDataCenter ourocgDataCenter = new OurocgDataCenter(ourocgRepository, includeRepository, limitRepository);
+		this.packageCenter = ourocgDataCenter;
+		this.limitCenter = ourocgDataCenter;
 		translateOurocgData();
 	}
 
@@ -29,12 +44,24 @@ public class OurocgService implements Runnable, ThreadFactory {
 		if (!packageCenter.exists())
 			return;
 		String packageUrl = String.format(OUROCG_URL, "/package");
-		OurocgQueueGuardian.addAll(packageCenter.gainPackageList(packageUrl));
+		addAll(packageCenter.gainPackageList(packageUrl));
+		String limitLatestUrl = String.format(OUROCG_URL, "/Limit-Latest");
+		List<String> urls = limitCenter.gainLimitList(limitLatestUrl);
+		urls.stream().forEach(data -> {
+			limitPublisher.publish(limitCenter.gainLimitDetail(data));
+		});
+		
 		newThread(this).start();
 	}
 
 	public void publishPackageDetail(String packageUrl, Integer status) {
-		OurocgQueueGuardian.syncAdd(packageUrl, status);
+		syncAdd(packageUrl, status);
+	}
+	
+	public LimitDetail publishLimitDetail(String LimitUrl) {
+		LimitDetail limitDetail =  limitCenter.gainLimitDetail(LimitUrl);
+		limitPublisher.publish(limitDetail);
+		return limitDetail;
 	}
 
 	@Override

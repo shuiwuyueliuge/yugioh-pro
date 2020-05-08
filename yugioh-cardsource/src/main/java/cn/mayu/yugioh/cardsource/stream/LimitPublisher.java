@@ -1,0 +1,17 @@
+package cn.mayu.yugioh.cardsource.stream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.messaging.support.MessageBuilder;
+import cn.mayu.yugioh.cardsource.model.LimitDetail;
+
+@EnableBinding(LimitOutStream.class)
+public class LimitPublisher {
+
+	@Autowired
+	private LimitOutStream limitPublisher;
+	
+	public boolean publish(LimitDetail entity) {
+		return limitPublisher.packageDataOutput().send(MessageBuilder.withPayload(entity).build(), 3000L);
+	}
+}

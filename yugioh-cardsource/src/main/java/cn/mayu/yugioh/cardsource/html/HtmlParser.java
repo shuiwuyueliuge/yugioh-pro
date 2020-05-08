@@ -8,7 +8,7 @@ public class HtmlParser {
 
 	private VisitResponse response;
 
-	public HtmlParser(String url) {
+	protected HtmlParser(String url) {
 		connUrl(url);
 	}
 

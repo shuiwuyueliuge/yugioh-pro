@@ -5,21 +5,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.BeanUtils;
+import cn.mayu.yugioh.cardsource.datacenter.LimitCenter;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
 import cn.mayu.yugioh.cardsource.html.HtmlHandler;
 import cn.mayu.yugioh.cardsource.model.CardDetail;
+import cn.mayu.yugioh.cardsource.model.LimitDetail;
 import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.ourocg.html.CardDataHtmlHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.IncludeInfoHandler;
+import cn.mayu.yugioh.cardsource.ourocg.html.LimitDataHandler;
+import cn.mayu.yugioh.cardsource.ourocg.html.LimitListHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.PackageListHandler;
 import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
+import cn.mayu.yugioh.cardsource.ourocg.model.LimitInfo;
 import cn.mayu.yugioh.cardsource.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.cardsource.ourocg.model.OurocgMetaData;
-import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
-import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgLimitRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgIncludeRepository;
+import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgPackageRepository;
+import static cn.mayu.yugioh.cardsource.ourocg.OurocgQueueGuardian.*;
 
-public class OurocgDataCenter implements PackageCenter {
+public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
 	private String description;
 
@@ -28,17 +35,28 @@ public class OurocgDataCenter implements PackageCenter {
 	private HtmlHandler<Include> includeTranslater;
 
 	private HtmlHandler<List<String>> packageListTranslater;
+	
+	private HtmlHandler<LimitInfo> limitDataTranslater;
+	
+	private HtmlHandler<List<String>> limitListTranslater;
 
-	private OurocgRepository ourocgRepository;
+	private OurocgPackageRepository ourocgRepository;
 
-	private IncludeRepository includeRepository;
+	private OurocgIncludeRepository includeRepository;
+	
+	private OurocgLimitRepository limitRepository; 
 
-	public OurocgDataCenter(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
+	public OurocgDataCenter(OurocgPackageRepository ourocgRepository, 
+							OurocgIncludeRepository includeRepository, 
+							OurocgLimitRepository limitRepository) {
 		this.ourocgRepository = ourocgRepository;
 		this.includeRepository = includeRepository;
+		this.limitRepository = limitRepository;
 		this.cardDataTranslater = new CardDataHtmlHandler();
 		this.includeTranslater = new IncludeInfoHandler();
 		this.packageListTranslater = new PackageListHandler();
+		this.limitDataTranslater = new LimitDataHandler();
+		this.limitListTranslater = new LimitListHandler();
 		this.description = "https://www.ourocg.cn/package";
 	}
 
@@ -103,7 +121,7 @@ public class OurocgDataCenter implements PackageCenter {
 				cardDetail.setSerial(info.getNumber());
 				cardDetail.getRare().add(info.getRare());
 			} else {// 英文版卡包重新放入队列
-				OurocgQueueGuardian.syncAdd("https://www.ourocg.cn" + info.getHref(), 0);
+				syncAdd(info.getHref(), 0);
 			}
 		}
 	}
@@ -111,5 +129,19 @@ public class OurocgDataCenter implements PackageCenter {
 	@Override
 	public List<String> gainPackageList(String resources) {
 		return packageListTranslater.handle(resources);
+	}
+
+	@Override
+	public LimitDetail gainLimitDetail(String resources) {
+		LimitInfo limitInfo = limitDataTranslater.handle(resources);
+		limitRepository.save(limitInfo).block();
+		LimitDetail detail = new LimitDetail();
+		BeanUtils.copyProperties(limitInfo, detail);
+		return detail;
+	}
+
+	@Override
+	public List<String> gainLimitList(String resources) {
+		return limitListTranslater.handle(resources);
 	}
 }
