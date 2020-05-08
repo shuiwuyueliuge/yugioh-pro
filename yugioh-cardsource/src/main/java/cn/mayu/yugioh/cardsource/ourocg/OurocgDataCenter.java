@@ -6,16 +6,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.BeanUtils;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
+import cn.mayu.yugioh.cardsource.html.HtmlHandler;
 import cn.mayu.yugioh.cardsource.model.CardDetail;
 import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.ourocg.html.CardDataHtmlHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.IncludeInfoHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.PackageListHandler;
-import cn.mayu.yugioh.cardsource.ourocg.model.CardDetil;
+import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
 import cn.mayu.yugioh.cardsource.ourocg.model.OurocgMetaData;
+import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
 import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
-import cn.mayu.yugioh.common.core.html.HtmlHandler;
 
 public class OurocgDataCenter implements PackageCenter {
 	
@@ -23,14 +24,17 @@ public class OurocgDataCenter implements PackageCenter {
 	
 	private HtmlHandler<String> cardDataTranslater;
 	
-	private HtmlHandler<CardDetil> includeTranslater;
+	private HtmlHandler<Include> includeTranslater;
 	
 	private HtmlHandler<List<String>> packageListTranslater;
 	
 	private OurocgRepository ourocgRepository;
 	
-	public OurocgDataCenter(OurocgRepository ourocgRepository) {
+	private IncludeRepository includeRepository;
+	
+	public OurocgDataCenter(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
 		this.ourocgRepository = ourocgRepository;
+		this.includeRepository = includeRepository;
 		this.cardDataTranslater = new CardDataHtmlHandler();
 		this.includeTranslater = new IncludeInfoHandler();
 		this.packageListTranslater = new PackageListHandler();
@@ -63,7 +67,8 @@ public class OurocgDataCenter implements PackageCenter {
 			cardDetail.setTypeSt(Stream.of(ourocgCard.getTypeSt().split("\\|")).collect(Collectors.toList()));
 			// href解析
 			try {
-				CardDetil cd = includeTranslater.handle(ourocgCard.getHref());
+				Include cd = includeTranslater.handle(ourocgCard.getHref());
+				includeRepository.save(cd).subscribe(System.out::println);
 				cardDetail.setAdjust(cd.getAdjust());
 				for (IncludeInfo info : cd.getIncludeInfos()) {
 					if (packageItml[1].trim().indexOf(info.getPackName()) == -1) {
@@ -78,7 +83,6 @@ public class OurocgDataCenter implements PackageCenter {
 						OurocgQueueGuardian.syncAdd("https://www.ourocg.cn" + info.getHref(), 0);
 					}
 				}
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

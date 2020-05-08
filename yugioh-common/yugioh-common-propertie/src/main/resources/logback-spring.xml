@@ -113,7 +113,7 @@
 		<appender-ref ref="ERROR" />
 	</root>
 	 
-	<logger name="cn.mayu.yugioh.common.core.html.DefaultHtmlHandler" level="DEBUG" additivity="false">
+	<logger name="cn.mayu.yugioh.cardsource.html" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 </configuration>

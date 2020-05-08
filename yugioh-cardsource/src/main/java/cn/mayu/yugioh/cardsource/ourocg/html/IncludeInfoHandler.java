@@ -3,22 +3,28 @@ package cn.mayu.yugioh.cardsource.ourocg.html;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.cardsource.ourocg.model.CardDetil;
+import cn.mayu.yugioh.cardsource.html.DefaultHtmlHandler;
+import cn.mayu.yugioh.cardsource.html.HtmlParser;
+import cn.mayu.yugioh.cardsource.html.interceptor.HttpStatusCodeInterceptorChain;
+import cn.mayu.yugioh.cardsource.html.interceptor.NotFoundStatusCodeInterceptor;
+import cn.mayu.yugioh.cardsource.html.interceptor.RetryStatusCodeInterceptor;
+import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
-import cn.mayu.yugioh.common.core.html.DefaultHtmlHandler;
-import cn.mayu.yugioh.common.core.html.HtmlParser;
 
 @Component
-public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
+public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 	
 	@Override
-	protected CardDetil htmlTranslate(HtmlParser parser) {
+	protected Include htmlTranslate(HtmlParser parser) {
 		String html = parser.toString();
 		String[] res = parser.parseByTag("td");
 		List<IncludeInfo> infos = new ArrayList<IncludeInfo>();
 		collectToList(infos, res, parser);
 		String adjust = parseAdjust(parser.setHtml(html));
-		return new CardDetil(infos, adjust);
+		Include cd = new Include();
+		cd.setAdjust(adjust);
+		cd.setIncludeInfos(infos);
+		return cd;
 	}
 	
 	private void collectToList(List<IncludeInfo> infos, String[] res, HtmlParser parser) {
@@ -45,5 +51,11 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<CardDetil> {
 		} catch (Exception e) {
 			return "";
 		}
+	}
+
+	@Override
+	protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
+		chain.addInterceptor(new RetryStatusCodeInterceptor())
+	     .addInterceptor(new NotFoundStatusCodeInterceptor());
 	}
 }

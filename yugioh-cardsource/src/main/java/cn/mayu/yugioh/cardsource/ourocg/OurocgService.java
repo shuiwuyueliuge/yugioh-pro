@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
 import cn.mayu.yugioh.cardsource.model.PackageDetail;
+import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
 import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
 import cn.mayu.yugioh.cardsource.stream.PackagePublisher;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,8 @@ public class OurocgService implements Runnable, ThreadFactory {
 	private PackagePublisher packagePublisher;
 
 	@Autowired
-	public OurocgService(OurocgRepository ourocgRepository) {
-		this.packageCenter = new OurocgDataCenter(ourocgRepository);
+	public OurocgService(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
+		this.packageCenter = new OurocgDataCenter(ourocgRepository, includeRepository);
 		translateOurocgData();
 		newThread(this).start();
 	}
