@@ -5,9 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.cardsource.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.cardsource.html.HtmlParser;
-import cn.mayu.yugioh.cardsource.html.interceptor.HttpStatusCodeInterceptorChain;
-import cn.mayu.yugioh.cardsource.html.interceptor.NotFoundStatusCodeInterceptor;
-import cn.mayu.yugioh.cardsource.html.interceptor.RetryStatusCodeInterceptor;
 import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
 
@@ -53,11 +50,5 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 		} catch (Exception e) {
 			return "";
 		}
-	}
-
-	@Override
-	protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
-		chain.addInterceptor(new RetryStatusCodeInterceptor())
-	     .addInterceptor(new NotFoundStatusCodeInterceptor());
 	}
 }

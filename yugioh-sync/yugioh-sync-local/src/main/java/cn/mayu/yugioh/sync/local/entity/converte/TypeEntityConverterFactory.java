@@ -5,14 +5,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.domain.AbstractDomainConverterFactory;
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.TypeEntity;
 import cn.mayu.yugioh.sync.local.service.IndexService;
 
 @Component
-public class TypeEntityConverterFactory extends AbstractDomainConverterFactory<CardEntity, List<TypeEntity>> {
+public class TypeEntityConverterFactory implements DomainConverterFactory<CardEntity, List<TypeEntity>> {
 
 	@Autowired
 	private IndexService indexService;
@@ -21,7 +21,7 @@ public class TypeEntityConverterFactory extends AbstractDomainConverterFactory<C
 	private CardIdThreadLocal threadLocal;
 
 	@Override
-	protected List<TypeEntity> doConvert(CardEntity entity) {
+	public List<TypeEntity> convert(CardEntity entity) {
 		String[] typeSts = entity.getTypeSt().split("\\|");
 		return Stream.of(typeSts)
 				     .map(types -> indexService.findByNameFromCache(4, types))

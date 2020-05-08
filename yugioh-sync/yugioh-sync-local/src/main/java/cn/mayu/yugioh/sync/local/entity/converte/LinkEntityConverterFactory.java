@@ -6,19 +6,19 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.common.core.domain.AbstractDomainConverterFactory;
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.dto.sync.home.CardProto.CardEntity;
 import cn.mayu.yugioh.sync.local.config.CardIdThreadLocal;
 import cn.mayu.yugioh.sync.local.entity.LinkEntity;
 
 @Component
-public class LinkEntityConverterFactory extends AbstractDomainConverterFactory<CardEntity, List<LinkEntity>> {
+public class LinkEntityConverterFactory implements DomainConverterFactory<CardEntity, List<LinkEntity>> {
 
 	@Autowired
 	private CardIdThreadLocal threadLocal;
 	
 	@Override
-	protected List<LinkEntity> doConvert(CardEntity entity) {
+	public List<LinkEntity> convert(CardEntity entity) {
 		if (entity.getLink().equals("")) {
 			return Collections.emptyList();
 		}

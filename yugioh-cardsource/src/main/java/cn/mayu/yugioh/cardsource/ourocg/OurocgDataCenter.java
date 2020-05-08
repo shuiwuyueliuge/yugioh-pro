@@ -14,24 +14,25 @@ import cn.mayu.yugioh.cardsource.ourocg.html.IncludeInfoHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.PackageListHandler;
 import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
+import cn.mayu.yugioh.cardsource.ourocg.model.OurocgCard;
 import cn.mayu.yugioh.cardsource.ourocg.model.OurocgMetaData;
 import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
 import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
 
 public class OurocgDataCenter implements PackageCenter {
-	
+
 	private String description;
-	
+
 	private HtmlHandler<String> cardDataTranslater;
-	
+
 	private HtmlHandler<Include> includeTranslater;
-	
+
 	private HtmlHandler<List<String>> packageListTranslater;
-	
+
 	private OurocgRepository ourocgRepository;
-	
+
 	private IncludeRepository includeRepository;
-	
+
 	public OurocgDataCenter(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
 		this.ourocgRepository = ourocgRepository;
 		this.includeRepository = includeRepository;
@@ -52,49 +53,63 @@ public class OurocgDataCenter implements PackageCenter {
 	}
 
 	@Override
-	public PackageDetail gainPackageDetail(String resources) throws Exception {
+	public PackageDetail gainPackageDetail(String resources) {
 		String data = cardDataTranslater.handle(resources);
-		OurocgMetaData metaData = readValue(data, OurocgMetaData.class);
-		ourocgRepository.save(metaData).subscribe(System.out::println);
-		String[] packageItml = metaData.getMeta().getMetaKw().split(",");
+		OurocgMetaData metaData = readToOurocgMetaData(data);
 		PackageDetail packageDetail = new PackageDetail();
-		packageDetail.setCardCount(metaData.getMeta().getCount());
-		packageDetail.setPackageName(packageItml[1].trim());
-		packageDetail.setAbbreviate(packageItml[0].trim());
-		List<CardDetail> cardDetails = metaData.getCards().stream().map(ourocgCard -> {
-			CardDetail cardDetail = new CardDetail();
-			BeanUtils.copyProperties(ourocgCard, cardDetail);
-			cardDetail.setTypeSt(Stream.of(ourocgCard.getTypeSt().split("\\|")).collect(Collectors.toList()));
-			// href解析
-			try {
-				Include cd = includeTranslater.handle(ourocgCard.getHref());
-				includeRepository.save(cd).subscribe(System.out::println);
-				cardDetail.setAdjust(cd.getAdjust());
-				for (IncludeInfo info : cd.getIncludeInfos()) {
-					if (packageItml[1].trim().indexOf(info.getPackName()) == -1) {
-						continue;
-					}
-					
-					if (packageItml[1].trim().equals(info.getPackName())) {// 日文版
-						packageDetail.setOfferingDate(info.getSellTime());
-						cardDetail.setSerial(info.getNumber());
-						cardDetail.getRare().add(info.getRare());
-					} else {// 英文版
-						OurocgQueueGuardian.syncAdd("https://www.ourocg.cn" + info.getHref(), 0);
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			return cardDetail;
-		}).collect(Collectors.toList());
-		packageDetail.setCards(cardDetails);
+		ourocgRepository.save(metaData).subscribe(ourocgMetaData -> 
+			metaDataToPackageDetail(packageDetail, ourocgMetaData));
 		return packageDetail;
 	}
 
+	private OurocgMetaData readToOurocgMetaData(String data) {
+		try {
+			return readValue(data, OurocgMetaData.class);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void metaDataToPackageDetail(PackageDetail packageDetail, OurocgMetaData metaData) {
+		String[] packageItml = metaData.getMeta().getMetaKw().split(",");
+		packageDetail.setCardCount(metaData.getMeta().getCount());
+		packageDetail.setPackageName(packageItml[1].trim());
+		packageDetail.setAbbreviate(packageItml[0].trim());
+		packageDetail.setCards(getCardDetailList(packageDetail, metaData.getCards()));
+	}
+
+	private List<CardDetail> getCardDetailList(PackageDetail packageDetail, List<OurocgCard> cards) {
+		return cards.stream().map(ourocgCard -> {
+			CardDetail cardDetail = new CardDetail();
+			BeanUtils.copyProperties(ourocgCard, cardDetail);
+			cardDetail.setTypeSt(Stream.of(ourocgCard.getTypeSt().split("\\|")).collect(Collectors.toList()));
+			// 收录详情/调整 解析
+			Include cd = includeTranslater.handle(ourocgCard.getHref());
+			includeRepository.save(cd).subscribe(includeInfo -> 
+				saveIncludeInfo(includeInfo, cardDetail, packageDetail));
+			return cardDetail;
+		}).collect(Collectors.toList());
+	}
+
+	private void saveIncludeInfo(Include cd, CardDetail cardDetail, PackageDetail packageDetail) {
+		cardDetail.setAdjust(cd.getAdjust());
+		for (IncludeInfo info : cd.getIncludeInfos()) {
+			if (packageDetail.getPackageName().indexOf(info.getPackName()) == -1) {
+				continue;
+			}
+
+			if (packageDetail.getPackageName().equals(info.getPackName())) {// 日文版卡包
+				packageDetail.setOfferingDate(info.getSellTime());
+				cardDetail.setSerial(info.getNumber());
+				cardDetail.getRare().add(info.getRare());
+			} else {// 英文版卡包重新放入队列
+				OurocgQueueGuardian.syncAdd("https://www.ourocg.cn" + info.getHref(), 0);
+			}
+		}
+	}
+
 	@Override
-	public List<String> gainPackageList(String resources) throws Exception {
+	public List<String> gainPackageList(String resources) {
 		return packageListTranslater.handle(resources);
 	}
 }

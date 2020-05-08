@@ -2,9 +2,6 @@ package cn.mayu.yugioh.cardsource.ourocg.html;
 
 import cn.mayu.yugioh.cardsource.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.cardsource.html.HtmlParser;
-import cn.mayu.yugioh.cardsource.html.interceptor.HttpStatusCodeInterceptorChain;
-import cn.mayu.yugioh.cardsource.html.interceptor.NotFoundStatusCodeInterceptor;
-import cn.mayu.yugioh.cardsource.html.interceptor.RetryStatusCodeInterceptor;
 
 public class CardDataHtmlHandler extends DefaultHtmlHandler<String> {
 	
@@ -29,11 +26,5 @@ public class CardDataHtmlHandler extends DefaultHtmlHandler<String> {
 	private String cardDataFilter(String metaData) {
 		return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1)
 				       .replace(REPLACE_SOURCE, REPLACE_TARGET);
-	}
-
-	@Override
-	protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
-		chain.addInterceptor(new RetryStatusCodeInterceptor())
-		     .addInterceptor(new NotFoundStatusCodeInterceptor());
 	}
 }

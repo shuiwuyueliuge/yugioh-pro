@@ -8,16 +8,14 @@ import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.repository.IncludeRepository;
 import cn.mayu.yugioh.cardsource.repository.OurocgRepository;
 import cn.mayu.yugioh.cardsource.stream.PackagePublisher;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class OurocgService implements Runnable, ThreadFactory {
 
 	private PackageCenter packageCenter;
 
 	private static final String OUROCG_URL = "https://www.ourocg.cn%s";
-	
+
 	@Autowired
 	private PackagePublisher packagePublisher;
 
@@ -25,35 +23,26 @@ public class OurocgService implements Runnable, ThreadFactory {
 	public OurocgService(OurocgRepository ourocgRepository, IncludeRepository includeRepository) {
 		this.packageCenter = new OurocgDataCenter(ourocgRepository, includeRepository);
 		translateOurocgData();
-		newThread(this).start();
 	}
 
 	private void translateOurocgData() {
 		if (!packageCenter.exists())
 			return;
 		String packageUrl = String.format(OUROCG_URL, "/package");
-		try {
-			OurocgQueueGuardian.addAll(packageCenter.gainPackageList(packageUrl));
-		} catch (Exception e) {
-			log.error("GET: [{}] Err: [{}]", packageUrl, e);
-		}
+		OurocgQueueGuardian.addAll(packageCenter.gainPackageList(packageUrl));
+		newThread(this).start();
 	}
 
-	public void publishPackageDetail(String packageUrl, Integer status) throws Exception {
+	public void publishPackageDetail(String packageUrl, Integer status) {
 		OurocgQueueGuardian.syncAdd(packageUrl, status);
 	}
 
 	@Override
 	public void run() {
 		while (true) {
-			String packageUrl = null;
-			try {
-				packageUrl = String.format(OUROCG_URL, OurocgQueueGuardian.take());
-				PackageDetail packageDetail = packageCenter.gainPackageDetail(packageUrl);
-				packagePublisher.publish(packageDetail);
-			} catch (Exception e) {
-				log.error("GET: [{}] Err: [{}]", packageUrl, e);
-			}
+			String packageUrl = String.format(OUROCG_URL, OurocgQueueGuardian.take());
+			PackageDetail packageDetail = packageCenter.gainPackageDetail(packageUrl);
+			packagePublisher.publish(packageDetail);
 		}
 	}
 

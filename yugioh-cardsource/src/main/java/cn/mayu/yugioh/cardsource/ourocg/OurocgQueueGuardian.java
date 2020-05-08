@@ -18,8 +18,12 @@ public class OurocgQueueGuardian {
 		});
 	}
 	
-	public static String take() throws Exception {
-		return PACKAGE_URL_QUEUE.take().getData();
+	public static String take() {
+		try {
+			return PACKAGE_URL_QUEUE.take().getData();
+		} catch (InterruptedException e) {
+			return "";
+		}
 	}
 
 	public static void syncAdd(String content, Integer status) {

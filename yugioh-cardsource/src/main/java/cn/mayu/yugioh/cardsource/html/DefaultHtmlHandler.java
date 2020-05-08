@@ -1,12 +1,14 @@
 package cn.mayu.yugioh.cardsource.html;
 
 import cn.mayu.yugioh.cardsource.html.interceptor.HttpStatusCodeInterceptorChain;
+import cn.mayu.yugioh.cardsource.html.interceptor.NotFoundStatusCodeInterceptor;
+import cn.mayu.yugioh.cardsource.html.interceptor.RetryStatusCodeInterceptor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 	
-	public T handle(String url) throws Exception {
+	public T handle(String url) {
 		HtmlParser parser = new HtmlParser(url);
 		VisitResponse response = parser.getResponse();
 		if (log.isDebugEnabled()) {
@@ -19,7 +21,10 @@ public abstract class DefaultHtmlHandler<T> implements HtmlHandler<T> {
 		return htmlTranslate(parser);
 	}
 	
-	protected abstract T htmlTranslate(HtmlParser parser) throws Exception;
+	protected abstract T htmlTranslate(HtmlParser parser);
 	
-	protected abstract void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain);
+	protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
+		chain.addInterceptor(new RetryStatusCodeInterceptor())
+	     .addInterceptor(new NotFoundStatusCodeInterceptor());
+	}
 }
