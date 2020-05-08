@@ -16,6 +16,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 	
 	@Override
 	protected Include htmlTranslate(HtmlParser parser) {
+		String[] s = parser.parseByTag("template");
 		String html = parser.toString();
 		String[] res = parser.parseByTag("td");
 		List<IncludeInfo> infos = new ArrayList<IncludeInfo>();
@@ -24,6 +25,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 		Include cd = new Include();
 		cd.setAdjust(adjust);
 		cd.setIncludeInfos(infos);
+		cd.setCardName(s[0]);
 		return cd;
 	}
 	

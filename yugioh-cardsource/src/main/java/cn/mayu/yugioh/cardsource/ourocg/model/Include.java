@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "ourocg_card")
+@Document(collection = "ourocg_include")
 public class Include {
 	
 	@Id
 	private String id;
+	
+	private String cardName;
 
 	private List<IncludeInfo> includeInfos;
 	
