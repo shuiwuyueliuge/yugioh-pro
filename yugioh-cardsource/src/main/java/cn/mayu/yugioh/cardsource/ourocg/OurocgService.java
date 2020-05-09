@@ -37,21 +37,20 @@ public class OurocgService implements Runnable, ThreadFactory {
 		OurocgDataCenter ourocgDataCenter = new OurocgDataCenter(ourocgRepository, includeRepository, limitRepository);
 		this.packageCenter = ourocgDataCenter;
 		this.limitCenter = ourocgDataCenter;
-		translateOurocgData();
 	}
 
-	private void translateOurocgData() {
+	public void translateOurocgData() {
 		if (!packageCenter.exists())
 			return;
-		String packageUrl = String.format(OUROCG_URL, "/package");
-		addAll(packageCenter.gainPackageList(packageUrl));
+		//String packageUrl = String.format(OUROCG_URL, "/package");
+		//addAll(packageCenter.gainPackageList(packageUrl));
 		String limitLatestUrl = String.format(OUROCG_URL, "/Limit-Latest");
 		List<String> urls = limitCenter.gainLimitList(limitLatestUrl);
 		urls.stream().forEach(data -> {
 			limitPublisher.publish(limitCenter.gainLimitDetail(data));
 		});
 		
-		newThread(this).start();
+		//newThread(this).start();
 	}
 
 	public void publishPackageDetail(String packageUrl, Integer status) {

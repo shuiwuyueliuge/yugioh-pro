@@ -13,6 +13,8 @@ public class LimitListHandler extends DefaultHtmlHandler<List<String>> {
 	@Override
 	protected List<String> htmlTranslate(HtmlParser parser) {
 		String[] res = parser.parseByClassIndex("limit-list sidebar-list", 0).parseByTag("li");
-		return Stream.of(res).collect(Collectors.toList());
+		return Stream.of(res).map(a -> {
+			return parser.setHtml(a).parseByTagIndexAttr("a", 0, "href").toString();
+		}).collect(Collectors.toList());
 	}
 }

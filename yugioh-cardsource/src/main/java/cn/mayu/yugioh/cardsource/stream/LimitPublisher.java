@@ -12,6 +12,6 @@ public class LimitPublisher {
 	private LimitOutStream limitPublisher;
 	
 	public boolean publish(LimitDetail entity) {
-		return limitPublisher.packageDataOutput().send(MessageBuilder.withPayload(entity).build(), 3000L);
+		return limitPublisher.LimitOutput().send(MessageBuilder.withPayload(entity).build());
 	}
 }

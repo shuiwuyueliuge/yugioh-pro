@@ -8,5 +8,11 @@ public interface LimitOutStream {
 	String LIMIT_OUTPUT = "limit";
 	
 	@Output(LIMIT_OUTPUT)
-	MessageChannel packageDataOutput();
+	MessageChannel LimitOutput();
+	
+	
+	String OUTPUT = "myOutput";
+	
+    @Output(OUTPUT)
+    MessageChannel output();
 }

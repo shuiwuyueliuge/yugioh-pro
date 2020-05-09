@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.cardsource.ourocg;
 
-import static cn.mayu.yugioh.common.core.util.JsonUtil.readValue;
+import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -134,7 +134,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 	@Override
 	public LimitDetail gainLimitDetail(String resources) {
 		LimitInfo limitInfo = limitDataTranslater.handle(resources);
-		limitRepository.save(limitInfo).block();
+		limitRepository.save(limitInfo).subscribe(System.out::println);
 		LimitDetail detail = new LimitDetail();
 		BeanUtils.copyProperties(limitInfo, detail);
 		return detail;

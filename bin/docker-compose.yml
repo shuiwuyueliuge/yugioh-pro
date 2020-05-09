@@ -65,3 +65,16 @@ services:
     volumes:
       - /usr/local/docker/nginx/conf:/etc/nginx/conf.d
       - /usr/local/docker/nginx/logs:/var/log/nginx
+  ftp:
+    container_name: ftp
+    privileged: true
+    image: fauria/vsftpd
+    ports:
+       - 20:20
+       - 21:21
+       - 21100-21110:21100-21110
+    volumes:
+      - /usr/local/docker/vsftpd:/home/vsftpd
+    environment:
+      - FTP_USER=ygo
+      - FTP_PASS=ygo

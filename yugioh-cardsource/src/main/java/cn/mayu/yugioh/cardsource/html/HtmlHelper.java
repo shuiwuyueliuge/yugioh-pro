@@ -1,11 +1,11 @@
 package cn.mayu.yugioh.cardsource.html;
 
+import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection.Response;
-import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 import java.util.Collections;
 
 @Slf4j

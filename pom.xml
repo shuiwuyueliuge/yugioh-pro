@@ -11,8 +11,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring-boot.version>2.2.4.RELEASE</spring-boot.version>
-		<spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+		<spring-boot.version>2.2.6.RELEASE</spring-boot.version>
+		<spring-cloud.version>Hoxton.SR3</spring-cloud.version>
 		<spring-boot-admin.version>2.2.1</spring-boot-admin.version>
 		<java.version>1.8</java.version>
 	</properties>
@@ -166,6 +166,7 @@
 		<module>yugioh-security</module>
 		<module>yugioh-cardsource</module>
     <module>yugioh-websocket</module>
+    <module>yugioh-transform</module>
   </modules>
 
 	<build>
