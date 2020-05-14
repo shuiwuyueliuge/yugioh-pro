@@ -8,9 +8,6 @@ import org.springframework.beans.BeanUtils;
 import cn.mayu.yugioh.cardsource.datacenter.LimitCenter;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
 import cn.mayu.yugioh.cardsource.html.HtmlHandler;
-import cn.mayu.yugioh.cardsource.model.CardDetail;
-import cn.mayu.yugioh.cardsource.model.LimitDetail;
-import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.ourocg.html.CardDataHtmlHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.IncludeInfoHandler;
 import cn.mayu.yugioh.cardsource.ourocg.html.LimitDataHandler;
@@ -24,6 +21,9 @@ import cn.mayu.yugioh.cardsource.ourocg.model.OurocgMetaData;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgLimitRepository;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgIncludeRepository;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgPackageRepository;
+import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
+import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
+import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
 import static cn.mayu.yugioh.cardsource.ourocg.OurocgQueueGuardian.*;
 
 public class OurocgDataCenter implements PackageCenter, LimitCenter {

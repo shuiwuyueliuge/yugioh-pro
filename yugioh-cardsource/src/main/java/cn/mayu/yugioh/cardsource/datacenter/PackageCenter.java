@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.cardsource.datacenter;
 
 import java.util.List;
-import cn.mayu.yugioh.cardsource.model.PackageDetail;
+import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
 
 public interface PackageCenter extends DataCenter {
 

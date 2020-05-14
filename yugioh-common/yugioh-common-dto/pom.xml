@@ -16,5 +16,6 @@
 	</dependencies>
   <modules>
     <module>yugioh-common-dto-sync-home</module>
+    <module>yugioh-common-dto-cardsource</module>
   </modules>
 </project>

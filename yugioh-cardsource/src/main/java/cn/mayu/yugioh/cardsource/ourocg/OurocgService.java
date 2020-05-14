@@ -3,20 +3,21 @@ package cn.mayu.yugioh.cardsource.ourocg;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 import cn.mayu.yugioh.cardsource.datacenter.LimitCenter;
 import cn.mayu.yugioh.cardsource.datacenter.PackageCenter;
-import cn.mayu.yugioh.cardsource.model.LimitDetail;
-import cn.mayu.yugioh.cardsource.model.PackageDetail;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgIncludeRepository;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgLimitRepository;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgPackageRepository;
 import cn.mayu.yugioh.cardsource.stream.LimitPublisher;
 import cn.mayu.yugioh.cardsource.stream.PackagePublisher;
+import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
+import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
 import static cn.mayu.yugioh.cardsource.ourocg.OurocgQueueGuardian.*;
 
 @Service
-public class OurocgService implements Runnable, ThreadFactory {
+public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner {
 
 	private PackageCenter packageCenter;
 	
@@ -39,7 +40,7 @@ public class OurocgService implements Runnable, ThreadFactory {
 		this.limitCenter = ourocgDataCenter;
 	}
 
-	public void translateOurocgData() {
+	private void translateOurocgData() {
 		if (!packageCenter.exists())
 			return;
 		//String packageUrl = String.format(OUROCG_URL, "/package");
@@ -77,5 +78,10 @@ public class OurocgService implements Runnable, ThreadFactory {
 		Thread thread = new Thread(r);
 		thread.setDaemon(true);
 		return thread;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		translateOurocgData();
 	}
 }

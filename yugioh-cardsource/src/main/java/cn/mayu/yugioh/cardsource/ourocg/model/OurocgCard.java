@@ -1,8 +1,8 @@
 package cn.mayu.yugioh.cardsource.ourocg.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import cn.mayu.yugioh.cardsource.model.BasicCardDetail;
 import cn.mayu.yugioh.cardsource.ourocg.OurocgCardDeserializer;
+import cn.mayu.yugioh.common.dto.cardsource.BasicCardDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
