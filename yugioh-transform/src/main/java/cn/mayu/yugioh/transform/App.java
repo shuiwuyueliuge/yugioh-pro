@@ -5,10 +5,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 import cn.mayu.yugioh.transform.service.IndexService;
 
 @SpringBootApplication
 @EnableAsync
+@EnableTransactionManagement
 public class App implements CommandLineRunner {
 	
 	@Autowired
