@@ -19,9 +19,6 @@ public class MagicTrapEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "hash_id")
-    private String hashId;
-
     @Column(name = "password")
     private String password;
 

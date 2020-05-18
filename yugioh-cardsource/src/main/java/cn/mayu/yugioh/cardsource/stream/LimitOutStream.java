@@ -9,10 +9,4 @@ public interface LimitOutStream {
 	
 	@Output(LIMIT_OUTPUT)
 	MessageChannel LimitOutput();
-	
-	
-	String OUTPUT = "myOutput";
-	
-    @Output(OUTPUT)
-    MessageChannel output();
 }

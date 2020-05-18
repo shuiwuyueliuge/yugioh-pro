@@ -46,7 +46,7 @@
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</Pattern>
 		</layout>
 	</appender>
-	<!--
+	
 	<appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">            
 			    <level>DEBUG</level>            
@@ -64,7 +64,7 @@
 			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</Pattern>
 		</layout>
 	</appender>
-	
+	<!--
 	<appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">            
 			    <level>WARN</level>            
@@ -109,6 +109,7 @@
 	
 	<root level="info">
 		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DEBUG" />
 		<appender-ref ref="ASYNC_INFO" />
 		<appender-ref ref="ERROR" />
 	</root>

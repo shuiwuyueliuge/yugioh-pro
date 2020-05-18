@@ -33,7 +33,7 @@ public class IndexServiceImpl implements IndexService {
 			return entity.getTypeIndex();
 		}
 		
-		return 0;
+		return null;
 	}
 
 	@Override

@@ -75,14 +75,14 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 		String data = cardDataTranslater.handle(resources);
 		OurocgMetaData metaData = readToOurocgMetaData(data);
 		PackageDetail packageDetail = new PackageDetail();
-		ourocgRepository.save(metaData).subscribe(ourocgMetaData -> 
-			metaDataToPackageDetail(packageDetail, ourocgMetaData));
+		ourocgRepository.save(metaData).subscribe();
+		metaDataToPackageDetail(packageDetail, metaData);
 		return packageDetail;
 	}
 
 	private OurocgMetaData readToOurocgMetaData(String data) {
 		try {
-			return readValue(data, OurocgMetaData.class);
+			return readValueSnakeCase(data, OurocgMetaData.class);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -134,7 +134,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 	@Override
 	public LimitDetail gainLimitDetail(String resources) {
 		LimitInfo limitInfo = limitDataTranslater.handle(resources);
-		limitRepository.save(limitInfo).subscribe(System.out::println);
+		limitRepository.save(limitInfo).subscribe();
 		LimitDetail detail = new LimitDetail();
 		BeanUtils.copyProperties(limitInfo, detail);
 		return detail;
