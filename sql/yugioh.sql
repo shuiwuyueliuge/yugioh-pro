@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50729
 File Encoding         : 65001
 
-Date: 2020-05-16 17:14:32
+Date: 2020-05-18 20:39:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -123,7 +123,6 @@ CREATE TABLE `t_index` (
 DROP TABLE IF EXISTS `t_magic_trap`;
 CREATE TABLE `t_magic_trap` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `hash_id` varchar(255) DEFAULT '' COMMENT '哈希值',
   `password` varchar(10) DEFAULT '' COMMENT '卡片密码',
   `name` varchar(255) DEFAULT '' COMMENT '中文名',
   `name_ja` varchar(255) DEFAULT '' COMMENT '日文名',
@@ -143,7 +142,6 @@ CREATE TABLE `t_magic_trap` (
 DROP TABLE IF EXISTS `t_monster`;
 CREATE TABLE `t_monster` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `hash_id` varchar(255) DEFAULT '' COMMENT '哈希值',
   `password` varchar(10) DEFAULT '' COMMENT '卡片密码',
   `name` varchar(255) DEFAULT '' COMMENT '中文名',
   `name_ja` varchar(255) DEFAULT '' COMMENT '日文名',
