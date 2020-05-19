@@ -2,13 +2,15 @@ package cn.mayu.yugioh.transform.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
-import cn.mayu.yugioh.transform.entity.IndexEntity;
+
+import cn.mayu.yugioh.transform.domain.entity.IndexEntity;
 import cn.mayu.yugioh.transform.repository.IndexRepository;
 
 @Service
-public class IndexServiceImpl implements IndexService {
+public class IndexServiceImpl implements IndexService, CommandLineRunner {
 
 	@Autowired
 	private IndexRepository indexRepository;
@@ -16,8 +18,7 @@ public class IndexServiceImpl implements IndexService {
 	@Autowired
 	private ReactiveRedisTemplate<String, IndexEntity> redisTemplate;
 
-	@Override
-	public void indexCache() {
+	private void indexCache() {
 		indexRepository.findAll().stream().forEach(entity -> 
 			redisTemplate.opsForSet().add(indexCacheKey(entity.getType()), entity).subscribe()
 		);
@@ -55,5 +56,10 @@ public class IndexServiceImpl implements IndexService {
 
 	private String indexCacheKey(Integer type) {
 		return String.format("index:type:%s", type);
+	}
+	
+	@Override
+	public void run(String... args) throws Exception {
+		indexCache();
 	}
 }

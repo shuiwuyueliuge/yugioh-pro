@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.transform.entity;
+package cn.mayu.yugioh.transform.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,8 +12,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
-@Table(name = "t_monster")
-public class MonsterEntity {
+@Table(name = "t_magic_trap")
+public class MagicTrapEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -37,34 +37,16 @@ public class MonsterEntity {
     @Column(name = "locale")
     private Integer locale;
 
-    @Column(name = "level")
-    private Integer level;
+    @Column(name = "type_st")
+    private Integer typeSt;
 
-    @Column(name = "attribute")
-    private Integer attribute;
-
-    @Column(name = "race")
-    private Integer race;
-
-    @Column(name = "atk")
-    private Integer atk;
-
-    @Column(name = "def")
-    private Integer def;
-
-    @Column(name = "pend_l")
-    private Integer pendL;
-
-    @Column(name = "pend_r")
-    private Integer pendR;
-
-    @Column(name = "link")
-    private Integer link;
+    @Column(name = "type_val")
+    private Integer typeVal;
 
     @UpdateTimestamp
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(insertable = false, updatable = false, name = "create_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 }

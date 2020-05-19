@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.transform.entity;
+package cn.mayu.yugioh.transform.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,8 +12,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
-@Table(name = "t_card_adjust")
-public class AdjustEntity {
+@Table(name = "t_card_effect")
+public class EffectEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,7 +31,16 @@ public class AdjustEntity {
 
     @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
+    
+    @Column(name = "effect")
+    private String effect;
 
-    @Column(name = "adjust")
-    private String adjust;
+    @Column(name = "effect_nw")
+    private String effectNw;
+    
+    @Column(name = "effect_ja")
+    private String effectJa;
+    
+    @Column(name = "effect_en")
+    private String effectEn;
 }

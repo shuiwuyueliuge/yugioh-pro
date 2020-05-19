@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.transform.entity;
+package cn.mayu.yugioh.transform.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

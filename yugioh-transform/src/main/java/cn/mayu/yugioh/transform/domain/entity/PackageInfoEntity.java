@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.transform.entity;
+package cn.mayu.yugioh.transform.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -12,21 +12,27 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
-@Table(name = "t_package")
-public class PackageEntity {
+@Table(name = "t_card_package")
+public class PackageInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "race_id")
+    private Integer raceId;
 
-    @Column(name = "shot_name")
-    private String shotName;
+    @Column(name = "package_id")
+    private Integer packageId;
 
-    @Column(name = "sell_time")
-    private String sellTime;
+    @Column(name = "card_id")
+    private Integer cardId;
+
+    @Column(name = "type_val")
+    private Integer typeVal;
+
+    @Column(name = "number")
+    private String number;
 
     @UpdateTimestamp
     @Column(name = "modify_time")

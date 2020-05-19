@@ -1,8 +1,8 @@
-package cn.mayu.yugioh.transform.service;
+package cn.mayu.yugioh.transform.manager;
 
 import org.springframework.messaging.Message;
 
-public interface AsyncReceiver {
+public interface AsyncMqDataManager {
 	
 	void receiveLimitData(Message<String> message) throws Exception;
 	

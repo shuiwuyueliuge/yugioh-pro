@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.transform.entity;
+package cn.mayu.yugioh.transform.domain.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -7,28 +7,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
-import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
-@Table(name = "t_card_link")
-public class LinkEntity {
+@Table(name = "t_index")
+public class IndexEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "card_id")
-    private Integer cardId;
+    @Column(name = "name", insertable = false, columnDefinition = "VARCHAR DEFAULT ")
+    private String name;
 
-    @Column(name = "link_arrow")
-    private Integer linkArrow;
+    @Column(name = "type")
+    private Integer type;
 
-    @UpdateTimestamp
-    @Column(name = "modify_time")
-    private LocalDateTime modifyTime;
+    @Column(name = "type_index")
+    private Integer typeIndex;
 
+    @JsonIgnore
     @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
+
+    @Column(name = "img")
+    private String img;
 }

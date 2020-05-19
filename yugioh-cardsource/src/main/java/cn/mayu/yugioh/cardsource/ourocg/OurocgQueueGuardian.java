@@ -11,7 +11,7 @@ public class OurocgQueueGuardian {
 	private static final BlockingQueue<PriorityQueueModel> PACKAGE_URL_QUEUE;
 	
 	static {
-		PACKAGE_URL_QUEUE = new PriorityBlockingQueue<PriorityQueueModel>(1000, (o1, o2) -> {
+		PACKAGE_URL_QUEUE = new PriorityBlockingQueue<PriorityQueueModel>(1000, (o1, o2) -> { // initialCapacity is 1000， i think package maybe not so mach
 			if (o1.getStatus() > o2.getStatus()) return -1;
 			if (o1.getStatus() < o2.getStatus()) return 1;
 			return 0;
@@ -47,7 +47,7 @@ public class OurocgQueueGuardian {
 		
 		private String data;
 		
-		// 0 非手动添加， 1手动添加，2立即执行
+		// TODO queue priority: 0 sys start run， 1 admin run，2 run now    -> all be pending
 		private int status;
 	}
 }

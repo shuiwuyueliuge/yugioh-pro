@@ -1,29 +1,33 @@
-package cn.mayu.yugioh.transform.service;
+package cn.mayu.yugioh.transform.manager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.rabbitmq.client.Channel;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
 import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
 import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
-import cn.mayu.yugioh.transform.config.AsyncConfig;
-import cn.mayu.yugioh.transform.entity.ForbiddenEntity;
-import cn.mayu.yugioh.transform.entity.MonsterEntity;
+import static cn.mayu.yugioh.transform.config.AsyncConfig.*;
+import cn.mayu.yugioh.transform.domain.LimitConverterFactory;
+import cn.mayu.yugioh.transform.domain.dto.CardDTO;
+import cn.mayu.yugioh.transform.domain.dto.CardTypeDTO;
+import cn.mayu.yugioh.transform.domain.dto.PackageRareDTO;
+import cn.mayu.yugioh.transform.domain.entity.ForbiddenEntity;
 import cn.mayu.yugioh.transform.repository.ForbiddenRepository;
-import cn.mayu.yugioh.transform.repository.MonsterRepository;
+import cn.mayu.yugioh.transform.service.IndexService;
+import cn.mayu.yugioh.transform.service.PackageService;
+import cn.mayu.yugioh.transform.service.RareService;
+import lombok.extern.slf4j.Slf4j;
 
-@Service
-public class AsyncReceiverImpl implements AsyncReceiver {
+@Slf4j
+@Component
+public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	
 	@Autowired
 	private ForbiddenRepository forbiddenRepository;
@@ -32,36 +36,28 @@ public class AsyncReceiverImpl implements AsyncReceiver {
 	private IndexService indexService;
 	
 	@Autowired
-	private MonsterRepository monsterRepository;
+	private RareService rareService;
+	
+	@Autowired
+	private PackageService packageService;
+	
+	@Autowired
+	private CardManagerContext cardManagerContext;
+	
+	private DomainConverterFactory<LimitDetail, ForbiddenEntity> limitConverterFactory;
+	
+	public AsyncMqDataManagerImpl() {
+		limitConverterFactory = new LimitConverterFactory();
+	}
 
-	@Async(AsyncConfig.ASYNC_EXECUTOR_NAME)
+	@Async(ASYNC_EXECUTOR_NAME)
 	@Override
 	@Transactional
 	public void receiveLimitData(Message<String> message) throws Exception {
 		String data = getMqData(message);
+		log.info("limit-data [{}]", data);
         LimitDetail limitDetail = readValue(data, LimitDetail.class);
-        List<ForbiddenEntity> entities = new ArrayList<ForbiddenEntity>();
-        entities.addAll(limitDetail.getForbidden().stream().map(detail -> {
-        	ForbiddenEntity forbiddenEntity = new ForbiddenEntity();
-        	forbiddenEntity.setCardName(detail);
-        	forbiddenEntity.setLimitVal(0);
-        	forbiddenEntity.setLimitTime(limitDetail.getName());
-        	return forbiddenEntity;
-        }).collect(Collectors.toList()));
-        entities.addAll(limitDetail.getLimited().stream().map(detail -> {
-        	ForbiddenEntity forbiddenEntity = new ForbiddenEntity();
-        	forbiddenEntity.setCardName(detail);
-        	forbiddenEntity.setLimitTime(limitDetail.getName());
-        	forbiddenEntity.setLimitVal(1);
-        	return forbiddenEntity;
-        }).collect(Collectors.toList()));
-        entities.addAll(limitDetail.getSemiLimited().stream().map(detail -> {
-        	ForbiddenEntity forbiddenEntity = new ForbiddenEntity();
-        	forbiddenEntity.setCardName(detail);
-        	forbiddenEntity.setLimitTime(limitDetail.getName());
-        	forbiddenEntity.setLimitVal(2);
-        	return forbiddenEntity;
-        }).collect(Collectors.toList()));
+        List<ForbiddenEntity> entities = limitConverterFactory.convertList(limitDetail);
         forbiddenRepository.saveAll(entities);
 	}
 
@@ -101,41 +97,37 @@ public class AsyncReceiverImpl implements AsyncReceiver {
      *           },{"password":"69015963","serial":"&nbsp;","name":"弗兰肯魔人","nameJa":"デビル・フランケン","nameEn":"Cyber-Stein","nameNw":"恶魔科学怪人","imgUrl":"http://ocg.resource.m2v.cn/515.jpg","level":2,"attribute":"暗","race":"机械","atk":"700","def":"500","pendL":"","pendR":"","link":"","desc":"①：可以支付5000LP发动。从额外卡组以攻击表示特殊召唤1只融合怪兽。","ban":"限制卡","descNw":"①：支付5000基本分才能发动。从额外卡组把1只融合怪兽攻击表示特殊召唤。","descJa":"①：５０００LPを払って発動できる。エクストラデッキから融合モンスター１体を攻撃表示で特殊召喚する。","descEn":"Pay 5000 Life Points. Special Summon 1 Fusion Monster from your Extra Deck to the field in Attack Position.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[恶魔科学怪人]<br> &lt;デビル·フランケン&gt;<br> [15/02/02]<br> <br> （这张卡的日文原卡名不带有「恶魔/デーモン」）<br> ●①：支付5000基本分才能发动。从额外卡组把1只融合怪兽攻击表示特殊召唤。<br> ◇起动效果，开连锁，不取对象<br> ◇支付5000基本分是效果发动COST<br> ◇效果处理时从自己的额外卡组把1只融合怪兽在自己场上表侧攻击表示特殊召唤，这个特殊召唤不是融合召唤、不解除苏生限制"},{"password":"28470714","serial":"&nbsp;","name":"刃蝇","nameJa":"ブレードフライ","nameEn":"Bladefly","nameNw":"刃蝇","imgUrl":"http://ocg.resource.m2v.cn/456.jpg","level":2,"attribute":"风","race":"昆虫","atk":"600","def":"700","pendL":"","pendR":"","link":"","desc":"只要这张卡在场上以表侧表示存在，场上的风属性怪兽的攻击力上升500点，地属性怪兽的攻击力下降400点。","ban":"无限制","descNw":"只要这张卡在场上表侧表示存在，场上表侧表示存在的风属性怪兽的攻击力上升500，地属性怪兽的攻击力下降400。","descJa":"このカードがフィールド上に表側表示で存在する限り、フィールド上に表側表示で存在する風属性モンスターの攻撃力は５００ポイントアップし、地属性モンスターの攻撃力は４００ポイントダウンする。","descEn":"As long as this card remains face-up on the field, increase the ATK of all WIND monsters by 500 points and decrease the ATK of all EARTH monsters by 400 points.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Rare"],"adjust":"[刃蝇]<br> &lt;ブレードフライ&gt;<br> [2010/09/08]<br> <br> ●只要这张卡在场上表侧表示存在，全部风属性怪兽的攻击力上升500分。地属性怪兽的攻击力下降400分。<br> ◇永续效果（不进入连锁）"},{"password":"80741828","serial":"&nbsp;","name":"见习魔女","nameJa":"見習い魔女","nameEn":"Witch's Apprentice","nameNw":"见习魔女","imgUrl":"http://ocg.resource.m2v.cn/459.jpg","level":2,"attribute":"暗","race":"魔法师","atk":"550","def":"500","pendL":"","pendR":"","link":"","desc":"只要这张卡在场上以表侧表示存在，场上的暗属性怪兽的攻击力上升500点，光属性怪兽的攻击力下降400点。","ban":"无限制","descNw":"①：场上的暗属性怪兽的攻击力上升500，光属性怪兽的攻击力下降400。","descJa":"このカードがフィールド上に表側表示で存在する限り、フィールド上の闇属性モンスターの攻撃力は５００ポイントアップし、光属性モンスターの攻撃力は４００ポイントダウンする。","descEn":"As long as this card remains face-up on the field, increase the ATK of all DARK monsters by 500 points and decrease the ATK of all LIGHT monsters by 400 points.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Rare"],"adjust":"[见习魔女]<br> &lt;見習い魔女&gt;<br> [2010/09/08]<br> <br> ●只要这张卡在场上表侧表示存在，全部暗属性怪兽的攻击力上升500分。光属性怪兽的攻击力下降400分。<br> ◇永续效果（不进入连锁）"},{"password":"76634149","serial":"&nbsp;","name":"海龙神","nameJa":"海竜神","nameEn":"Kairyu-Shin","nameNw":"海龙神","imgUrl":"http://ocg.resource.m2v.cn/507.jpg","level":5,"attribute":"水","race":"海龙","atk":"1800","def":"1500","pendL":"","pendR":"","link":"","desc":"被称为海洋之主的海之龙。会引发海啸将一切吞没。","ban":"无限制","descNw":"描述：被称为海洋之主的海龙。掀起海啸吞噬一切。","descJa":"海の主と呼ばれる海のドラゴン。津波をおこして全てを飲み込む。","descEn":"A sea dragon known as the King of the Ocean, it attacks with huge tidal waves.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"53493204","serial":"&nbsp;","name":"心眼的女神","nameJa":"心眼の女神","nameEn":"Goddess with the Third Eye","nameNw":"心眼之女神","imgUrl":"http://ocg.resource.m2v.cn/509.jpg","level":4,"attribute":"光","race":"天使","atk":"1200","def":"1000","pendL":"","pendR":"","link":"","desc":"这张卡可以代替1只融合素材怪兽。那个时候，其他的融合素材怪兽必须正规。","ban":"无限制","descNw":"这张卡可以作为1只融合素材怪兽的代替。那个时候，其他的融合素材怪兽必须是正规品。","descJa":"このカードを融合素材モンスター１体の代わりにする事ができる。その際、他の融合素材モンスターは正規のものでなければならない。","descEn":"You can substitute this card for any 1 Fusion Material Monster. When you do this, the other Fusion Material Monster(s) must be the correct one(s).","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[心眼之女神]<br> &lt;心眼の女神&gt;<br> [2010/09/10]<br> <br> ●这张卡可以代替1只融合素材怪兽。那时，其他的融合素材怪兽必须是正规物。<br> ◇无效果分类<br> ◇可以被「技能抽取/スキルドレイン」「星骸龙/デブリ·ドラゴン」「冥界的魔王 哈·迪斯/冥界の魔王 ハ·デス」等的效果无效<br> ◇只能代替融合怪兽上写全卡名的融合素材<br> ◇只能在进行融合召唤时代替融合素材怪兽<br> ◇不能从卡组、除外状态代替融合素材怪兽<br> ◇可以从手卡、场上（不论表里）、墓地代替融合素材怪兽"},{"password":"99426834","serial":"&nbsp;","name":"沼地的魔兽王","nameJa":"沼地の魔獣王","nameEn":"Beastking of the Swamps","nameNw":"沼地的魔兽王","imgUrl":"http://ocg.resource.m2v.cn/511.jpg","level":4,"attribute":"水","race":"水","atk":"1000","def":"1100","pendL":"","pendR":"","link":"","desc":"这张卡可以代替1只融合素材怪兽。那个时候，其他的融合素材怪兽必须正规。","ban":"无限制","descNw":"这张卡可以作为1只融合素材怪兽的代替。那个时候，其他的融合素材怪兽必须是正规品。","descJa":"このカードを融合素材モンスター１体の代わりにする事ができる。その際、他の融合素材モンスターは正規のものでなければならない。","descEn":"You can substitute this card for any 1 Fusion Material Monster. When you do this, the other Fusion Material Monster(s) must be the correct one(s).","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[沼地的魔兽王]<br> &lt;沼地の魔獣王&gt;<br> [2010/09/10]<br> <br> ●这张卡可以代替1只融合素材怪兽。那时，其他的融合素材怪兽必须是正规物。<br> ◇无效果分类<br> ◇可以被「技能抽取/スキルドレイン」「星骸龙/デブリ·ドラゴン」「冥界的魔王 哈·迪斯/冥界の魔王 ハ·デス」等的效果无效<br> ◇只能代替融合怪兽上写全卡名的融合素材<br> ◇只能在进行融合召唤时代替融合素材怪兽<br> ◇不能从卡组、除外状态代替融合素材怪兽<br> ◇可以从手卡、场上（不论表里）、墓地代替融合素材怪兽"},{"password":"50259460","serial":"&nbsp;","name":"破坏神 瓦沙克","nameJa":"破壊神 ヴァサーゴ","nameEn":"Versago the Destroyer","nameNw":"破坏神 瓦沙克","imgUrl":"http://ocg.resource.m2v.cn/512.jpg","level":3,"attribute":"暗","race":"恶魔","atk":"1100","def":"900","pendL":"","pendR":"","link":"","desc":"这张卡可以代替1只融合素材怪兽。那个时候，其他的融合素材怪兽必须正规。","ban":"无限制","descNw":"这张卡可以作为1只融合素材怪兽的代替。那个时候，其他的融合素材怪兽必须是正规品。","descJa":"このカードを融合素材モンスター１体の代わりにする事ができる。その際、他の融合素材モンスターは正規のものでなければならない。","descEn":"You can substitute this card for any 1 Fusion Material Monster. When you do this, the other Fusion Material Monster(s) must be the correct one(s).","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[破坏神 瓦沙克]<br> &lt;破壊神 ヴァサーゴ&gt;<br> [2010/09/10]<br> <br> ●这张卡可以代替1只融合素材怪兽。那时，其他的融合素材怪兽必须是正规物。<br> ◇无效果分类<br> ◇可以被「技能抽取/スキルドレイン」「星骸龙/デブリ·ドラゴン」「冥界的魔王 哈·迪斯/冥界の魔王 ハ·デス」等的效果无效<br> ◇只能代替融合怪兽上写全卡名的融合素材<br> ◇只能在进行融合召唤时代替融合素材怪兽<br> ◇不能从卡组、除外状态代替融合素材怪兽<br> ◇可以从手卡、场上（不论表里）、墓地代替融合素材怪兽"},{"password":"84133008","serial":"&nbsp;","name":"眼球怪","nameJa":"モンスター・アイ","nameEn":"Monster Eye","nameNw":"眼球怪","imgUrl":"http://ocg.resource.m2v.cn/513.jpg","level":1,"attribute":"暗","race":"恶魔","atk":"250","def":"350","pendL":"","pendR":"","link":"","desc":"可以支付1000LP发动。使自己墓地存在的1张「融合」返回手牌。","ban":"无限制","descNw":"支付1000基本分发动。自己墓地存在的1张「融合」魔法卡回到手卡。","descJa":"１０００ライフポイントを払って発動する。自分の墓地に存在する「融合」魔法カード１枚を手札に戻す。","descEn":"You can pay 1000 Life Points; add 1 \"Polymerization\" from your Graveyard to your hand.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[眼球怪]<br> &lt;モンスター·アイ&gt;<br> [2010/09/10]<br> <br> ●支付1000基本分。从自己墓地把1张「融合」魔法卡返回手卡。<br> ◇启动效果（进入连锁）<br> ◇取对象<br> ◇发动次数不限（符合条件的前提下，不得空发）"},{"password":"61831093","serial":"&nbsp;","name":"二重身","nameJa":"ドッペルゲンガー","nameEn":"Greenkappa","nameNw":"二重身","imgUrl":"http://ocg.resource.m2v.cn/519.jpg","level":3,"attribute":"暗","race":"战士","atk":"650","def":"900","pendL":"","pendR":"","link":"","desc":"翻转：选择场上2张盖放的魔法陷阱卡破坏。","ban":"无限制","descNw":"反转：选择场上盖放的2张魔法·陷阱卡破坏。","descJa":"リバース：フィールド上にセットされた魔法・罠カード２枚を選択して破壊する。","descEn":"FLIP: Target 2 Set Spell/Trap Cards on the field; destroy those targets.","typeSt":["怪兽","效果","反转"],"linkArrow":null,"rare":["Normal"],"adjust":"[二重身]<br> &lt;ドッペルゲンガー&gt;<br> [2010/09/10]<br> <br> ●反转：必须选择场上覆盖的2张魔法或陷阱卡，破坏那些。<br> ◇诱发效果，强制发动，开连锁，发动时选择场上2张覆盖的魔法或陷阱卡为对象<br> ◇场上可以作为对象的卡不足2张的场合，这个效果不发动<br> ◇效果处理时其中之一对象为表侧表示的场合，剩下的那张破坏<br> ◇效果处理时其中之一对象不在场上存在的场合，剩下的那张破坏"},{"password":"08201910","serial":"&nbsp;","name":"海星男孩","nameJa":"スター・ボーイ","nameEn":"Star Boy","nameNw":"海星小子","imgUrl":"http://ocg.resource.m2v.cn/449.jpg","level":2,"attribute":"水","race":"水","atk":"550","def":"500","pendL":"","pendR":"","link":"","desc":"只要这张卡在场上以表侧表示存在，场上的水属性怪兽的攻击力上升500点，炎属性怪兽的攻击力下降400点。","ban":"无限制","descNw":"只要这张卡在场上表侧表示存在，场上表侧表示存在的水属性怪兽的攻击力上升500，炎属性怪兽的攻击力下降400。","descJa":"このカードがフィールド上に表側表示で存在する限り、フィールド上に表側表示で存在する水属性モンスターの攻撃力は５００ポイントアップし、炎属性モンスターの攻撃力は４００ポイントダウンする。","descEn":"As long as this card remains face-up on the field, increase the ATK of all WATER monsters by 500 points and decrease the ATK of all FIRE monsters by 400 points.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Rare"],"adjust":"[海星小子]<br> &lt;スター·ボーイ&gt;<br> [2010/09/08]<br> <br> ●只要这张卡在场上表侧表示存在，全部水属性怪兽的攻击力上升500分。炎属性怪兽的攻击力下降400分。<br> ◇永续效果（不进入连锁）"},{"password":"93920745","serial":"&nbsp;","name":"企鹅兵","nameJa":"ペンギン・ソルジャー","nameEn":"Penguin Soldier","nameNw":"企鹅士兵","imgUrl":"http://ocg.resource.m2v.cn/521.jpg","level":2,"attribute":"水","race":"水","atk":"750","def":"500","pendL":"","pendR":"","link":"","desc":"翻转：可以选择场上最多2只怪兽返回持有者的手牌。","ban":"无限制","descNw":"反转：可以选择场上最多2只怪兽回到持有者手卡。","descJa":"リバース：フィールド上のモンスターを２体まで選択して持ち主の手札に戻す事ができる。","descEn":"FLIP: You can target up to 2 monsters on the field; return those targets to the hand.","typeSt":["怪兽","效果","反转"],"linkArrow":null,"rare":["Normal"],"adjust":"[企鹅士兵]<br> &lt;ペンギン·ソルジャー&gt;<br> [14/08/07]<br> <br> ●反转：可以让场上存在的最多2只怪兽回到持有者的手卡。<br> ◇诱发效果，任意发动，开连锁，发动时取1~2张符合条件的卡为对象<br> ◇里侧表示的此卡因战斗而反转、要发动这个效果时，不能把已经被战斗破坏的怪兽作为对象<br> ◇发动时选择2只对象，效果处理时对象卡只剩下1只的场合，剩下的那只回到持有者手卡"},{"password":"40173854","serial":"&nbsp;","name":"水陆两用战斗艇","nameJa":"水陸両用バグロス","nameEn":"Amphibious Bugroth","nameNw":"水陆两用战斗艇","imgUrl":"http://ocg.resource.m2v.cn/522.jpg","level":5,"attribute":"水","race":"水","atk":"1850","def":"1300","pendL":"","pendR":"","link":"","desc":"「陸戦型 バグロス／陆战型战斗艇」+「海を守る戦士／守卫海的戦士」","ban":"无限制","descNw":"融合：「陆战型战斗艇」＋「守卫海洋的战士」。","descJa":"「陸戦型 バグロス」＋「海を守る戦士」","descEn":"\"Ground Attacker Bugroth\" + \"Defender of the Sea\"","typeSt":["怪兽","融合"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"30451366","serial":"&nbsp;","name":"幻影绵羊","nameJa":"イリュージョン・シープ","nameEn":"Mystical Sheep #1","nameNw":"幻想绵羊","imgUrl":"http://ocg.resource.m2v.cn/523.jpg","level":3,"attribute":"地","race":"兽","atk":"1150","def":"900","pendL":"","pendR":"","link":"","desc":"这张卡可以代替1只融合素材怪兽。那个时候，其他的融合素材怪兽必须正规。","ban":"无限制","descNw":"这张卡可以作为1只融合素材怪兽的代替。那个时候，其他的融合素材怪兽必须是正规品。","descJa":"このカードを融合素材モンスター１体の代わりにする事ができる。その際、他の融合素材モンスターは正規のものでなければならない。","descEn":"You can substitute this card for any 1 Fusion-Material Monster. When you do this, the other Fusion-Material Monster(s) must be the correct one(s).","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[幻想绵羊]<br> &lt;イリュージョン·シープ&gt;<br> [2010/09/10]<br> <br> ●这张卡可以代替1只融合素材怪兽。那时，其他的融合素材怪兽必须是正规物。<br> ◇无效果分类<br> ◇可以被「技能抽取/スキルドレイン」「星骸龙/デブリ·ドラゴン」「冥界的魔王 哈·迪斯/冥界の魔王 ハ·デス」等的效果无效<br> ◇只能代替融合怪兽上写全卡名的融合素材<br> ◇只能在进行融合召唤时代替融合素材怪兽<br> ◇不能从卡组、除外状态代替融合素材怪兽<br> ◇可以从手卡、场上（不论表里）、墓地代替融合素材怪兽"},{"password":"90330453","serial":"&nbsp;","name":"魔女狩猎","nameJa":"魔女狩り","nameEn":"Last Day of Witch","nameNw":"魔女狩猎","imgUrl":"http://ocg.resource.m2v.cn/525.jpg","level":0,"attribute":"","race":"","atk":"　　　　","def":"　　　　","pendL":"","pendR":"","link":"","desc":"将场上的以表侧表示存在的魔法师族怪兽全部破坏。","ban":"无限制","descNw":"场上表侧表示存在的魔法师族怪兽全部破坏。","descJa":"フィールド上に表側表示で存在する魔法使い族モンスターを全て破壊する。","descEn":"Destroy all face-up Spellcaster-Type monsters on the field.","typeSt":["魔法","通常"],"linkArrow":null,"rare":["Normal"],"adjust":"[魔女狩猎]<br> &lt;魔女狩り&gt;<br> [2010/09/10]<br> <br> ●在场上表侧表示存在的魔法师族怪兽全部破坏。<br> ◇不取对象"},{"password":"26725158","serial":"&nbsp;","name":"悪魔祓除","nameJa":"悪魔払い","nameEn":"Exile of the Wicked","nameNw":"恶魔祓除","imgUrl":"http://ocg.resource.m2v.cn/526.jpg","level":0,"attribute":"","race":"","atk":"　　　　","def":"　　　　","pendL":"","pendR":"","link":"","desc":"将场上的恶魔族怪兽全部破坏。","ban":"无限制","descNw":"场上的恶魔族怪兽全部破坏。","descJa":"フィールド上に表側表示で存在する悪魔族モンスターを全て破壊する。","descEn":"Destroy all face-up Fiend-Type monsters on the field.","typeSt":["魔法","通常"],"linkArrow":null,"rare":["Normal"],"adjust":"[恶魔祓除]<br> &lt;悪魔払い&gt;<br> [2010/09/10]<br> <br> （这张卡的日文原卡名不带有「恶魔/デーモン」）<br> ●在场上表侧表示存在的恶魔族怪兽全部破坏。<br> ◇不取对象"},{"password":"53119267","serial":"&nbsp;","name":"魔力之棘","nameJa":"魔力の棘","nameEn":"Magical Thorn","nameNw":"魔力之棘","imgUrl":"http://ocg.resource.m2v.cn/527.jpg","level":0,"attribute":"","race":"","atk":"　　　　","def":"　　　　","pendL":"","pendR":"","link":"","desc":"对手的手牌舍弃入墓地时，给予对手LP舍弃的数量×500点伤害。","ban":"无限制","descNw":"对方手卡被丢弃去墓地时，给与对方基本分丢弃的卡数量×500的数值的伤害。","descJa":"相手の手札が墓地へ捨てられた時、捨てたカードの数×５００ポイントダメージを相手ライフに与える。","descEn":"When your opponent's card(s) in their hand are discarded to the Graveyard, inflict 500 points of damage to their Life Points for each card that was discarded.","typeSt":["陷阱","效果","永续"],"linkArrow":null,"rare":["Normal"],"adjust":"[魔力之棘]<br> &lt;魔力の棘&gt;<br> [2010/09/10]<br> <br> ●对方的手卡被丢弃去墓地时，每丢弃1张卡给予对方500分伤害。<br> ◇伤害效果不进入连锁<br> ◇这张卡在场上有2张以上效果适用的场合，效果叠加<br> ◇原本自己的卡从对方手卡被丢弃、原本对方的卡从自己手卡被丢弃这个效果都不适用<br> ◇一次丢弃多张的场合，伤害数值为那个被丢弃数量×500<br> ◇从手卡送去墓地、被破坏都不在效果适用范围内<br> ◇对方场上「魔力之棘/魔力の棘」的效果适用中，我方回合自己发动「天使的施舍/天使の施し」从卡组抽3张卡，丢弃2张卡。「天使的施舍/天使の施し」效果处理完毕后自己凑齐了「艾克佐迪亚/エクゾディア」5张部件满足胜利条件，而由于「魔力之棘/魔力の棘」的效果自己受到1000分伤害基本分变为0对方也满足胜利条件的场合，以回合玩家优先来处理。（即实际先适用「被封印的艾克佐迪亚/封印されしエクゾディア」的效果自己获得决斗胜利）"},{"password":"99518961","serial":"&nbsp;","name":"革命","nameJa":"革命","nameEn":"Restructer Revolution","nameNw":"革命","imgUrl":"http://ocg.resource.m2v.cn/528.jpg","level":0,"attribute":"","race":"","atk":"　　　　","def":"　　　　","pendL":"","pendR":"","link":"","desc":"给予对手LP为对手的手牌张数×200点伤害。","ban":"无限制","descNw":"给与对方基本分对方手卡数量×200的数值的伤害。","descJa":"相手の手札の枚数×２００ポイントダメージを相手ライフに与える。","descEn":"Inflict 200 points of damage to your opponent's Life Points for each card in your opponent's hand.","typeSt":["魔法","通常"],"linkArrow":null,"rare":["Normal"],"adjust":"[革命]<br> &lt;革命&gt;<br> [2010/09/10]<br> <br> ●给予对方基本分对方的手卡的数量×200分的伤害。<br> ◇「精灵之镜/精霊の鏡」可以对应这张卡的发动而发动<br> ◇对方没有手卡时不能发动<br> ◇效果处理时计算对方的手卡数量"},{"password":"68658728","serial":"&nbsp;","name":"小奇美拉","nameJa":"リトル・キメラ","nameEn":"Little Chimera","nameNw":"小奇美拉","imgUrl":"http://ocg.resource.m2v.cn/455.jpg","level":2,"attribute":"炎","race":"兽","atk":"600","def":"550","pendL":"","pendR":"","link":"","desc":"只要这张卡在场上以表侧表示存在，场上的炎属性怪兽的攻击力上升500点，水属性怪兽的攻击力下降400点。","ban":"无限制","descNw":"只要这张卡在场上表侧表示存在，场上的炎属性怪兽的攻击力上升500，水属性怪兽的攻击力下降400。","descJa":"このカードがフィールド上に表側表示で存在する限り、フィールド上の炎属性モンスターの攻撃力は５００ポイントアップし、水属性モンスターの攻撃力は４００ポイントダウンする。","descEn":"All FIRE monsters on the field gain 500 ATK. All WATER monsters on the field lose 400 ATK.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Rare"],"adjust":"[小奇美拉]<br> &lt;リトル·キメラ&gt;<br> [2010/09/08]<br> <br> ●只要这张卡在场上表侧表示存在，全部炎属性怪兽的攻击力上升500分。水属性怪兽的攻击力下降400分。<br> ◇永续效果（不进入连锁）"},{"password":"67629977","serial":"&nbsp;","name":"超级明星","nameJa":"スーパースター","nameEn":"Hoshiningen","nameNw":"超级流星","imgUrl":"http://ocg.resource.m2v.cn/442.jpg","level":2,"attribute":"光","race":"天使","atk":"500","def":"700","pendL":"","pendR":"","link":"","desc":"只要这张卡在场上以表侧表示存在，场上的光属性怪兽的攻击力上升500点，暗属性怪兽的攻击力下降400点。","ban":"无限制","descNw":"①：场上的光属性怪兽的攻击力上升500，暗属性怪兽的攻击力下降400。","descJa":"このカードがフィールド上に表側表示で存在する限り、フィールド上の光属性モンスターの攻撃力は５００ポイントアップし、闇属性モンスターの攻撃力は４００ポイントダウンする。","descEn":"As long as this card remains face-up on the field, increase the ATK of all LIGHT monsters by 500 points and decrease the ATK of all DARK monsters by 400 points.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Rare"],"adjust":"[超级流星]<br> &lt;スーパースター&gt;<br> [2010/09/08]<br> <br> ●只要这张卡在场上表侧表示存在，全部光属性怪兽的攻击力上升500分。暗属性怪兽的攻击力下降400分。<br> ◇永续效果（不进入连锁）"},{"password":"69780745","serial":"&nbsp;","name":"加尔瓦斯","nameJa":"ガルヴァス","nameEn":"Garvas","nameNw":"加尔瓦斯","imgUrl":"http://ocg.resource.m2v.cn/2581.jpg","level":6,"attribute":"地","race":"兽","atk":"2000","def":"1700","pendL":"","pendR":"","link":"","desc":"有着像长着翅膀的狮子那样的野兽姿态的恶之化身。","ban":"无限制","descNw":"描述：恶之化身。样子如同长着羽毛的狮子。","descJa":"ライオンに羽の生えた、獣のような姿をした悪の化身。","descEn":"A wicked beast that resembles a winged lion.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"82818645","serial":"&nbsp;","name":"岩石精灵","nameJa":"岩石の精霊","nameEn":"Rock Spirit","nameNw":"岩石之精灵","imgUrl":"http://ocg.resource.m2v.cn/2589.jpg","level":5,"attribute":"地","race":"魔法师","atk":"1650","def":"1900","pendL":"","pendR":"","link":"","desc":"虽然像个土偶但其实是岩石的精灵。攻击、守备都非常强。","ban":"无限制","descNw":"描述：指轮般的岩石精灵。攻击与守备力都很强。","descJa":"はにわみたいだが岩石の精霊。攻撃・守備ともにかなり強い。","descEn":"A fairy of boulders that looks like an earthenware statue. It is quite strong in terms of both attack and defense.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"62762898","serial":"&nbsp;","name":"鹦鹉龙","nameJa":"パロット・ドラゴン","nameEn":"Parrot Dragon","nameNw":"鹦鹉龙","imgUrl":"http://ocg.resource.m2v.cn/2582.jpg","level":5,"attribute":"风","race":"龙","atk":"2000","def":"1300","pendL":"","pendR":"","link":"","desc":"美国漫画世界的龙。不要被它可爱的外表所欺骗。","ban":"无限制","descNw":"描述：美国喜剧中的龙，不要被可爱的外表所迷惑。","descJa":"アメリカンコミックの世界のドラゴン。かわいらしい風貌にだまされるな。","descEn":"A dragon from the cartoons that's more dangerous than it appears to be.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"95288024","serial":"&nbsp;","name":"天空龙","nameJa":"天空竜","nameEn":"Sky Dragon","nameNw":"天空龙","imgUrl":"http://ocg.resource.m2v.cn/2583.jpg","level":6,"attribute":"风","race":"龙","atk":"1900","def":"1800","pendL":"","pendR":"","link":"","desc":"有着四块翅膀、鸟的外形的龙。用刀刃那样的翅膀攻击。","ban":"无限制","descNw":"描述：有着四枚羽翼的鸟的外形的龙，用如刀刃一般的羽毛进行攻击。","descJa":"４枚の羽を持つ、鳥の姿をしたドラゴン。刃の羽で攻撃。","descEn":"A flying dragon with four wings housing some very dangerous blades.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"14977074","serial":"&nbsp;","name":"加鲁撒斯","nameJa":"ガルーザス","nameEn":"Garoozis","nameNw":"加鲁撒斯","imgUrl":"http://ocg.resource.m2v.cn/2584.jpg","level":5,"attribute":"炎","race":"兽战士","atk":"1800","def":"1500","pendL":"","pendR":"","link":"","desc":"有着龙头的兽战士。斧的攻击非常强力。","ban":"无限制","descNw":"描述：长有龙头的兽战士，斧头具有相当大的威力。","descJa":"竜の頭を持つ獣戦士。オノの攻撃はかなり強力。","descEn":"An axe-swinging beast-warrior with the head of a dragon.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"13069066","serial":"&nbsp;","name":"剑龙","nameJa":"剣竜","nameEn":"Sword Arm of Dragon","nameNw":"剑龙","imgUrl":"http://ocg.resource.m2v.cn/2585.jpg","level":6,"attribute":"地","race":"恐龙","atk":"1750","def":"2030","pendL":"","pendR":"","link":"","desc":"全身有着像刀那样的尖刺的恐龙。会猛撞攻击。","ban":"无限制","descNw":"描述：全身都附有刀刺的恐龙。以突进为手段进行攻击。","descJa":"全身にカタナのトゲがついた恐竜。突進攻撃をする。","descEn":"This Jurassic juggernaut has a spine covered in sword-like plates, and a tail to split open skulls.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"70084224","serial":"&nbsp;","name":"猎头魔人","nameJa":"首狩り魔人","nameEn":"Neck Hunter","nameNw":"猎头魔人","imgUrl":"http://ocg.resource.m2v.cn/2586.jpg","level":6,"attribute":"暗","race":"恶魔","atk":"1750","def":"1900","pendL":"","pendR":"","link":"","desc":"挥动大镰刀狙击首级的恶魔。也会从那大眼睛射出光线。","ban":"无限制","descNw":"描述：挥舞着大镰刀的恶魔。从大眼睛中还会发出光柱。","descJa":"大きなカマを振り回しクビを狩る悪魔。大きな目からビームも出す。","descEn":"A fiend that wields a mean sickle and fires devastating beams from its eyes.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"54615781","serial":"&nbsp;","name":"风之精灵","nameJa":"風の精霊","nameEn":"Spirit of the Wind","nameNw":"风之精灵","imgUrl":"http://ocg.resource.m2v.cn/2587.jpg","level":5,"attribute":"风","race":"魔法师","atk":"1700","def":"1400","pendL":"","pendR":"","link":"","desc":"随心所欲地来回飞动的风之精灵。心情不好就会变成风暴。","ban":"无限制","descNw":"描述：自在飞翔的风之精灵。心情不好的时候就会变成狂风。","descJa":"気ままに飛び回る風の精霊。機嫌が悪いと嵐になる。","descEn":"A free-spirited wind elemental that flits about as it desires. It brings storms when it becomes upset.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"05053103","serial":"&nbsp;","name":"牛头人","nameJa":"ミノタウルス","nameEn":"Battle Ox","nameNw":"牛头人","imgUrl":"http://ocg.resource.m2v.cn/2588.jpg","level":4,"attribute":"地","race":"兽战士","atk":"1700","def":"1000","pendL":"","pendR":"","link":"","desc":"很大力气的牛怪物。那大斧一挥，无论什么都可以砍倒。","ban":"无限制","descNw":"描述：有着强大力量的牛怪，斧头一挥能砍倒一切东西。","descJa":"すごい力を持つウシの怪物。オノひと振りで何でもなぎ倒す。","descEn":"A monster with tremendous power, it destroys enemies with a swing of its axe.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"81686058","serial":"&nbsp;","name":"塞壬","nameJa":"セイレーン","nameEn":"Ill Witch","nameNw":"塞壬","imgUrl":"http://ocg.resource.m2v.cn/2590.jpg","level":5,"attribute":"光","race":"魔法师","atk":"1600","def":"1500","pendL":"","pendR":"","link":"","desc":"操纵风并放出突风，将所有的东西吹跑。","ban":"无限制","descNw":"描述：能操纵风并能引起强风吹飞所有东西。","descJa":"風を操り突風をまきおこし、ありとあらゆる物を吹き飛ばす。","descEn":"This monster blasts enemies with unexpected bursts of wind.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"32355828","serial":"&nbsp;","name":"骸骨龙","nameJa":"スケルゴン","nameEn":"Skelgon","nameNw":"骸骨龙","imgUrl":"http://ocg.resource.m2v.cn/2599.jpg","level":6,"attribute":"暗","race":"不死","atk":"1700","def":"1900","pendL":"","pendR":"","link":"","desc":"「メデューサの亡霊／美杜莎的亡灵」+「暗黒の竜王／暗黑龙王」","ban":"无限制","descNw":"融合：「美杜莎的亡灵」＋「暗黑之龙王」。","descJa":"メデューサの亡霊＋暗黒の竜王","descEn":"\"The Snake Hair\" + \"Blackland Fire Dragon\"","typeSt":["怪兽","融合"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"09540040","serial":"&nbsp;","name":"岩石龟","nameJa":"岩石カメッター","nameEn":"Boulder Tortoise","nameNw":"岩石龟","imgUrl":"http://ocg.resource.m2v.cn/2591.jpg","level":6,"attribute":"水","race":"水","atk":"1450","def":"2200","pendL":"","pendR":"","link":"","desc":"全身由岩石构成的乌龟。高守备力是其特征。","ban":"无限制","descNw":"描述：全身由岩石做成的龟。特点是守备力非常高。","descJa":"全身が岩石でできているカメ。非常に高い守備が特徴。","descEn":"A ponderous tortoise whose entire body is composed of boulders. Its defense rating is outstanding.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"85448931","serial":"&nbsp;","name":"守卫海的戦士","nameJa":"海を守る戦士","nameEn":"Sentinel of the Seas","nameNw":"守卫海洋的战士","imgUrl":"http://ocg.resource.m2v.cn/2592.jpg","level":4,"attribute":"水","race":"水","atk":"1300","def":"1000","pendL":"","pendR":"","link":"","desc":"对弄脏大海的家伙作出彻底攻击的鱼人战士。","ban":"无限制","descNw":"描述：彻底的攻击玷污大海的家伙、人鱼战士。","descJa":"海を汚す奴等を徹底的に攻撃する、マーマン戦士。","descEn":"A merman warrior that relentlessly attacks those who pollute the seas with their presence.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"09197735","serial":"&nbsp;","name":"龙魂的石像","nameJa":"竜魂の石像","nameEn":"Dragon Statue","nameNw":"龙魂之石像","imgUrl":"http://ocg.resource.m2v.cn/2593.jpg","level":3,"attribute":"地","race":"战士","atk":"1100","def":"900","pendL":"","pendR":"","link":"","desc":"拥有龙魂的石像战士。用引以为豪的剑将敌人劈开。","ban":"无限制","descNw":"描述：拥有龙的灵魂的石像战士。用自豪的剑劈开敌人。","descJa":"ドラゴンの魂を持つ石像の戦士。自慢の剣で、敵を切り裂く。","descEn":"A stone warrior with the heart of a dragon.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"94412545","serial":"&nbsp;","name":"色变龙","nameJa":"メカレオン","nameEn":"Mechaleon","nameNw":"机械变色龙","imgUrl":"http://ocg.resource.m2v.cn/2594.jpg","level":2,"attribute":"水","race":"爬虫类","atk":"800","def":"600","pendL":"","pendR":"","link":"","desc":"使身体的颜色改变，不管是在什么地方都能隐藏自己。","ban":"无限制","descNw":"描述：变换身体颜色可以隐藏在任何地方。","descJa":"身体の色を変化させ、どんな場所にでも隠れることができる。","descEn":"A large chameleon with the ability to alter its body coloring. Using this ability, it can conceal itself in any location.","typeSt":["怪兽","通常"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"16229315","serial":"&nbsp;","name":"狂风毒蛾","nameJa":"ゲール・ドグラ","nameEn":"Gale Dogra","nameNw":"狂风毒蛾","imgUrl":"http://ocg.resource.m2v.cn/2595.jpg","level":2,"attribute":"地","race":"昆虫","atk":"650","def":"600","pendL":"","pendR":"","link":"","desc":"①：可以支付3000LP发动。从额外卡组将1只怪兽送入墓地。","ban":"无限制","descNw":"①：支付3000基本分才能发动。从额外卡组把1只怪兽送去墓地。","descJa":"３０００ライフポイントを払って発動する。自分の融合デッキからモンスター１体を墓地に捨てる。","descEn":"You can pay 3000 Life Points to send 1 monster from your Extra Deck to the Graveyard.","typeSt":["怪兽","效果"],"linkArrow":null,"rare":["Normal"],"adjust":"[狂风毒蛾]<br> &lt;ゲール·ドグラ&gt;<br> [2010/09/10]<br> <br> ●支付3000基本分发动。从自己的融合卡组把1只怪兽丢弃去墓地。<br> ◇发动时支付3000基本分（代价）<br> ◇效果解决时从自己的额外卡组把1只融合怪兽或同调怪兽丢弃去墓地（不取对象）"},{"password":"94566432","serial":"&nbsp;","name":"帝王龙","nameJa":"カイザー・ドラゴン","nameEn":"Kaiser Dragon","nameNw":"帝王龙","imgUrl":"http://ocg.resource.m2v.cn/2596.jpg","level":7,"attribute":"光","race":"龙","atk":"2300","def":"2000","pendL":"","pendR":"","link":"","desc":"「砦を守る翼竜／守城翼龙」+「フェアリー・ドラゴン／妖精龙」","ban":"无限制","descNw":"融合：「守城的翼龙」＋「妖精龙」。","descJa":"砦を守る翼竜＋フェアリー・ドラゴン","descEn":"\"Winged Dragon, Guardian of the Fortress #1\" + \"Fairy Dragon\"","typeSt":["怪兽","融合"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"46696593","serial":"&nbsp;","name":"红阳鸟","nameJa":"紅陽鳥","nameEn":"Crimson Sunbird","nameNw":"红阳鸟","imgUrl":"http://ocg.resource.m2v.cn/2597.jpg","level":6,"attribute":"炎","race":"鸟兽","atk":"2300","def":"1800","pendL":"","pendR":"","link":"","desc":"「セイント・バード／圣鸟」+「スカイ・ハンター／天空猎手」","ban":"无限制","descNw":"融合：「圣鸟」＋「天空猎手」。","descJa":"セイント・バード＋スカイ・ハンター","descEn":"\"Faith Bird\" + \"Skull Red Bird\"","typeSt":["怪兽","融合"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"32751480","serial":"&nbsp;","name":"沙之魔女","nameJa":"砂の魔女","nameEn":"Mystical Sand","nameNw":"沙之魔女","imgUrl":"http://ocg.resource.m2v.cn/2598.jpg","level":6,"attribute":"地","race":"岩石","atk":"2100","def":"1700","pendL":"","pendR":"","link":"","desc":"「岩石の巨兵／岩石巨兵」+「エンシェント・エルフ／远古精灵」","ban":"无限制","descNw":"融合：「岩石巨兵」＋「古代精灵」。","descJa":"岩石の巨兵＋エンシェント・エルフ","descEn":"\"Giant Soldier of Stone\" + \"Ancient Elf\"","typeSt":["怪兽","融合"],"linkArrow":null,"rare":["Normal"],"adjust":""},{"password":"26902560","serial":"","name":"融合贤者","nameJa":"融合賢者","nameEn":"Fusion Sage","nameNw":"融合贤者","imgUrl":"http://ocg.resource.m2v.cn/529.jpg","level":0,"attribute":"","race":"","atk":"　　　　","def":"　　　　","pendL":"","pendR":"","link":"","desc":"从自己的卡组将1张「融合」加入手牌。","ban":"无限制","descNw":"从自己卡组把1张「融合」魔法卡加入手卡。","descJa":"自分のデッキから「融合」魔法カード１枚を手札に加える。","descEn":"Add 1 \"Polymerization\" card from your Deck to your hand. Then shuffle your Deck.","typeSt":["魔法","通常"],"linkArrow":null,"rare":[],"adjust":null}]}
 	 */
 	
+	@Async(ASYNC_EXECUTOR_NAME)
 	@Override
+	@Transactional
 	public void receivePackageData(Message<String> message) throws Exception {
 		String data = getMqData(message);
+		log.info("package-data [{}]", data);
         PackageDetail packageDetail = readValue(data, PackageDetail.class);
+        // t_package
+        Integer packageId = packageService.save(packageDetail);
         for (CardDetail card : packageDetail.getCards()) {
-        	Map<Integer, Integer> types = new HashMap<Integer, Integer>();
-        	boolean isMonster = false;
-			for (String type : card.getTypeSt()) {
-				int typeCache = 4;
-				Integer typeNum = indexService.findByNameFromCache(4, type);
-				if (typeNum == null) {
-					typeCache = 5;
-					typeNum = indexService.findByNameFromCache(5, type);
-					if (typeNum == null) {
-						typeCache = 6;
-						typeNum = indexService.findByNameFromCache(6, type);
-						if (typeNum == 1) isMonster = true;
-					}
-				}
-				
-				types.put(typeCache, typeNum);
-			}
-			
-			// TODO this is a bad way to check card type, should be use polymorphism
-			if (isMonster) {
-				MonsterEntity saved = monsterRepository.findByNameAndPassword(card.getName(), card.getPassword());
-				if (saved == null) {
-					return;
-				} 
-				
-				saved = new MonsterEntity();
-			} else {
-				
-			}
+        	CardTypeDTO cardTypeDto = getCardType(card.getTypeSt());
+			Integer cardId = cardManagerContext.cardSave(new CardDTO(cardTypeDto, card));
+			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRare(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
+			rareService.save(packageRareDto);
 		}
+	}
+	
+	private CardTypeDTO getCardType(List<String> types) {
+		CardTypeDTO cardTypeDto = new CardTypeDTO();
+		for (String type : types) {
+			Integer typeNum = indexService.findByNameFromCache(4, type);
+			if (typeNum != null) cardTypeDto.getMonsterType().add(typeNum);
+			
+			typeNum = indexService.findByNameFromCache(5, type);
+			if (typeNum != null) cardTypeDto.setMagicTrapType(typeNum);
+			
+			typeNum = indexService.findByNameFromCache(6, type);
+			if (typeNum != null) cardTypeDto.setCardType(typeNum);
+		}
+		
+		return cardTypeDto;
 	}
 	
 	private String getMqData(Message<String> message) throws Exception {

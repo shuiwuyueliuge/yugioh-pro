@@ -95,7 +95,7 @@ public class OurocgCardDeserializer extends JsonDeserializer<OurocgCard> {
 		try {
 			method.invoke(card, arg);
 		} catch (Exception e) {
-			log.error("invkoe method: [{}] arg: [{}] error: [{}]",method.getName(), arg, e);
+			log.error("invkoe method: [{}] arg: [{}] error: [{}]", method.getName(), arg, e);
 		}
 	}
 	

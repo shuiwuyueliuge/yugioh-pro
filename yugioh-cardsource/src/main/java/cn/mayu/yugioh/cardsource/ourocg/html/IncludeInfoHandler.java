@@ -2,12 +2,17 @@ package cn.mayu.yugioh.cardsource.ourocg.html;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.cardsource.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.cardsource.html.HtmlParser;
+import cn.mayu.yugioh.cardsource.html.interceptor.HttpStatusCodeInterceptorChain;
+import cn.mayu.yugioh.cardsource.html.interceptor.RetryStatusCodeInterceptor;
 import cn.mayu.yugioh.cardsource.ourocg.model.Include;
 import cn.mayu.yugioh.cardsource.ourocg.model.IncludeInfo;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 	
@@ -37,7 +42,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 			builder.setPackName(parser.setHtml(res[i - 3]).parseByTagIndex("a", 0).toString());
 			builder.setHref(parser.setHtml(res[i - 3]).parseByTagAttr("a", "href")[0]);
 			builder.setSellTime(parser.setHtml(res[i - 3]).parseByTagIndex("small", 0).toString());
-			builder.setNumber(number);
+			builder.setNumber(number.equals("&nbsp;") ? "" : number);
 			builder.setRare(res[i - 1]);
 			infos.add(builder);
 		}
@@ -49,6 +54,28 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 		    return adjust.equals("　　　　") ? "" : adjust;
 		} catch (Exception e) {
 			return "";
+		}
+	}
+	
+	@Override
+	protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
+		super.addHttpStatusCodeInterceptor(chain);
+		chain.addInterceptor(new RetryInterceptor());
+	}
+	
+	private static class RetryInterceptor extends RetryStatusCodeInterceptor {
+		
+		@Override
+		public void handelStatusCode(String url, HtmlParser parser) {
+			super.handelStatusCode(url, parser);
+			if (parser.toString().indexOf("Too Many Attempts.") != -1) {
+				log.debug(parser.getStateCode() + "  " + parser.getResponse().getHeaders());
+				try {
+					TimeUnit.SECONDS.sleep(5L);
+					parser.connUrl(url);
+				} catch (InterruptedException e) {
+				}
+			}
 		}
 	}
 }

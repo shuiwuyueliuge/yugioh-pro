@@ -4,9 +4,19 @@ import java.util.List;
 
 public interface DomainConverterFactory<S, T> {
 
-	T convert(S source);
+	default T convert(S source) {
+		return null;
+	}
 
 	default S reversal(T target) {
+		return null;
+	}
+	
+	default List<T> convertList(S source) {
+		return null;
+	}
+
+	default List<S> reversalList(T target) {
 		return null;
 	}
 	
@@ -15,6 +25,14 @@ public interface DomainConverterFactory<S, T> {
 	}
 
 	default List<S> reversalList(List<T> target) {
+		return null;
+	}
+	
+	default T convert(List<S> source) {
+		return null;
+	}
+
+	default S reversal(List<T> target) {
 		return null;
 	}
 }

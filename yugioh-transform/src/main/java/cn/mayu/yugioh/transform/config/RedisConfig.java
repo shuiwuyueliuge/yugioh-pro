@@ -9,7 +9,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import cn.mayu.yugioh.common.redis.RedisConfigContext;
 import cn.mayu.yugioh.common.redis.YugiohRedisFactory;
-import cn.mayu.yugioh.transform.entity.IndexEntity;
+import cn.mayu.yugioh.transform.domain.entity.IndexEntity;
 
 @Configuration
 public class RedisConfig {
