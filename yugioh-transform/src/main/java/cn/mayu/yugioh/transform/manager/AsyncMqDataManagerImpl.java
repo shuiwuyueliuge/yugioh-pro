@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rabbitmq.client.Channel;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
+import static cn.mayu.yugioh.common.core.util.Base64Util.*;
 import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
 import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
 import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
@@ -20,6 +21,7 @@ import cn.mayu.yugioh.transform.domain.dto.CardTypeDTO;
 import cn.mayu.yugioh.transform.domain.dto.PackageRareDTO;
 import cn.mayu.yugioh.transform.domain.entity.ForbiddenEntity;
 import cn.mayu.yugioh.transform.repository.ForbiddenRepository;
+import cn.mayu.yugioh.transform.service.ImageService;
 import cn.mayu.yugioh.transform.service.IndexService;
 import cn.mayu.yugioh.transform.service.PackageService;
 import cn.mayu.yugioh.transform.service.RareService;
@@ -43,6 +45,9 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	
 	@Autowired
 	private CardManagerContext cardManagerContext;
+	
+	@Autowired
+	private ImageService imageService;
 	
 	private DomainConverterFactory<LimitDetail, ForbiddenEntity> limitConverterFactory;
 	
@@ -104,13 +109,21 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 		String data = getMqData(message);
 		log.info("package-data [{}]", data);
         PackageDetail packageDetail = readValue(data, PackageDetail.class);
-        // t_package
         Integer packageId = packageService.save(packageDetail);
-        for (CardDetail card : packageDetail.getCards()) {
-        	CardTypeDTO cardTypeDto = getCardType(card.getTypeSt());
+        packageDetail.getCards().stream().forEach(card -> saveCard(card, packageId));
+	}
+	
+	@Transactional
+	private void saveCard(CardDetail card, Integer packageId) {
+		try {
+    		CardTypeDTO cardTypeDto = getCardType(card.getTypeSt());
 			Integer cardId = cardManagerContext.cardSave(new CardDTO(cardTypeDto, card));
+			byte[] image = urlImg2Byte(card.getImgUrl());
+			imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
 			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRare(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
 			rareService.save(packageRareDto);
+		} catch (Exception e) {
+			log.error("save card error[{}]", e);
 		}
 	}
 	

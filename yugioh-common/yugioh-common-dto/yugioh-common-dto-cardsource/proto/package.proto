@@ -1,0 +1,28 @@
+package cn.mayu.yugioh.common.dto.cardsource;
+option java_outer_classname = "PackageProto";
+
+import "card.proto";
+
+message PackageDetail {
+	
+	// 卡包名称
+	optional string packageName = 1;
+	
+	// 卡包发售时间
+	optional string offeringDate = 2;
+	
+	// 卡片总数
+	optional int32 cardCount = 3;
+	
+	// 卡包缩写
+	optional string abbreviate = 4;
+	
+	// 卡包图片
+	optional string packageImg = 5;
+	
+	// 卡包封面
+	optional string coverImg = 6;
+	
+	// 卡片详情
+	repeated CardDetail cards = 7;
+}

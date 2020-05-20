@@ -1,0 +1,13 @@
+package cn.mayu.yugioh.common.dto.cardsource;
+option java_outer_classname = "LimitProto";
+
+message LimitDetail {
+	
+	optional string name = 1;
+	
+	repeated string forbidden = 2;
+	
+	repeated string limited = 3;
+	
+	repeated string semiLimited = 4;
+}
