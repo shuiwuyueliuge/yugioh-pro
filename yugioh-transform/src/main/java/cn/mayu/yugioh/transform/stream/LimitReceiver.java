@@ -13,7 +13,7 @@ public class LimitReceiver {
 	private AsyncMqDataManager asyncMqDataManager; 
 
 	@StreamListener(LimitInputStream.LIMIT_SAVE_INPUT)
-	public void receiveSave(Message<String> message) throws Exception {
+	public void receiveSave(Message<byte[]> message) throws Exception {
 		asyncMqDataManager.receiveLimitData(message);
 	}
 }

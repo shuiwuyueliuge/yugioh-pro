@@ -23,10 +23,10 @@ public class PackageDetail {
 	private String abbreviate;
 	
 	// 卡包图片
-	private String packageImg;
+	private String packageImg = "";
 	
 	// 卡包封面
-	private String coverImg;
+	private String coverImg = "";
 	
 	// 卡片详情
 	private List<CardDetail> cards;

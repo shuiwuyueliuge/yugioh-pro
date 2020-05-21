@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAsync
 @EnableTransactionManagement
-public class App  {
+public class TransformApp {
 
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(App.class);
+		SpringApplication app = new SpringApplication(TransformApp.class);
 		app.run(args);
 	}
 }

@@ -31,7 +31,7 @@ public class IndexEntity {
     private Integer typeIndex;
 
     @JsonIgnore
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "create_time", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 
     @Column(name = "img")

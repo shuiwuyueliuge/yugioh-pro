@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.cardsource.datacenter;
 
 import java.util.List;
-import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
+import cn.mayu.yugioh.common.dto.cardsource.LimitProto.LimitDetail;
 
 public interface LimitCenter extends DataCenter {
 

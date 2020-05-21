@@ -13,7 +13,7 @@ public class PackageReceiver {
 	private AsyncMqDataManager asyncMqDataManager; 
 
 	@StreamListener(PackageInputStream.PACKAGE_SAVE_INPUT)
-	public void receiveSave(Message<String> message) throws Exception {
+	public void receiveSave(Message<byte[]> message) throws Exception {
 		asyncMqDataManager.receivePackageData(message);
 	}
 }

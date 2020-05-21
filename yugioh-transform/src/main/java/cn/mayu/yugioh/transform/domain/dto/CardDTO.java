@@ -1,6 +1,7 @@
 package cn.mayu.yugioh.transform.domain.dto;
 
 import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
+import cn.mayu.yugioh.common.dto.cardsource.CardProto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ public class CardDTO {
 
 	private CardTypeDTO cardTypeDTO;
 	
-	private CardDetail cardDetail;
+	private CardProto.CardDetail cardDetail;
 }

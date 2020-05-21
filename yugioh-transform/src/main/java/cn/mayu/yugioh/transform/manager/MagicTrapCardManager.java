@@ -1,9 +1,9 @@
 package cn.mayu.yugioh.transform.manager;
 
+import cn.mayu.yugioh.common.dto.cardsource.CardProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
 import cn.mayu.yugioh.transform.domain.dto.CardDTO;
 import cn.mayu.yugioh.transform.domain.dto.CardTypeDTO;
 import cn.mayu.yugioh.transform.domain.entity.MagicTrapEntity;
@@ -23,7 +23,7 @@ public class MagicTrapCardManager implements CardManager {
 	@Transactional
 	public Integer cardSave(CardDTO cardDto) {
 		CardTypeDTO cardTypeDto = cardDto.getCardTypeDTO();
-		CardDetail card = cardDto.getCardDetail();
+		CardProto.CardDetail card = cardDto.getCardDetail();
 		MagicTrapEntity magicTrap = magicTrapRepository.findByNameAndPassword(card.getName(), card.getPassword());
 		if (magicTrap == null) magicTrap = new MagicTrapEntity();
 		magicTrap.setPassword(card.getPassword());
@@ -34,8 +34,8 @@ public class MagicTrapCardManager implements CardManager {
 		magicTrap.setTypeSt(cardTypeDto.getMagicTrapType());
 		magicTrap.setTypeVal(cardTypeDto.getCardType());
 		magicTrap = magicTrapRepository.save(magicTrap);
-		cardInfoService.saveAdjust(card.getAdjust(), magicTrap.getId());
-		cardInfoService.saveEffect(card, magicTrap.getId());
+		cardInfoService.saveAdjust(card.getAdjust(), magicTrap.getId(), cardTypeDto.getCardType());
+		cardInfoService.saveEffect(card, magicTrap.getId(), cardTypeDto.getCardType());
 		return magicTrap.getId();
 	}
 }

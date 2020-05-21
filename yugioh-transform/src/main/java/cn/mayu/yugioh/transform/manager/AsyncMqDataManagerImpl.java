@@ -1,6 +1,8 @@
 package cn.mayu.yugioh.transform.manager;
 
 import java.util.List;
+import cn.mayu.yugioh.common.dto.cardsource.*;
+import com.google.protobuf.TextFormat;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -8,12 +10,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.rabbitmq.client.Channel;
-import static cn.mayu.yugioh.common.core.util.JsonUtil.*;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import static cn.mayu.yugioh.common.core.util.Base64Util.*;
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
-import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
-import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
 import static cn.mayu.yugioh.transform.config.AsyncConfig.*;
 import cn.mayu.yugioh.transform.domain.LimitConverterFactory;
 import cn.mayu.yugioh.transform.domain.dto.CardDTO;
@@ -49,7 +47,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	@Autowired
 	private ImageService imageService;
 	
-	private DomainConverterFactory<LimitDetail, ForbiddenEntity> limitConverterFactory;
+	private DomainConverterFactory<LimitProto.LimitDetail, ForbiddenEntity> limitConverterFactory;
 	
 	public AsyncMqDataManagerImpl() {
 		limitConverterFactory = new LimitConverterFactory();
@@ -58,10 +56,10 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	@Async(ASYNC_EXECUTOR_NAME)
 	@Override
 	@Transactional
-	public void receiveLimitData(Message<String> message) throws Exception {
-		String data = getMqData(message);
-		log.info("limit-data [{}]", data);
-        LimitDetail limitDetail = readValue(data, LimitDetail.class);
+	public void receiveLimitData(Message<byte[]> message) throws Exception {
+		byte[] data = getMqData(message);
+		LimitProto.LimitDetail limitDetail = LimitProto.LimitDetail.parseFrom(data);
+		log.info("limit-data [{}]", TextFormat.printToUnicodeString(limitDetail));
         List<ForbiddenEntity> entities = limitConverterFactory.convertList(limitDetail);
         forbiddenRepository.saveAll(entities);
 	}
@@ -105,22 +103,22 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	@Async(ASYNC_EXECUTOR_NAME)
 	@Override
 	@Transactional
-	public void receivePackageData(Message<String> message) throws Exception {
-		String data = getMqData(message);
-		log.info("package-data [{}]", data);
-        PackageDetail packageDetail = readValue(data, PackageDetail.class);
+	public void receivePackageData(Message<byte[]> message) throws Exception {
+		byte[] data = getMqData(message);
+		PackageProto.PackageDetail packageDetail = PackageProto.PackageDetail.parseFrom(data);
+		log.info("package-data [{}]", TextFormat.printToUnicodeString(packageDetail));
         Integer packageId = packageService.save(packageDetail);
-        packageDetail.getCards().stream().forEach(card -> saveCard(card, packageId));
+        packageDetail.getCardsList().stream().forEach(card -> saveCard(card, packageId));
 	}
-	
+
 	@Transactional
-	private void saveCard(CardDetail card, Integer packageId) {
+	void saveCard(CardProto.CardDetail card, Integer packageId) {
 		try {
-    		CardTypeDTO cardTypeDto = getCardType(card.getTypeSt());
+    		CardTypeDTO cardTypeDto = getCardType(card.getTypeStList());
 			Integer cardId = cardManagerContext.cardSave(new CardDTO(cardTypeDto, card));
 			byte[] image = urlImg2Byte(card.getImgUrl());
-			imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
-			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRare(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
+			//imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
+			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRareList(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
 			rareService.save(packageRareDto);
 		} catch (Exception e) {
 			log.error("save card error[{}]", e);
@@ -143,7 +141,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 		return cardTypeDto;
 	}
 	
-	private String getMqData(Message<String> message) throws Exception {
+	private byte[] getMqData(Message<byte[]> message) throws Exception {
 		Channel channel = (Channel) message.getHeaders().get(AmqpHeaders.CHANNEL);
         Long deliveryTag = (Long) message.getHeaders().get(AmqpHeaders.DELIVERY_TAG);
 		channel.basicAck(deliveryTag, false);

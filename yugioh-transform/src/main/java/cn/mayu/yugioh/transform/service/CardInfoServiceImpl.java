@@ -2,6 +2,8 @@ package cn.mayu.yugioh.transform.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.mayu.yugioh.common.dto.cardsource.CardProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,29 +38,29 @@ public class CardInfoServiceImpl implements CardInfoService {
 
 	@Override
 	@Transactional
-	public void saveAdjust(String adjust, Integer cardId) {
+	public void saveAdjust(String adjust, Integer cardId, Integer cardType) {
 		if (adjust == null || adjust.equals(""))
 			return;
-		AdjustEntity adjustSaved = adjustRepository.findByCardIdAndTypeVal(cardId, 1);
+		AdjustEntity adjustSaved = adjustRepository.findByCardIdAndTypeVal(cardId, cardType);
 		if (adjustSaved == null)
 			adjustSaved = new AdjustEntity();
 		adjustSaved.setCardId(cardId);
 		adjustSaved.setAdjust(adjust);
-		adjustSaved.setTypeVal(1);
+		adjustSaved.setTypeVal(cardType);
 		adjustRepository.save(adjustSaved);
 	}
 
 	@Override
 	@Transactional
-	public void saveEffect(CardDetail card, Integer cardId) {
-		EffectEntity effectSaved = effectRepository.findByCardIdAndTypeVal(cardId, 1);
+	public void saveEffect(CardProto.CardDetail card, Integer cardId, Integer cardType) {
+		EffectEntity effectSaved = effectRepository.findByCardIdAndTypeVal(cardId, cardType);
 		if (effectSaved == null) effectSaved = new EffectEntity();
 		effectSaved.setCardId(cardId);
 		effectSaved.setEffect(card.getDesc());
 		effectSaved.setEffectNw(card.getDescNw());
 		effectSaved.setEffectJa(card.getDescJa());
 		effectSaved.setEffectEn(card.getDescEn());
-		effectSaved.setTypeVal(1);
+		effectSaved.setTypeVal(cardType);
 		effectRepository.save(effectSaved);
 	}
 

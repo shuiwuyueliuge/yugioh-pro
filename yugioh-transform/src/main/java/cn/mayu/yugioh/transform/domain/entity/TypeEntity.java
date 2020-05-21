@@ -29,6 +29,6 @@ public class TypeEntity {
     @Column(name = "modify_time")
     private LocalDateTime modifyTime;
 
-    @Column(name = "create_time", insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "create_time", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createTime;
 }

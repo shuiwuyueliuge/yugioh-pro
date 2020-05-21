@@ -2,6 +2,10 @@ package cn.mayu.yugioh.cardsource.ourocg;
 
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
+
+import cn.mayu.yugioh.cardsource.stream.PackageDetailConverterFactory;
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
+import cn.mayu.yugioh.common.dto.cardsource.PackageProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -12,7 +16,7 @@ import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgLimitRepository;
 import cn.mayu.yugioh.cardsource.ourocg.repository.OurocgPackageRepository;
 import cn.mayu.yugioh.cardsource.stream.LimitPublisher;
 import cn.mayu.yugioh.cardsource.stream.PackagePublisher;
-import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
+import cn.mayu.yugioh.common.dto.cardsource.LimitProto.LimitDetail;
 import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
 import static cn.mayu.yugioh.cardsource.ourocg.OurocgQueueGuardian.*;
 
@@ -31,6 +35,8 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 	@Autowired
 	private LimitPublisher limitPublisher;
 
+	private DomainConverterFactory<PackageDetail, PackageProto.PackageDetail> packageDetailConverterFactory;
+
 	@Autowired
 	public OurocgService(OurocgPackageRepository ourocgRepository, 
 						 OurocgIncludeRepository includeRepository, 
@@ -38,6 +44,7 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 		OurocgDataCenter ourocgDataCenter = new OurocgDataCenter(ourocgRepository, includeRepository, limitRepository);
 		this.packageCenter = ourocgDataCenter;
 		this.limitCenter = ourocgDataCenter;
+		this.packageDetailConverterFactory = new PackageDetailConverterFactory();
 	}
 
 	private void translateOurocgData() {
@@ -45,12 +52,12 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 			return;
 		String packageUrl = String.format(OUROCG_URL, "/package");
 		addAll(packageCenter.gainPackageList(packageUrl));
-		String limitLatestUrl = String.format(OUROCG_URL, "/Limit-Latest");
-		List<String> urls = limitCenter.gainLimitList(limitLatestUrl);
-		urls.stream().forEach(data -> {
-			limitPublisher.publish(limitCenter.gainLimitDetail(data));
-		});
-		
+//		String limitLatestUrl = String.format(OUROCG_URL, "/Limit-Latest");
+//		List<String> urls = limitCenter.gainLimitList(limitLatestUrl);
+//		urls.stream().forEach(data -> {
+//			limitPublisher.publish(limitCenter.gainLimitDetail(data));
+//		});
+
 		newThread(this).start();
 	}
 
@@ -59,7 +66,7 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 	}
 	
 	public void publishLimitDetail(String LimitUrl) {
-		LimitDetail limitDetail =  limitCenter.gainLimitDetail(LimitUrl);
+		LimitDetail limitDetail = limitCenter.gainLimitDetail(LimitUrl);
 		limitPublisher.publish(limitDetail);
 	}
 
@@ -68,7 +75,8 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 		while (true) {
 			String packageUrl = String.format(OUROCG_URL, OurocgQueueGuardian.take());
 			PackageDetail packageDetail = packageCenter.gainPackageDetail(packageUrl);
-			packagePublisher.publish(packageDetail);
+			PackageProto.PackageDetail packageDetailProto = packageDetailConverterFactory.convert(packageDetail);
+			packagePublisher.publish(packageDetailProto);
 		}
 	}
 
