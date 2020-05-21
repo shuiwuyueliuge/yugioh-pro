@@ -58,10 +58,9 @@ public class OurocgService implements Runnable, ThreadFactory, CommandLineRunner
 		syncAdd(packageUrl, status);
 	}
 	
-	public LimitDetail publishLimitDetail(String LimitUrl) {
+	public void publishLimitDetail(String LimitUrl) {
 		LimitDetail limitDetail =  limitCenter.gainLimitDetail(LimitUrl);
 		limitPublisher.publish(limitDetail);
-		return limitDetail;
 	}
 
 	@Override

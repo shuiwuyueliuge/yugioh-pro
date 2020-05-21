@@ -8,8 +8,8 @@
 **/logs/**
 **/test/**
 .git/
-**/.idea/**
 .settings/
 pom.properties
 MANIFEST.MF
 application-*.properties
+/.idea/
