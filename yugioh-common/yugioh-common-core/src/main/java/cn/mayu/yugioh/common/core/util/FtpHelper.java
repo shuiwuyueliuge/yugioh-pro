@@ -20,15 +20,29 @@ public class FtpHelper {
 
 	private String psw;
 
-	public boolean uploadFile(String ftpPath, String fileName, byte[] data) throws Exception {
+	/**
+	 *主动
+	 */
+	public boolean uploadFilePort(String ftpPath, String fileName, byte[] data) throws Exception {
+		return uploadFile(ftpPath, fileName, data, 0);
+	}
+
+	/**
+	 *被动
+	 */
+	public boolean uploadFilePasv(String ftpPath, String fileName, byte[] data) throws Exception {
+		return uploadFile(ftpPath, fileName, data, 1);
+	}
+
+	private boolean uploadFile(String ftpPath, String fileName, byte[] data, int type) throws Exception {
 		FTPClient client = null;
 		try {
 			client = connect();
 			client.setControlEncoding("UTF-8");
 			client.setFileType(FTPClient.BINARY_FILE_TYPE);
 			makeDir(ftpPath, client);
-			client.enterLocalPassiveMode();
 			client.changeWorkingDirectory(ftpPath);
+			if (type == 1) client.enterLocalPassiveMode(); // 被动模式
 			ByteArrayInputStream byStream = new ByteArrayInputStream(data);
 			client.storeFile(fileName, byStream);
 			byStream.close();

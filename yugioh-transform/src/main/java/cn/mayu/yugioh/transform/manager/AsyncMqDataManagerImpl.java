@@ -106,7 +106,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	public void receivePackageData(Message<byte[]> message) throws Exception {
 		byte[] data = getMqData(message);
 		PackageProto.PackageDetail packageDetail = PackageProto.PackageDetail.parseFrom(data);
-		log.info("package-data [{}]", TextFormat.printToUnicodeString(packageDetail));
+		log.debug("package-data [{}]", TextFormat.printToUnicodeString(packageDetail));
         Integer packageId = packageService.save(packageDetail);
         packageDetail.getCardsList().stream().forEach(card -> saveCard(card, packageId));
 	}
@@ -117,7 +117,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
     		CardTypeDTO cardTypeDto = getCardType(card.getTypeStList());
 			Integer cardId = cardManagerContext.cardSave(new CardDTO(cardTypeDto, card));
 			byte[] image = urlImg2Byte(card.getImgUrl());
-			//imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
+			imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
 			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRareList(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
 			rareService.save(packageRareDto);
 		} catch (Exception e) {

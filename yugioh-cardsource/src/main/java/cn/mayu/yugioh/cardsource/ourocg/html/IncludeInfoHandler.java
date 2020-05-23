@@ -72,7 +72,7 @@ public class IncludeInfoHandler extends DefaultHtmlHandler<Include> {
 				log.debug(parser.getStateCode() + "  " + parser.getResponse().getHeaders());
 				try {
 					TimeUnit.SECONDS.sleep(5L);
-					parser.connUrl(url);
+					parser.connUrl();
 				} catch (InterruptedException e) {
 				}
 			}

@@ -82,6 +82,34 @@ public final class LimitProto {
      */
     com.google.protobuf.ByteString
         getSemiLimitedBytes(int index);
+
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    boolean hasPublishTime();
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    java.lang.String getPublishTime();
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getPublishTimeBytes();
+
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    boolean hasRegion();
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    java.lang.String getRegion();
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getRegionBytes();
   }
   /**
    * Protobuf type {@code cn.mayu.yugioh.common.dto.cardsource.LimitDetail}
@@ -166,6 +194,18 @@ public final class LimitProto {
                 mutable_bitField0_ |= 0x00000008;
               }
               semiLimited_.add(bs);
+              break;
+            }
+            case 42: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000002;
+              publishTime_ = bs;
+              break;
+            }
+            case 50: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              region_ = bs;
               break;
             }
           }
@@ -346,11 +386,97 @@ public final class LimitProto {
       return semiLimited_.getByteString(index);
     }
 
+    public static final int PUBLISHTIME_FIELD_NUMBER = 5;
+    private java.lang.Object publishTime_;
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    public boolean hasPublishTime() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    public java.lang.String getPublishTime() {
+      java.lang.Object ref = publishTime_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          publishTime_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string publishTime = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPublishTimeBytes() {
+      java.lang.Object ref = publishTime_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        publishTime_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int REGION_FIELD_NUMBER = 6;
+    private java.lang.Object region_;
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    public boolean hasRegion() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    public java.lang.String getRegion() {
+      java.lang.Object ref = region_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          region_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string region = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getRegionBytes() {
+      java.lang.Object ref = region_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        region_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       name_ = "";
       forbidden_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       limited_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       semiLimited_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      publishTime_ = "";
+      region_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -376,6 +502,12 @@ public final class LimitProto {
       }
       for (int i = 0; i < semiLimited_.size(); i++) {
         output.writeBytes(4, semiLimited_.getByteString(i));
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(5, getPublishTimeBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(6, getRegionBytes());
       }
       getUnknownFields().writeTo(output);
     }
@@ -416,6 +548,14 @@ public final class LimitProto {
         }
         size += dataSize;
         size += 1 * getSemiLimitedList().size();
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getPublishTimeBytes());
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, getRegionBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -542,6 +682,10 @@ public final class LimitProto {
         bitField0_ = (bitField0_ & ~0x00000004);
         semiLimited_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
+        publishTime_ = "";
+        bitField0_ = (bitField0_ & ~0x00000010);
+        region_ = "";
+        bitField0_ = (bitField0_ & ~0x00000020);
         return this;
       }
 
@@ -589,6 +733,14 @@ public final class LimitProto {
           bitField0_ = (bitField0_ & ~0x00000008);
         }
         result.semiLimited_ = semiLimited_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.publishTime_ = publishTime_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.region_ = region_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -638,6 +790,16 @@ public final class LimitProto {
             ensureSemiLimitedIsMutable();
             semiLimited_.addAll(other.semiLimited_);
           }
+          onChanged();
+        }
+        if (other.hasPublishTime()) {
+          bitField0_ |= 0x00000010;
+          publishTime_ = other.publishTime_;
+          onChanged();
+        }
+        if (other.hasRegion()) {
+          bitField0_ |= 0x00000020;
+          region_ = other.region_;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -1022,6 +1184,158 @@ public final class LimitProto {
         return this;
       }
 
+      private java.lang.Object publishTime_ = "";
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public boolean hasPublishTime() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public java.lang.String getPublishTime() {
+        java.lang.Object ref = publishTime_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            publishTime_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPublishTimeBytes() {
+        java.lang.Object ref = publishTime_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          publishTime_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public Builder setPublishTime(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        publishTime_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public Builder clearPublishTime() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        publishTime_ = getDefaultInstance().getPublishTime();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string publishTime = 5;</code>
+       */
+      public Builder setPublishTimeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000010;
+        publishTime_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object region_ = "";
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public boolean hasRegion() {
+        return ((bitField0_ & 0x00000020) == 0x00000020);
+      }
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public java.lang.String getRegion() {
+        java.lang.Object ref = region_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            region_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getRegionBytes() {
+        java.lang.Object ref = region_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          region_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public Builder setRegion(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        region_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public Builder clearRegion() {
+        bitField0_ = (bitField0_ & ~0x00000020);
+        region_ = getDefaultInstance().getRegion();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string region = 6;</code>
+       */
+      public Builder setRegionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000020;
+        region_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:cn.mayu.yugioh.common.dto.cardsource.LimitDetail)
     }
 
@@ -1048,9 +1362,10 @@ public final class LimitProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\013limit.proto\022$cn.mayu.yugioh.common.dto" +
-      ".cardsource\"T\n\013LimitDetail\022\014\n\004name\030\001 \001(\t" +
+      ".cardsource\"y\n\013LimitDetail\022\014\n\004name\030\001 \001(\t" +
       "\022\021\n\tforbidden\030\002 \003(\t\022\017\n\007limited\030\003 \003(\t\022\023\n\013" +
-      "semiLimited\030\004 \003(\tB\014B\nLimitProto"
+      "semiLimited\030\004 \003(\t\022\023\n\013publishTime\030\005 \001(\t\022\016" +
+      "\n\006region\030\006 \001(\tB\014B\nLimitProto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -1069,7 +1384,7 @@ public final class LimitProto {
     internal_static_cn_mayu_yugioh_common_dto_cardsource_LimitDetail_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_cn_mayu_yugioh_common_dto_cardsource_LimitDetail_descriptor,
-        new java.lang.String[] { "Name", "Forbidden", "Limited", "SemiLimited", });
+        new java.lang.String[] { "Name", "Forbidden", "Limited", "SemiLimited", "PublishTime", "Region", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

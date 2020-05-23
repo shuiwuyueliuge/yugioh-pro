@@ -17,4 +17,8 @@ public class LimitDetail {
 	private List<String> limited;
 	
 	private List<String> semiLimited;
+
+	private String publishTime;
+
+	private String region;
 }

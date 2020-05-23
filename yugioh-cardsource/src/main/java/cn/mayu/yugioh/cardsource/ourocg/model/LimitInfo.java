@@ -24,6 +24,10 @@ public class LimitInfo {
 	private List<String> limited;
 	
 	private List<String> semiLimited;
+
+	private String publishTime;
+
+	private String region;
 	
 	private LocalDateTime createTime = LocalDateTime.now();
 }

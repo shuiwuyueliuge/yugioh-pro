@@ -8,11 +8,14 @@ public class HtmlParser {
 
 	private VisitResponse response;
 
+	private String url;
+
 	protected HtmlParser(String url) {
-		connUrl(url);
+		this.url = url;
+		connUrl();
 	}
 
-	public HtmlParser connUrl(String url) {
+	public HtmlParser connUrl() {
 		this.response = connect(url);
 		this.html = getResponse().getHtml();
 		return this;
@@ -58,4 +61,6 @@ public class HtmlParser {
 	public int getStateCode() {
 		return response.getStatusCode();
 	}
+
+	public String getUrl() {return url;}
 }

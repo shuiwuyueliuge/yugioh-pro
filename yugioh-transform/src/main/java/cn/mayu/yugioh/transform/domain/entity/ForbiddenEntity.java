@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.transform.domain.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,10 @@ public class ForbiddenEntity {
     private Integer limitVal;
 
     @Column(name = "limit_time")
-    private String limitTime;
+    private LocalDate limitTime;
+
+    @Column(name = "region")
+    private String region;
 
     @UpdateTimestamp
     @Column(name = "modify_time")

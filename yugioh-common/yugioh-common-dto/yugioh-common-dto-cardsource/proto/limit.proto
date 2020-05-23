@@ -10,4 +10,8 @@ message LimitDetail {
 	repeated string limited = 3;
 	
 	repeated string semiLimited = 4;
+
+	optional string publishTime = 5;
+
+	optional string region = 6;
 }

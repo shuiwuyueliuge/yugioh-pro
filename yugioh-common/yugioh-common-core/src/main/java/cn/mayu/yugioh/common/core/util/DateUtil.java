@@ -14,4 +14,8 @@ public class DateUtil {
 	public static long toEpochMilli(LocalDateTime localDateTime) {
 		return localDateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
 	}
+
+	public static LocalDate toLocalDate(String time) {
+		return LocalDate.parse(time, DateTimeFormatter.ofPattern("yyyyMMdd"));
+	}
 }

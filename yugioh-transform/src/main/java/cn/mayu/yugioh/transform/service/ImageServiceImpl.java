@@ -20,7 +20,7 @@ public class ImageServiceImpl implements ImageService {
 		String imgName = String.format("%s_%s.jpg", cardId, cardType);
 		try {
 			FtpHelper.builder().host(ftpImgConfig.getHost()).port(ftpImgConfig.getPort()).user(ftpImgConfig.getUser())
-					.psw(ftpImgConfig.getPsw()).build().uploadFile(imgPath, imgName, imageData);
+					.psw(ftpImgConfig.getPsw()).build().uploadFilePort(imgPath, imgName, imageData);
 		} catch (Exception e) {
 			log.error("upload [{}] img error: [{}]", imgName, e);
 		}

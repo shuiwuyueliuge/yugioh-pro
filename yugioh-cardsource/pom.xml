@@ -59,7 +59,11 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-facade-cardsource</artifactId>
+        </dependency>
+    </dependencies>
 	<build>
 		<plugins>
 			<plugin>

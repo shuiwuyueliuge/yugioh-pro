@@ -160,6 +160,11 @@
 				<artifactId>yugioh-security-core-base</artifactId>
 				<version>${version}</version>
 			</dependency>
+			<dependency>
+				<groupId>cn.mayu</groupId>
+				<artifactId>yugioh-common-facade-cardsource</artifactId>
+				<version>${version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 

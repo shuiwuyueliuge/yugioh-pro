@@ -22,6 +22,7 @@ public class LimitDataHandler extends DefaultHtmlHandler<LimitInfo> {
 		entity.setForbidden(hashIds.get(0));
 		entity.setLimited(hashIds.get(1));
 		entity.setSemiLimited(hashIds.get(2));
+		getTimeAndType(entity, parser.getUrl());
 		return entity;
 	}
 
@@ -32,5 +33,13 @@ public class LimitDataHandler extends DefaultHtmlHandler<LimitInfo> {
 	private List<String> parseCardId(String data, HtmlParser parser) {
 		String[] s = parser.setHtml(data).parseByTag("a");
 		return Stream.of(s).collect(Collectors.toList());
+	}
+
+	private void getTimeAndType(LimitInfo entity, String url) {
+		String[] str = url.split("/");
+		String[] s = str[str.length - 1].split("-");
+		String time = s[1];
+		entity.setPublishTime(time);
+		entity.setRegion(s[0].indexOf("T") != -1 ? "TCG" : "OCG");
 	}
 }
