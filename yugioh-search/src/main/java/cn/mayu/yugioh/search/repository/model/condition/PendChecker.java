@@ -6,14 +6,14 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LevelChecker implements EsCardConditionChecker {
+public class PendChecker implements EsCardConditionChecker {
 
     @Override
     public void initQueryBuilder(BoolQueryBuilder boolQueryBuilder, CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getLevel() == null) {
+        if (cardSpecification.getPend() == null) {
             return;
         }
 
-        boolQueryBuilder.must(QueryBuilders.matchQuery("level", cardSpecification.getLevel()));
+        boolQueryBuilder.must(QueryBuilders.matchQuery("pend", cardSpecification.getPend()));
     }
 }

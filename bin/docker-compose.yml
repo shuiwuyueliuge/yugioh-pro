@@ -78,3 +78,38 @@ services:
     environment:
       - FTP_USER=ygo
       - FTP_PASS=ygo
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.1.1
+    network_mode: esnetwork
+    ports:
+      - 9300:9300
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - /usr/local/docker/es/config/elasticsearch.yml:/config/elasticsearch.yml
+      - /usr/local/docker/es/plugins:/plugins
+      - /usr/local/docker/es/data:/data
+      - /usr/local/docker/es/logs:/logs
+  kibana:
+    container_name: kibana
+    image: kibana:7.1.1
+    network_mode: esnetwork
+    ports:
+      - 5601:5601
+  elasticsearch-head:
+    container_name: elasticsearch-head
+    image: mobz/elasticsearch-head:5
+    ports:
+      - 9100:9100
+  logstash:
+    container_name: logstash:7.1.1
+    privileged: true
+    network_mode: esnetwork
+    image: logstash:7.1.1
+    ports:
+      - 5044:5044
+    volumes:
+      - /usr/local/docker/logstash/log/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - /usr/local/docker/logstash/config/conf.d/:/usr/share/logstash/conf.d/

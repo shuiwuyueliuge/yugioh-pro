@@ -1,14 +1,11 @@
 package cn.mayu.yugioh.transform.service;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 import cn.mayu.yugioh.common.dto.cardsource.CardProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
 import cn.mayu.yugioh.transform.domain.entity.AdjustEntity;
 import cn.mayu.yugioh.transform.domain.entity.EffectEntity;
 import cn.mayu.yugioh.transform.domain.entity.LinkEntity;
@@ -26,13 +23,13 @@ public class CardInfoServiceImpl implements CardInfoService {
 
 	@Autowired
 	private EffectRepository effectRepository;
-	
+
 	@Autowired
 	private LinkRepository linkRepository;
-	
+
 	@Autowired
 	private IndexService indexService;
-	
+
 	@Autowired
 	private TypeRepository typeRepository;
 
@@ -70,16 +67,14 @@ public class CardInfoServiceImpl implements CardInfoService {
 		if (linkArrow == null || linkArrow.size() <= 0) return;
 		List<LinkEntity> links = linkRepository.findByCardId(cardId);
 		if (links == null || links.size() <= 0) {
-			links = new ArrayList<LinkEntity>();
-			for (String link : linkArrow) {
+			links = linkArrow.stream().map(link -> {
 				LinkEntity linkEntity = new LinkEntity();
 				linkEntity.setCardId(cardId);
 				linkEntity.setLinkArrow(indexService.findByNameFromCache(1, link));
-				links.add(linkEntity);
-			}
-			
+				return linkEntity;
+			}).collect(Collectors.toList());
 			linkRepository.saveAll(links);
-		} 
+		}
 	}
 
 	@Override
@@ -87,14 +82,12 @@ public class CardInfoServiceImpl implements CardInfoService {
 	public void saveTypes(List<Integer> types, Integer cardId) {
 		List<TypeEntity> typeEntities = typeRepository.findByCardId(cardId);
 		if (typeEntities == null || typeEntities.size() <= 0) {
-			typeEntities = new ArrayList<TypeEntity>();
-			for (Integer type : types) {
-				TypeEntity typeEntity = new TypeEntity();
-				typeEntity.setCardId(cardId);
-				typeEntity.setTypeSt(type);
-				typeEntities.add(typeEntity);
-			}
-			
+            typeEntities = types.stream().map(type -> {
+                TypeEntity typeEntity = new TypeEntity();
+                typeEntity.setCardId(cardId);
+                typeEntity.setTypeSt(type);
+                return typeEntity;
+            }).collect(Collectors.toList());
 			typeRepository.saveAll(typeEntities);
 		}
 	}

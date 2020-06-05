@@ -3,7 +3,6 @@ package cn.mayu.yugioh.cardsource.ourocg;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

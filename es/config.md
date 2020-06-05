@@ -14,7 +14,7 @@ pipelines.yml 打开如下配置
    queue.type: persisted
    path.config: "/tmp/logstash/*.config"
    
-Gemfile修改source为 "https://gems.ruby-china.org"
+Gemfile修改source为 "https://gems.ruby-china.com"
 logstash-plugin.bat 添加javahome路径  SET JAVA_HOME=H:\jdk8
 logstash bin目录下运行 logstash-plugin install --no-verify logstash-input-jdbc
 新建logstash-yugioh.conf文件

@@ -1,10 +1,14 @@
 package cn.mayu.yugioh.common.dto.search;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-public class CardSpecification {
+@AllArgsConstructor
+@NoArgsConstructor
+public class CardSpecificationDTO {
 
     private String keyWord;
 

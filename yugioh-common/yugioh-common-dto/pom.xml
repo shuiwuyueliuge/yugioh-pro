@@ -17,5 +17,6 @@
   <modules>
     <module>yugioh-common-dto-sync-home</module>
     <module>yugioh-common-dto-cardsource</module>
+      <module>yugioh-common-dto-search</module>
   </modules>
 </project>

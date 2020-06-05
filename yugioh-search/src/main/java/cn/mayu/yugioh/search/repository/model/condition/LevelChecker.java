@@ -6,14 +6,14 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AtkChecker implements EsCardConditionChecker {
+public class LevelChecker implements EsCardConditionChecker {
 
     @Override
     public void initQueryBuilder(BoolQueryBuilder boolQueryBuilder, CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getAtk() == null) {
-           return;
+        if (cardSpecification.getLevel() == null) {
+            return;
         }
 
-        boolQueryBuilder.must(QueryBuilders.matchQuery("atk", cardSpecification.getAtk()));
+        boolQueryBuilder.must(QueryBuilders.matchQuery("level", cardSpecification.getLevel()));
     }
 }

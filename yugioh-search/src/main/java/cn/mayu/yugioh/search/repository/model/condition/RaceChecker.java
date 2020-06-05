@@ -6,14 +6,17 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AtkChecker implements EsCardConditionChecker {
+public class RaceChecker implements EsCardConditionChecker {
 
     @Override
     public void initQueryBuilder(BoolQueryBuilder boolQueryBuilder, CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getAtk() == null) {
+        if (cardSpecification.getMonsterRace() != null && cardSpecification.getMonsterRace().size() > 0) {
            return;
         }
 
-        boolQueryBuilder.must(QueryBuilders.matchQuery("atk", cardSpecification.getAtk()));
+        BoolQueryBuilder raceBoolQueryBuilder = QueryBuilders.boolQuery();
+        cardSpecification.getMonsterRace().stream().forEach(data ->
+                raceBoolQueryBuilder.should(QueryBuilders.matchQuery("race", data)));
+        boolQueryBuilder.must(raceBoolQueryBuilder);
     }
 }

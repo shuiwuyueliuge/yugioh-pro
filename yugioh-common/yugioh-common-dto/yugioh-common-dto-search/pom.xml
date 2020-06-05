@@ -11,5 +11,10 @@
 
     <artifactId>yugioh-common-dto-search</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-propertie</artifactId>
+        </dependency>
+    </dependencies>
 </project>

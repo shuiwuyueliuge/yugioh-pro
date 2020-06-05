@@ -204,3 +204,25 @@
 						使用链接：docker run --name web-demo -p 9300:9300 --link mysql:mysql --net home_default  172.18.146.180:8082/web-demo:1.1
 						        --link 【容器名称】:【mysql】
 **********************************************************************************************
+sed -i 's/\r//' xxx.sh 
+
+在这里可能会出现跨域拒绝访问问题：
+解决方式1：
+进入elasticsearch容器内部，修改配置文件elasticsearch.yml
+
+复制代码
+docker ps -a   #拿到运行容器elasticsearch 的 id
+
+docker exec -it ******(容器id) /bin/bash
+
+cd ./config
+
+vim elasticsearch.yml
+复制代码
+在elasticsearch.yml中添加:
+
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+重启  elasticsearch容器
+
+docker restart  elasticsearch
