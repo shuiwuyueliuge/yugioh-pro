@@ -1,0 +1,32 @@
+package cn.mayu.yugioh.common.dto.search;
+
+import lombok.Data;
+import java.util.List;
+
+@Data
+public class CardSpecification {
+
+    private String keyWord;
+
+    private Integer cardType;
+
+    private String atk;
+
+    private String def;
+
+    private Integer level;
+
+    private Integer pend;
+
+    private Integer link;
+
+    private List<Integer> linkArrow;
+
+    private List<Integer> monsterAttribute;
+
+    private List<Integer> magicTrapType;
+
+    private List<Integer> monsterType;
+
+    private List<Integer> monsterRace;
+}
