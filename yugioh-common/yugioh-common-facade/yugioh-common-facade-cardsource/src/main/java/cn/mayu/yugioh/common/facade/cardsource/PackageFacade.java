@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
-@FeignClient(name = "sync-home")
+@FeignClient(name = "card-source")
 public interface PackageFacade {
 
     @GetMapping(value = "/card")

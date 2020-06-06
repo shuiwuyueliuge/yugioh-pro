@@ -184,6 +184,7 @@
 		<module>yugioh-cardsource</module>
 		<module>yugioh-websocket</module>
 		<module>yugioh-transform</module>
+        <module>yugioh-manager</module>
     </modules>
 
 	<build>

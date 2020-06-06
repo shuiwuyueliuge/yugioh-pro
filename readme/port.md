@@ -4,12 +4,13 @@
 9100-9199
 网关
 9200-9299
-sync-ourocg
+cardsource
 9300-9399
-sync-local
+transform
 9400-9499
-sync-home
+search
 9500-9599
+
 authorize
 9600-9699
 admin

@@ -33,4 +33,8 @@ public class CardSpecificationDTO {
     private List<Integer> monsterType;
 
     private List<Integer> monsterRace;
+
+    private Integer page;
+
+    private Integer size;
 }
