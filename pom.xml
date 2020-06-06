@@ -184,7 +184,7 @@
 		<module>yugioh-cardsource</module>
 		<module>yugioh-websocket</module>
 		<module>yugioh-transform</module>
-	</modules>
+    </modules>
 
 	<build>
 		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>
