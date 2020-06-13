@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.transform.service;
 
-import cn.mayu.yugioh.common.dto.cardsource.PackageProto;
+import cn.mayu.yugioh.common.dto.transform.PackageProto;
 
 public interface PackageService {
 

@@ -21,7 +21,7 @@
     <cache
             name = "cardCache"
             eternal = "false"
-            maxElementsInMemory = "100"
+            maxElementsInMemory = "1000"
             overflowToDisk = "false"
             diskPersistent = "false"
             timeToIdleSeconds = "120"

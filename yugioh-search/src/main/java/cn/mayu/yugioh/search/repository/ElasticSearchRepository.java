@@ -1,9 +1,9 @@
 package cn.mayu.yugioh.search.repository;
 
 import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
-import cn.mayu.yugioh.search.repository.model.ElasticsearchCardEntity;
-import cn.mayu.yugioh.search.repository.model.condition.EsCardConditionChecker;
-import cn.mayu.yugioh.search.repository.model.condition.EsCardConditionCheckerChain;
+import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
+import cn.mayu.yugioh.search.model.condition.EsCardConditionChecker;
+import cn.mayu.yugioh.search.model.condition.EsCardConditionCheckerChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;

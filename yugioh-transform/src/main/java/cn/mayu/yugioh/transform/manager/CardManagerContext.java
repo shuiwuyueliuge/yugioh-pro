@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.transform.manager;
 
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.transform.domain.dto.CardDTO;
@@ -14,7 +15,14 @@ public class CardManagerContext {
 	private MonsterCardManager monsterCardManager;
 
 	public Integer cardSave(CardDTO cardDto) {
-		CardManager manager = cardDto.getCardTypeDTO().getCardType() == 1 ? monsterCardManager : magicTrapCardManager;
-		return manager.cardSave(cardDto);
+		return getCardManager(cardDto.getCardTypeDTO().getCardType()).cardSave(cardDto);
+	}
+
+	public CardDetail findByIdAndTypeVal(Integer id, Integer typeVal) {
+		return getCardManager(typeVal).findByIdAndTypeVal(id);
+	}
+
+	private CardManager getCardManager(Integer cardType) {
+		return cardType == 1 ? monsterCardManager : magicTrapCardManager;
 	}
 }

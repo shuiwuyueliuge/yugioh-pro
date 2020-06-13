@@ -1,8 +1,7 @@
 package cn.mayu.yugioh.transform.service;
 
 import java.util.List;
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
-import cn.mayu.yugioh.common.dto.cardsource.CardProto;
+import cn.mayu.yugioh.common.dto.transform.CardProto;
 
 public interface CardInfoService {
 

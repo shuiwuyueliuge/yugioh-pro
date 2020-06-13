@@ -1,6 +1,7 @@
 package cn.mayu.yugioh.transform.manager;
 
-import cn.mayu.yugioh.common.dto.cardsource.CardProto;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
+import cn.mayu.yugioh.common.dto.transform.CardProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,5 +38,10 @@ public class MagicTrapCardManager implements CardManager {
 		cardInfoService.saveAdjust(card.getAdjust(), magicTrap.getId(), cardTypeDto.getCardType());
 		cardInfoService.saveEffect(card, magicTrap.getId(), cardTypeDto.getCardType());
 		return magicTrap.getId();
+	}
+
+	@Override
+	public CardDetail findByIdAndTypeVal(Integer id) {
+		return null;
 	}
 }

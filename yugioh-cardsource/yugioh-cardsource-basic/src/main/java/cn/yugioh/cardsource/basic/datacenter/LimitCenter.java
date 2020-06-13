@@ -1,6 +1,6 @@
 package cn.yugioh.cardsource.basic.datacenter;
 
-import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
+import cn.mayu.yugioh.common.dto.transform.LimitDetail;
 
 import java.util.List;
 

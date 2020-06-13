@@ -1,8 +1,8 @@
 package cn.mayu.yugioh.transform.domain;
 
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
-import cn.mayu.yugioh.common.dto.cardsource.CardProto;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
+import cn.mayu.yugioh.common.dto.transform.CardProto;
 import cn.mayu.yugioh.transform.domain.entity.MonsterEntity;
 import cn.mayu.yugioh.transform.service.IndexService;
 

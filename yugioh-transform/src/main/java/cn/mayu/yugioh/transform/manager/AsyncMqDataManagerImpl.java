@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.transform.manager;
 
 import java.util.List;
-import cn.mayu.yugioh.common.dto.cardsource.*;
+import cn.mayu.yugioh.common.dto.transform.*;
 import com.google.protobuf.TextFormat;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.core.util.DateUtil;
-import cn.mayu.yugioh.common.dto.cardsource.LimitProto;
+import cn.mayu.yugioh.common.dto.transform.LimitProto;
 import cn.mayu.yugioh.transform.domain.entity.ForbiddenEntity;
 
 public class LimitConverterFactory implements DomainConverterFactory<LimitProto.LimitDetail, ForbiddenEntity> {

@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.facade;
 
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import cn.mayu.yugioh.search.service.CardService;
 import cn.yugioh.common.facade.search.SearchCardFacade;

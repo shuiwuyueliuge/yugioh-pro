@@ -35,13 +35,31 @@
       "pend": {
         "type": "long"
       },
-      "type_val": {
+      "typeVal": {
         "type": "long"
       },
       "attribute": {
         "type": "long"
       },
       "name": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "typeSt": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "linkArrow": {
         "type": "text",
         "fields": {
           "raw": {

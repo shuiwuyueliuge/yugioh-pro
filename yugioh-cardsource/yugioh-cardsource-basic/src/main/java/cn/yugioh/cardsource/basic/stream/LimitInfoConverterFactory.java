@@ -1,8 +1,8 @@
 package cn.yugioh.cardsource.basic.stream;
 
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.common.dto.cardsource.LimitDetail;
-import cn.mayu.yugioh.common.dto.cardsource.LimitProto;
+import cn.mayu.yugioh.common.dto.transform.LimitDetail;
+import cn.mayu.yugioh.common.dto.transform.LimitProto;
 
 public class LimitInfoConverterFactory implements DomainConverterFactory<LimitDetail, LimitProto.LimitDetail> {
 

@@ -1,8 +1,8 @@
 package cn.yugioh.cardsource.basic.stream;
 
 import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
-import cn.mayu.yugioh.common.dto.cardsource.CardProto;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
+import cn.mayu.yugioh.common.dto.transform.CardProto;
 
 import java.util.List;
 import java.util.stream.Collectors;

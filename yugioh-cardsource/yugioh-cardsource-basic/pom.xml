@@ -17,7 +17,7 @@
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>
-            <artifactId>yugioh-common-dto-cardsource</artifactId>
+            <artifactId>yugioh-common-dto-transform</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>

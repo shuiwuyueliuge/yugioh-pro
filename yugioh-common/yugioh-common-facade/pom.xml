@@ -12,6 +12,7 @@
     <modules>
         <module>yugioh-common-facade-cardsource</module>
         <module>yugioh-common-facade-search</module>
+        <module>yugioh-common-facade-transform</module>
     </modules>
     <artifactId>yugioh-common-facade</artifactId>
 

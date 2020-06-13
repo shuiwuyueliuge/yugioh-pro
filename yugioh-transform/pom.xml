@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-dto-cardsource</artifactId>
+			<artifactId>yugioh-common-dto-search</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
@@ -32,6 +32,10 @@
 		<dependency>
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-facade-transform</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

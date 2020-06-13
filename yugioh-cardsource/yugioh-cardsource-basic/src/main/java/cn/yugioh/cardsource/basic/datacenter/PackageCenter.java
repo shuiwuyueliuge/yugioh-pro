@@ -1,6 +1,6 @@
 package cn.yugioh.cardsource.basic.datacenter;
 
-import cn.mayu.yugioh.common.dto.cardsource.PackageDetail;
+import cn.mayu.yugioh.common.dto.transform.PackageDetail;
 
 import java.util.List;
 

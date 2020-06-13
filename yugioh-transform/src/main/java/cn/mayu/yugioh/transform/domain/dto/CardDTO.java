@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.transform.domain.dto;
 
-import cn.mayu.yugioh.common.dto.cardsource.CardDetail;
-import cn.mayu.yugioh.common.dto.cardsource.CardProto;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
+import cn.mayu.yugioh.common.dto.transform.CardProto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
