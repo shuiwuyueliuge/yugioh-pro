@@ -6,10 +6,6 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 
 public interface EsCardConditionChecker {
 
-    String PRE_TAG = "<strong>";
-
-    String POST_TAG = "</strong>";
-
     void initQueryBuilder(NativeSearchQueryBuilder queryBuilder,
                           BoolQueryBuilder boolQueryBuilder,
                           CardSpecificationDTO cardSpecification);

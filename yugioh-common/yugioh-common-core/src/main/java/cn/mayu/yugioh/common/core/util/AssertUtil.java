@@ -11,4 +11,8 @@ public class AssertUtil {
 	public static boolean isNull(Object obj) {
 		return obj == null;
 	}
+
+	public static boolean isEmpty(Collection collection) {
+		return collection == null || collection.size() <= 0;
+	}
 }

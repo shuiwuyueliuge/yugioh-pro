@@ -1,34 +1,27 @@
 package cn.mayu.yugioh.search.repository.model.condition;
 
 import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Component;
+import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
+import java.util.List;
 
 @Component
-public class AttributeChecker implements EsCardConditionChecker {
+public class AttributeChecker extends ArrayEsCardConditionChecker<Integer> {
 
     private static final String ATTRIBUTE = "attribute";
 
     @Override
-    public void initQueryBuilder(NativeSearchQueryBuilder queryBuilder,
-                                 BoolQueryBuilder boolQueryBuilder,
-                                 CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getMonsterAttribute() == null || cardSpecification.getMonsterAttribute().size() <= 0) {
-            return;
-        }
-
-        BoolQueryBuilder attributeBoolQueryBuilder = QueryBuilders.boolQuery();
-        cardSpecification.getMonsterAttribute().stream().forEach(data ->
-                attributeBoolQueryBuilder.should(QueryBuilders.matchQuery(getField(), data)));
-        boolQueryBuilder.must(attributeBoolQueryBuilder);
-        queryBuilder.withHighlightFields(new HighlightBuilder.Field(getField()).preTags(PRE_TAG).postTags(POST_TAG));
+    public String getField() {
+        return ATTRIBUTE;
     }
 
     @Override
-    public String getField() {
-        return ATTRIBUTE;
+    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+        return isEmpty(cardSpecification.getMonsterAttribute());
+    }
+
+    @Override
+    protected List<Integer> getSpecification(CardSpecificationDTO cardSpecification) {
+        return cardSpecification.getMonsterAttribute();
     }
 }

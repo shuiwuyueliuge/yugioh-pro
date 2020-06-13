@@ -7,13 +7,17 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.stereotype.Component;
 
 @Component
-public class PageableChecker implements EsCardConditionChecker {
+public class PageableChecker extends PageEsCardConditionChecker {
 
     @Override
     public void initQueryBuilder(NativeSearchQueryBuilder queryBuilder,
                                  BoolQueryBuilder boolQueryBuilder,
                                  CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getPage() == null || cardSpecification.getSize() == null) return;
         queryBuilder.withPageable(PageRequest.of(cardSpecification.getPage(), cardSpecification.getSize()));
+    }
+
+    @Override
+    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+        return cardSpecification.getPage() == null || cardSpecification.getSize() == null;
     }
 }

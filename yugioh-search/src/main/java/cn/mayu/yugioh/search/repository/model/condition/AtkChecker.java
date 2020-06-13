@@ -1,28 +1,26 @@
 package cn.mayu.yugioh.search.repository.model.condition;
 
+import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AtkChecker implements EsCardConditionChecker {
+public class AtkChecker extends OneEsCardConditionChecker {
 
     private static final String ATK = "atk";
 
     @Override
-    public void initQueryBuilder(NativeSearchQueryBuilder queryBuilder,
-                                 BoolQueryBuilder boolQueryBuilder,
-                                 CardSpecificationDTO cardSpecification) {
-        if (cardSpecification.getAtk() == null) return;
-        boolQueryBuilder.must(QueryBuilders.matchQuery(getField(), cardSpecification.getAtk()));
-        queryBuilder.withHighlightFields(new HighlightBuilder.Field(getField()).preTags(PRE_TAG).postTags(POST_TAG));
+    public String getField() {
+        return ATK;
     }
 
     @Override
-    public String getField() {
-        return ATK;
+    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+        return isNull(cardSpecification.getAtk());
+    }
+
+    @Override
+    protected Object getSpecification(CardSpecificationDTO cardSpecification) {
+        return cardSpecification.getAtk();
     }
 }
