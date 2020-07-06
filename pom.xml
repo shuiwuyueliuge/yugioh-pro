@@ -137,11 +137,6 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-facade-sync-home</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
 				<artifactId>yugioh-common-facade-transform</artifactId>
 				<version>${version}</version>
 			</dependency>
@@ -153,11 +148,6 @@
 			<dependency>
 				<groupId>cn.mayu</groupId>
 				<artifactId>yugioh-common-redis</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-dto-sync-home</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>
