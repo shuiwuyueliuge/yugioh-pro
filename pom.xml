@@ -107,7 +107,7 @@
 			</dependency>
 			<dependency>
 				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-propertie</artifactId>
+				<artifactId>yugioh-common-property</artifactId>
 				<version>${version}</version>
 			</dependency>
 			<dependency>
@@ -177,8 +177,6 @@
 		<module>yugioh-basic</module>
 		<module>yugioh-common</module>
 		<module>yugioh-test</module>
-		<module>yugioh-sync</module>
-		<module>yugioh-facade</module>
 		<module>yugioh-search</module>
 		<module>yugioh-security</module>
 		<module>yugioh-cardsource</module>

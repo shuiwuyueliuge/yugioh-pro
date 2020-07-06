@@ -2,6 +2,7 @@ package cn.mayu.yugioh.search.model;
 
 import lombok.Data;
 import org.springframework.data.elasticsearch.annotations.Document;
+import java.util.List;
 
 @Data
 @Document(indexName = "card")
@@ -30,4 +31,8 @@ public class ElasticsearchCardEntity {
     private Integer level;
 
     private Integer atk;
+
+    private List<Integer> typeSt;
+
+    private List<Integer> linkArrow;
 }

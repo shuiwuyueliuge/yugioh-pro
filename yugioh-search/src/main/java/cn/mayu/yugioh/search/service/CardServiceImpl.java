@@ -1,11 +1,11 @@
 package cn.mayu.yugioh.search.service;
 
+import cn.mayu.yugioh.common.core.util.BeanUtil;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import cn.mayu.yugioh.search.repository.ElasticSearchRepository;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
 import cn.yugioh.common.facade.transform.CardFacade;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -41,16 +41,17 @@ public class CardServiceImpl implements CardService {
             // 本地查询
             CardDetail cached = cardCache.get(entity.getId(), CardDetail.class);
             if (cached != null) {
-                BeanUtils.copyProperties(cached, cardDetail);
+                BeanUtil.copyProperties(cached, cardDetail);
             } else {
                 // redis查询
                 CardDetail redisCached = redisTemplate.opsForValue().get(entity.getId()).block();
                 if (redisCached != null) {
-                    BeanUtils.copyProperties(cardDetail, redisCached);
+                    BeanUtil.copyProperties(redisCached, cardDetail);
                 }
 
-                // TODO mysql查询
+                // mysql查询
                 CardDetail dbCard = cardFacade.findByIdAndTypeVal(entity.getId(), entity.getTypeVal());
+                BeanUtil.copyProperties(dbCard, cardDetail);
             }
 
             cardDetail.setName(entity.getName());

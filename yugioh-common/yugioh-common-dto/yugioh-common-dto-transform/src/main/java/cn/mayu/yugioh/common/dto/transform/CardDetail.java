@@ -83,7 +83,9 @@ public class CardDetail {
 	// wiki
 	private String adjust;
 
+	// id
 	private Integer id;
 
+	// 卡类型
 	private String typeVal;
 }

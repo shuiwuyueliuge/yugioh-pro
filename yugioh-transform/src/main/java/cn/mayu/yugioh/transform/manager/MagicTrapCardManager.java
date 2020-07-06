@@ -1,7 +1,9 @@
 package cn.mayu.yugioh.transform.manager;
 
+import cn.mayu.yugioh.common.core.domain.DomainConverterFactory;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.CardProto;
+import cn.mayu.yugioh.transform.model.MagicTrapCardDetailConverterFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +12,7 @@ import cn.mayu.yugioh.transform.model.dto.CardTypeDTO;
 import cn.mayu.yugioh.transform.model.entity.MagicTrapEntity;
 import cn.mayu.yugioh.transform.repository.MagicTrapRepository;
 import cn.mayu.yugioh.transform.service.CardInfoService;
+import java.util.Optional;
 
 @Component
 public class MagicTrapCardManager implements CardManager {
@@ -18,7 +21,13 @@ public class MagicTrapCardManager implements CardManager {
 	private MagicTrapRepository magicTrapRepository;
 	
 	@Autowired
-	private CardInfoService cardInfoService; 
+	private CardInfoService cardInfoService;
+
+	private DomainConverterFactory<MagicTrapEntity, CardDetail> magicTrapEntityCardDetailDomainConverter;
+
+	{
+		this.magicTrapEntityCardDetailDomainConverter = new MagicTrapCardDetailConverterFactory();
+	}
 
 	@Override
 	@Transactional
@@ -42,6 +51,7 @@ public class MagicTrapCardManager implements CardManager {
 
 	@Override
 	public CardDetail findByIdAndTypeVal(Integer id) {
-		return null;
+		Optional<MagicTrapEntity> entityOptional = magicTrapRepository.findById(id);
+		return magicTrapEntityCardDetailDomainConverter.convert(entityOptional.get());
 	}
 }

@@ -16,3 +16,4 @@ application-*.properties
 *.iws
 *.iml
 *.ipr
+logs/

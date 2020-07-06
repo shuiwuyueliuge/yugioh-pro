@@ -2,6 +2,7 @@ package cn.mayu.yugioh.transform.manager;
 
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.CardProto;
+import cn.mayu.yugioh.transform.model.MonsterEntityCardDetailConverterFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import cn.mayu.yugioh.transform.model.entity.MonsterEntity;
 import cn.mayu.yugioh.transform.repository.MonsterRepository;
 import cn.mayu.yugioh.transform.service.CardInfoService;
 import cn.mayu.yugioh.transform.service.IndexService;
+import java.util.Optional;
 
 @Component
 public class MonsterCardManager implements CardManager {
@@ -24,10 +26,13 @@ public class MonsterCardManager implements CardManager {
 	private CardInfoService cardInfoService; 
 	
 	private DomainConverterFactory<CardProto.CardDetail, MonsterEntity> monsterConverterFactory;
+
+	private DomainConverterFactory<MonsterEntity, CardDetail> monsterEntityCardDetailDomainConverter;
 	
 	@Autowired
 	public MonsterCardManager(IndexService indexService) {
 		monsterConverterFactory = new MonsterConverterFactory(indexService);
+		monsterEntityCardDetailDomainConverter = new MonsterEntityCardDetailConverterFactory();
 	}
 
 	@Override
@@ -48,6 +53,7 @@ public class MonsterCardManager implements CardManager {
 
 	@Override
 	public CardDetail findByIdAndTypeVal(Integer id) {
-		return null;
+		Optional<MonsterEntity> optionalMonsterEntity = monsterRepository.findById(id);
+		return monsterEntityCardDetailDomainConverter.convert(optionalMonsterEntity.get());
 	}
 }

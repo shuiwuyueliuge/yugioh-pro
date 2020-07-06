@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "t_magic_trap")
 public class MagicTrapEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

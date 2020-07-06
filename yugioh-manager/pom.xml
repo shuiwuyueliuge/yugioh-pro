@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>
-            <artifactId>yugioh-common-propertie</artifactId>
+            <artifactId>yugioh-common-property</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>
