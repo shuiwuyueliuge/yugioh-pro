@@ -1,5 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.mayu.yugioh.security.core.social.github.GitHubSocialConfigurerAdapter,\
-cn.mayu.org.yugioh.security.core.base.social.SocialConfig,\
-cn.mayu.org.yugioh.security.core.base.social.SocialRequestProvider,\
-cn.mayu.org.yugioh.security.core.base.social.SocialProperty

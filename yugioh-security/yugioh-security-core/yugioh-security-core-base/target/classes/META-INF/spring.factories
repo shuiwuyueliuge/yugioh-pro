@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.mayu.org.yugioh.security.core.base.authorizerequest.DefaultRequestManager
