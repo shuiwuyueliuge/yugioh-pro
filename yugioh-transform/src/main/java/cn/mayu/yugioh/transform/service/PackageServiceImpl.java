@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.mayu.yugioh.common.dto.transform.PackageDetail;
-import cn.mayu.yugioh.transform.domain.entity.PackageEntity;
+import cn.mayu.yugioh.transform.model.entity.PackageEntity;
 import cn.mayu.yugioh.transform.repository.PackageRepository;
 
 @Service

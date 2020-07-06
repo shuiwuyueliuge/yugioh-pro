@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import cn.mayu.yugioh.transform.domain.entity.TypeEntity;
+import cn.mayu.yugioh.transform.model.entity.TypeEntity;
 
 public interface TypeRepository extends JpaRepository<TypeEntity, Integer> {
 

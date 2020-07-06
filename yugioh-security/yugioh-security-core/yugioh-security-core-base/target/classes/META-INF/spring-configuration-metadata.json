@@ -1,0 +1,81 @@
+{
+  "groups": [
+    {
+      "name": "yugioh.security.browser",
+      "type": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty"
+    },
+    {
+      "name": "yugioh.security.encache",
+      "type": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty"
+    },
+    {
+      "name": "yugioh.security.social",
+      "type": "cn.mayu.org.yugioh.security.core.base.social.SocialProperty",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.social.SocialProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "yugioh.security.browser.login-page",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty"
+    },
+    {
+      "name": "yugioh.security.browser.password-parameter",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty",
+      "defaultValue": "password"
+    },
+    {
+      "name": "yugioh.security.browser.processing-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty",
+      "defaultValue": "\/login"
+    },
+    {
+      "name": "yugioh.security.browser.username-parameter",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.LoginProperty",
+      "defaultValue": "username"
+    },
+    {
+      "name": "yugioh.security.encache.heap-size",
+      "type": "java.lang.Long",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty",
+      "defaultValue": 1000
+    },
+    {
+      "name": "yugioh.security.encache.off-heap-size",
+      "type": "java.lang.Long",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty",
+      "defaultValue": 100
+    },
+    {
+      "name": "yugioh.security.encache.time-to-idle-second",
+      "type": "java.lang.Long",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty",
+      "defaultValue": 30
+    },
+    {
+      "name": "yugioh.security.encache.time-to-live-second",
+      "type": "java.lang.Long",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty",
+      "defaultValue": 30
+    },
+    {
+      "name": "yugioh.security.social.signup-url",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.social.SocialProperty",
+      "defaultValue": "\/index.html"
+    },
+    {
+      "name": "yugioh.security.social.table-prefix",
+      "type": "java.lang.String",
+      "sourceType": "cn.mayu.org.yugioh.security.core.base.social.SocialProperty",
+      "defaultValue": ""
+    }
+  ],
+  "hints": []
+}

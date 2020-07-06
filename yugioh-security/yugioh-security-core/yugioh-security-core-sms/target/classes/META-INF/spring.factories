@@ -1,0 +1,10 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.mayu.org.yugioh.security.core.base.validatecode.DefaultValidateCodeProcessorHolder,\
+cn.mayu.org.yugioh.security.core.base.adapter.ValidateConfigurerAdapter,\
+cn.mayu.org.yugioh.security.core.base.validatecode.ValidateController,\
+cn.mayu.org.yugioh.security.core.base.property.EhcacheProperty,\
+cn.mayu.org.yugioh.security.core.base.validatecode.ValidateCodeRequestProvider,\
+cn.mayu.org.yugioh.security.core.base.config.EhcacheConfig,\
+cn.mayu.yugioh.security.core.sms.SmsCodeConfig,\
+cn.mayu.yugioh.security.core.sms.SmsConfigurerAdapter,\
+cn.mayu.yugioh.security.core.sms.SmsValidateCodeProperty

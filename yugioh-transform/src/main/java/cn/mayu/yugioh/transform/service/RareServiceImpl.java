@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.mayu.yugioh.transform.domain.dto.PackageRareDTO;
-import cn.mayu.yugioh.transform.domain.entity.PackageInfoEntity;
-import cn.mayu.yugioh.transform.domain.entity.RareEntity;
+import cn.mayu.yugioh.transform.model.dto.PackageRareDTO;
+import cn.mayu.yugioh.transform.model.entity.PackageInfoEntity;
+import cn.mayu.yugioh.transform.model.entity.RareEntity;
 import cn.mayu.yugioh.transform.repository.PackageInfoRepository;
 import cn.mayu.yugioh.transform.repository.RareRepository;
 

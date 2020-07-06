@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry location="F:\jars\mysql\mysql-connector-java\8.0.18\mysql-connector-java-8.0.18.jar" />
+	<context id="context1">
+	<plugin type="cn.mayu.yugioh.common.mybatis.generator.plugin.JpaLombokPlugin"></plugin>
+		<commentGenerator>
+			<property name="suppressDate" value="true" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection connectionURL="jdbc:mysql://127.0.0.1:3306/ygo_config?serverTimezone=GMT" driverClass="com.mysql.cj.jdbc.Driver" password="root" userId="root" />
+		<javaModelGenerator targetPackage="cn.mayu.yugioh.basic.config.model.entity" targetProject="yugioh-basic-config" />
+	    <table schema="yugioh-basic-config" tableName="t_properties" domainObjectName="PropertiesEntity"></table>
+		<!--<table schema="yugioh-basic-authorize" tableName="t_registration_role" domainObjectName="RegistrationRole"></table>
+		<table schema="yugioh-basic-authorize" tableName="t_role" domainObjectName="Role"></table>
+		<table schema="yugioh-basic-authorize" tableName="t_user" domainObjectName="User"></table>
+		<table schema="yugioh-basic-authorize" tableName="t_user_registration" domainObjectName="UerRegistration"></table>
+		<table schema="yugioh-basic-authorize" tableName="t_card_type" domainObjectName="TypeEntity"></table>
+		<table schema="yugioh-basic-authorize" tableName="t_index" domainObjectName="IndexEntity"></table>
+		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
+		<table schema="yugioh-sync" tableName="t_package" domainObjectName="PackageEntity"></table>
+		<table schema="yugioh-sync" tableName="t_monster" domainObjectName="MonsterEntity"></table>
+		<table schema="yugioh-sync" tableName="t_rare" domainObjectName="RareEntity"></table> 
+		<table schema="yugioh-sync" tableName="t_sync_record" domainObjectName="SyncRecordEntity"></table>
+		<table schema="yugioh-sync" tableName="t_magic_trap" domainObjectName="MagicTrapEntity"></table>
+		<table schema="yugioh-sync-local" tableName="t_forbidden" domainObjectName="ForbiddenEntity"></table>-->
+	</context>
+</generatorConfiguration>

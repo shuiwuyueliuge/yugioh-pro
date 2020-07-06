@@ -3,7 +3,7 @@ package cn.mayu.yugioh.transform.manager;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import cn.mayu.yugioh.transform.domain.dto.CardDTO;
+import cn.mayu.yugioh.transform.model.dto.CardDTO;
 
 @Component
 public class CardManagerContext {

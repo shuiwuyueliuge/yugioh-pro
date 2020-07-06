@@ -5,9 +5,9 @@ import cn.mayu.yugioh.common.dto.transform.CardProto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import cn.mayu.yugioh.transform.domain.dto.CardDTO;
-import cn.mayu.yugioh.transform.domain.dto.CardTypeDTO;
-import cn.mayu.yugioh.transform.domain.entity.MagicTrapEntity;
+import cn.mayu.yugioh.transform.model.dto.CardDTO;
+import cn.mayu.yugioh.transform.model.dto.CardTypeDTO;
+import cn.mayu.yugioh.transform.model.entity.MagicTrapEntity;
 import cn.mayu.yugioh.transform.repository.MagicTrapRepository;
 import cn.mayu.yugioh.transform.service.CardInfoService;
 

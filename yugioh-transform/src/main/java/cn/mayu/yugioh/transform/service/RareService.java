@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.transform.service;
 
-import cn.mayu.yugioh.transform.domain.dto.PackageRareDTO;
+import cn.mayu.yugioh.transform.model.dto.PackageRareDTO;
 
 public interface RareService {
 
