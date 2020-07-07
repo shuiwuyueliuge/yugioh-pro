@@ -21,6 +21,11 @@
             <groupId>cn.mayu</groupId>
             <artifactId>yugioh-common-property</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-dto-cardsource</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

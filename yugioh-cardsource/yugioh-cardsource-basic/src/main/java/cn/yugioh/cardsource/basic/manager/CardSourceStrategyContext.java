@@ -1,5 +1,6 @@
 package cn.yugioh.cardsource.basic.manager;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.Map;
@@ -16,15 +17,15 @@ public class CardSourceStrategyContext {
         cardSourceStrategyMap = cardSources.stream().collect(Collectors.toMap(cardSource -> cardSource.getCardSourceType(), Function.identity()));
     }
 
-    public void publishPackageDetail(List<String> packageUrls, Integer priority, Integer sourceType) {
-        getStrategy(sourceType).publishPackageDetail(packageUrls, priority);
+    public void publishPackageDetail(PackageData packageData, Integer sourceType) {
+        getStrategy(sourceType).publishPackageDetail(packageData.getPackageUris(), packageData.getPriority());
     }
 
     public void publishLimitDetail(String LimitUrl, Integer priority, Integer sourceType) {
         getStrategy(sourceType).publishLimitDetail(LimitUrl, priority);
     }
 
-    public List<String> gainPackageList(Integer sourceType) {
+    public List<PackageData> gainPackageList(Integer sourceType) {
         return getStrategy(sourceType).gainPackageList();
     }
 

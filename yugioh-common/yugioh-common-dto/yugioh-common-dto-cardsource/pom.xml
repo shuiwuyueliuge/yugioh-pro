@@ -3,20 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yugioh-common-facade</artifactId>
+        <artifactId>yugioh-common-dto</artifactId>
         <groupId>cn.mayu</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yugioh-common-facade-cardsource</artifactId>
+    <artifactId>yugioh-common-dto-cardsource</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>cn.mayu</groupId>
-            <artifactId>yugioh-common-dto-cardsource</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <artifactId>yugioh-common-property</artifactId>
         </dependency>
     </dependencies>
-
 </project>

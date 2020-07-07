@@ -1,5 +1,6 @@
 package cn.yugioh.cardsource.core.ourocg;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.transform.LimitDetail;
 import cn.mayu.yugioh.common.dto.transform.PackageDetail;
 import cn.yugioh.cardsource.basic.datacenter.LimitCenter;
@@ -17,7 +18,6 @@ import static cn.yugioh.cardsource.core.ourocg.DataTypeEnum.LIMIT;
 import static cn.yugioh.cardsource.core.ourocg.DataTypeEnum.PACKAGE;
 import static cn.yugioh.cardsource.core.ourocg.OurocgQueueGuardian.addAll;
 import static cn.yugioh.cardsource.core.ourocg.OurocgQueueGuardian.addOne;
-
 
 @Service
 public class OurocgServiceImpl implements OurocgService {
@@ -54,7 +54,7 @@ public class OurocgServiceImpl implements OurocgService {
 	}
 
 	@Override
-	public List<String> gainPackageList() {
+	public List<PackageData> gainPackageList() {
 		String packageUrl = String.format(OUROCG_URL, "/package");
 		return packageCenter.gainPackageList(packageUrl);
 	}
@@ -95,7 +95,7 @@ public class OurocgServiceImpl implements OurocgService {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		newThread(this).start();
 	}
 }

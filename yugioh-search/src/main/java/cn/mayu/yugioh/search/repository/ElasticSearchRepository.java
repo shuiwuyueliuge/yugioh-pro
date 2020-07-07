@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.repository;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
 import cn.mayu.yugioh.search.model.condition.EsCardConditionChecker;
 import cn.mayu.yugioh.search.model.condition.EsCardConditionCheckerChain;
@@ -24,7 +24,7 @@ public class ElasticSearchRepository {
         this.checkerChain = new EsCardConditionCheckerChain(esCardConditionCheckers);
     }
 
-    public SearchHits<ElasticsearchCardEntity> searchCard(CardSpecificationDTO cardSpecification) {
+    public SearchHits<ElasticsearchCardEntity> searchCard(CardSpecification cardSpecification) {
         NativeSearchQueryBuilder queryBuilder = checkerChain.initNativeSearchQueryBuilder(cardSpecification);
         return esTemplate.search(queryBuilder.build(), ElasticsearchCardEntity.class);
     }

@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import org.springframework.stereotype.Component;
 import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 
@@ -17,12 +17,12 @@ public class KeyWordChecker extends MoreEsCardConditionChecker {
     }
 
     @Override
-    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+    protected boolean checkSpecification(CardSpecification cardSpecification) {
         return isNull(cardSpecification.getKeyWord());
     }
 
     @Override
-    protected Object getSpecification(CardSpecificationDTO cardSpecification) {
+    protected Object getSpecification(CardSpecification cardSpecification) {
         return cardSpecification.getKeyWord();
     }
 

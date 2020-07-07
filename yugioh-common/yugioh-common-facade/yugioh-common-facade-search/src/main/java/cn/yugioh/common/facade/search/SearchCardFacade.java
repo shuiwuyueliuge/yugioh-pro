@@ -1,7 +1,7 @@
 package cn.yugioh.common.facade.search;
 
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
@@ -10,5 +10,5 @@ import java.util.List;
 public interface SearchCardFacade {
 
     @GetMapping("/card")
-    List<CardDetail> searchCardByCondition(CardSpecificationDTO cardSpecificationDTO);
+    List<CardDetail> searchCardByCondition(CardSpecification cardSpecificationDTO);
 }

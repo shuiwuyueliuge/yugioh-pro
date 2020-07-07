@@ -1,5 +1,6 @@
 package cn.yugioh.cardsource.basic.manager;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import java.util.List;
 
 public interface CardSourceStrategy {
@@ -8,7 +9,7 @@ public interface CardSourceStrategy {
 
     void publishLimitDetail(String LimitUrl, Integer priority);
 
-    List<String> gainPackageList();
+    List<PackageData> gainPackageList();
 
     CardSourceEnum getCardSourceType();
 }

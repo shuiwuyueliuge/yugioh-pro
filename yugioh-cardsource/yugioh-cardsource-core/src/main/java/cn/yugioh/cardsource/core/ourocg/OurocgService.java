@@ -1,5 +1,6 @@
 package cn.yugioh.cardsource.core.ourocg;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.yugioh.cardsource.basic.manager.CardSourceStrategy;
 import org.springframework.boot.CommandLineRunner;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface OurocgService extends Runnable, ThreadFactory, CommandLineRunne
 
     void publishLimitDetail(String LimitUrl, Integer priority);
 
-    List<String> gainPackageList();
+    List<PackageData> gainPackageList();
 
     List<String> gainLimitList(String resources);
 }

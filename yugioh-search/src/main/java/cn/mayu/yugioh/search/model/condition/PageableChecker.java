@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import org.springframework.stereotype.Component;
 import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 
@@ -8,7 +8,7 @@ import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 public class PageableChecker extends PageEsCardConditionChecker {
 
     @Override
-    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+    protected boolean checkSpecification(CardSpecification cardSpecification) {
         return isNull(cardSpecification.getPage()) || isNull(cardSpecification.getSize());
     }
 }

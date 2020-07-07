@@ -1,7 +1,7 @@
 package cn.mayu.yugioh.search.facade;
 
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import cn.mayu.yugioh.search.service.CardService;
 import cn.yugioh.common.facade.search.SearchCardFacade;
 import cn.yugioh.common.facade.transform.CardFacade;
@@ -21,7 +21,7 @@ public class SearchCardFacadeImpl implements SearchCardFacade {
 
     @Override
     @GetMapping("/card")
-    public List<CardDetail> searchCardByCondition(CardSpecificationDTO cardSpecificationDTO) {
+    public List<CardDetail> searchCardByCondition(CardSpecification cardSpecificationDTO) {
         cf.findByIdAndTypeVal(1,2);
         return cardService.searchCard(cardSpecificationDTO);
     }

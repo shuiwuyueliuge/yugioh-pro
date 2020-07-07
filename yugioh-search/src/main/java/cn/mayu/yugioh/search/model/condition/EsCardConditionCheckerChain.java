@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import static org.elasticsearch.search.sort.SortBuilders.*;
@@ -18,7 +18,7 @@ public class EsCardConditionCheckerChain {
         this.esCardConditionCheckers = esCardConditionCheckers;
     }
 
-    public NativeSearchQueryBuilder initNativeSearchQueryBuilder(CardSpecificationDTO cardSpecification) {
+    public NativeSearchQueryBuilder initNativeSearchQueryBuilder(CardSpecification cardSpecification) {
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         initQueryBuilder(queryBuilder, boolQueryBuilder, cardSpecification);
@@ -27,7 +27,7 @@ public class EsCardConditionCheckerChain {
         return queryBuilder;
     }
 
-    private void initQueryBuilder(NativeSearchQueryBuilder queryBuilder, BoolQueryBuilder boolQueryBuilder, CardSpecificationDTO cardSpecification) {
+    private void initQueryBuilder(NativeSearchQueryBuilder queryBuilder, BoolQueryBuilder boolQueryBuilder, CardSpecification cardSpecification) {
         esCardConditionCheckers.stream().forEach(checker -> checker.initQueryBuilder(queryBuilder, boolQueryBuilder, cardSpecification));
     }
 }

@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.*.dao" level="debug" additivity="true"></logger>
+    <logger name="cn.yugioh.cardsource.basic.html" level="debug" additivity="true"></logger>
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>

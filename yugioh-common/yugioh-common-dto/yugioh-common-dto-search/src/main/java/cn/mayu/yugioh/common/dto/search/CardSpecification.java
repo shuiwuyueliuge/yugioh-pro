@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardSpecificationDTO {
+public class CardSpecification {
 
     private String keyWord;
 

@@ -2,7 +2,7 @@ package cn.mayu.yugioh.search.service;
 
 import cn.mayu.yugioh.common.core.util.BeanUtil;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import cn.mayu.yugioh.search.repository.ElasticSearchRepository;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
 import cn.yugioh.common.facade.transform.CardFacade;
@@ -31,7 +31,7 @@ public class CardServiceImpl implements CardService {
     private CardFacade cardFacade;
 
     @Override
-    public List<CardDetail> searchCard(CardSpecificationDTO cardSpecification) {
+    public List<CardDetail> searchCard(CardSpecification cardSpecification) {
         // es查询数据
         SearchHits<ElasticsearchCardEntity> cards = elasticSearchRepository.searchCard(cardSpecification);
         Cache cardCache = cacheManager.getCache("cardCache");

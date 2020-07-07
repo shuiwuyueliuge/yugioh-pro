@@ -3,10 +3,13 @@ package cn.yugioh.cardsource.basic.html;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static cn.mayu.yugioh.common.core.util.AssertUtil.isIndexOutOfBounds;
 
@@ -53,7 +56,8 @@ public class HtmlHelper {
 	protected static String[] getElementsByTag(String html, String tagName) {
 		Elements els = parse(html).getElementsByTag(tagName);
 		String res[] = new String[els.size()];
-		for (int i = 0; i < els.size(); i++) {
+		int len = els.size();
+		for (int i = 0; i < len; i++) {
 			res[i] = els.get(i).html();
 		}
 		
@@ -62,12 +66,28 @@ public class HtmlHelper {
 	
 	protected static String[] getElementsByTagAttr(String html, String tagName, String attr) {
 		Elements els = parse(html).getElementsByTag(tagName);
-		String res[] = new String[els.size()];
-		for (int i = 0; i < els.size(); i++) {
+		int len = els.size();
+		String res[] = new String[len];
+		for (int i = 0; i < len; i++) {
 			res[i] = els.get(i).attr(attr);
 		}
 		
 		return res;
+	}
+
+	protected static List<Map<String, String>> getTextAndAttrs(String html, String tagName, String textKey) {
+		Elements els = parse(html).getElementsByTag(tagName);
+		int len = els.size();
+		List<Map<String, String>> list = new ArrayList<>();
+		for (int i = 0; i < len; i++) {
+			Attributes attributes = els.get(i).attributes();
+			List<Attribute> attributeList = attributes.asList();
+			Map<String, String> map = attributeList.stream().collect(Collectors.toMap(data -> data.getKey(), data -> data.getValue()));
+			map.put(textKey, els.get(i).html());
+			list.add(map);
+		}
+
+		return list;
 	}
 
 	protected static String getElementsByTagIndexAttr(String html, String tagName, int index, String attribute) {

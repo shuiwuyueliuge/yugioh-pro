@@ -1,5 +1,6 @@
-package cn.yugioh.cardsource.basic.service;
+package cn.yugioh.cardsource.basic.facade;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.facade.cardsource.PackageFacade;
 import cn.yugioh.cardsource.basic.manager.CardSourceStrategyContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,13 @@ public class PackageFacadeImpl implements PackageFacade {
 
     @Override
     @PostMapping(value = "/package/detail/{sourceType}")
-    public void publishPackageDetail(List<String> packageUrls, Integer priority, Integer sourceType) {
-        strategyContext.publishPackageDetail(packageUrls, priority, sourceType);
+    public void publishPackageDetail(@RequestBody PackageData packageData, @PathVariable("sourceType") Integer sourceType) {
+        strategyContext.publishPackageDetail(packageData, sourceType);
     }
 
     @Override
     @GetMapping(value = "/package/{sourceType}")
-    public List<String> gainPackageList(@PathVariable("sourceType") Integer sourceType) {
+    public List<PackageData> gainPackageList(@PathVariable("sourceType") Integer sourceType) {
         return strategyContext.gainPackageList(sourceType);
     }
 }

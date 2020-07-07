@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import org.springframework.stereotype.Component;
 import static cn.mayu.yugioh.common.core.util.AssertUtil.*;
 import java.util.List;
@@ -16,12 +16,12 @@ public class AttributeChecker extends ArrayEsCardConditionChecker<Integer> {
     }
 
     @Override
-    protected boolean checkSpecification(CardSpecificationDTO cardSpecification) {
+    protected boolean checkSpecification(CardSpecification cardSpecification) {
         return isEmpty(cardSpecification.getMonsterAttribute());
     }
 
     @Override
-    protected List<Integer> getSpecification(CardSpecificationDTO cardSpecification) {
+    protected List<Integer> getSpecification(CardSpecification cardSpecification) {
         return cardSpecification.getMonsterAttribute();
     }
 }

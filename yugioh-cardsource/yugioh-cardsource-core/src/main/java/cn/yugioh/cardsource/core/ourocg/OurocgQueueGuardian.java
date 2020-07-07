@@ -11,7 +11,7 @@ public class OurocgQueueGuardian {
     private static final BlockingQueue<PriorityQueueModel> OUROCG_QUEUE;
 
     static {
-        OUROCG_QUEUE = new PriorityBlockingQueue<PriorityQueueModel>(1000, (o1, o2) -> { // initialCapacity is 1000， i think package maybe not so mach
+        OUROCG_QUEUE = new PriorityBlockingQueue<PriorityQueueModel>(1000, (o1, o2) -> { // TODO initialCapacity is 1000，package maybe not so mach
             if (o1.getPriority() > o2.getPriority()) return -1;
             if (o1.getPriority() < o2.getPriority()) return 1;
             return 0;

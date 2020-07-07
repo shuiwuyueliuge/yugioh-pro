@@ -1,5 +1,8 @@
 package cn.yugioh.cardsource.basic.html;
 
+import java.util.List;
+import java.util.Map;
+
 import static cn.yugioh.cardsource.basic.html.HtmlHelper.*;
 
 public class HtmlParser {
@@ -37,6 +40,10 @@ public class HtmlParser {
 	
 	public String[] parseByTagAttr(String tagName, String attr) {
 		return getElementsByTagAttr(html, tagName, attr);
+	}
+
+	public List<Map<String, String>> parseTextAndAttrs(String tagName, String textKey) {
+		return getTextAndAttrs(html, tagName, textKey);
 	}
 
 	public HtmlParser parseByClassIndex(String className, int index) {

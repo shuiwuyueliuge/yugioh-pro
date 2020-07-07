@@ -1,5 +1,6 @@
 package cn.yugioh.cardsource.core.ourocg;
 
+import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.LimitDetail;
 import cn.mayu.yugioh.common.dto.transform.PackageDetail;
@@ -28,7 +29,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
     private HtmlHandler<Include> includeTranslater;
 
-    private HtmlHandler<List<String>> packageListTranslater;
+    private HtmlHandler<List<PackageData>> packageListTranslater;
 
     private HtmlHandler<LimitInfo> limitDataTranslater;
 
@@ -128,7 +129,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
     }
 
     @Override
-    public List<String> gainPackageList(String resources) {
+    public List<PackageData> gainPackageList(String resources) {
         return packageListTranslater.handle(resources);
     }
 
