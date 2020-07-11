@@ -1,6 +1,6 @@
 const SLIDE_MENU: Resources =  { uri: "assets/showcase/data/slidemenu.json", description: "slidemenu" };
 
-const CAR: Resources =  { uri: "assets/showcase/data/cars-medium.json", description: "car" };
+const PACKAGE: Resources =  { uri: "assets/showcase/data/package.json", description: "package" };
 
 interface Resources {
 
@@ -9,4 +9,4 @@ interface Resources {
     description: string;
 }
 
-export { SLIDE_MENU, CAR }
+export { SLIDE_MENU, PACKAGE}

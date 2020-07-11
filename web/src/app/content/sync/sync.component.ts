@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from './car';
+import { Package } from './package';
 import { SyncService } from './sync.service';
+
 @Component({
   selector: 'app-sync',
   templateUrl: './sync.component.html',
@@ -8,16 +9,14 @@ import { SyncService } from './sync.service';
 })
 export class SyncComponent implements OnInit {
 
-  cars: Car[] = [];
+  cars: Package[] = [];
+
+  selectedCustomers: Package[];
 
   cols: any[];
 
-  first = 0;
-
-  rows = 10;
-
   constructor(private syncService: SyncService) {
-    this.syncService.getCarsMedium().then(cars => {
+    this.syncService.getCarsMedium2().then(cars => {
       let seq = 1;
       cars.forEach(car => {
           car.seq = seq;
@@ -28,13 +27,15 @@ export class SyncComponent implements OnInit {
     });
 
     this.cols = [
-      { field: 'seq', header: 'Seq' },
-      { field: 'vin', header: 'Vin' },
-      { field: 'year', header: 'Year' },
-      { field: 'brand', header: 'Brand' },
-      { field: 'color', header: 'Color' }
+      { field: 'seq', header: '' },
+      { field: 'name', header: 'Name' },
+      { field: 'uri', header: 'Uri' }
   ];
   }
 
   ngOnInit() {}
+
+  selectRow() {
+    console.log(this.selectedCustomers);
+}
 }

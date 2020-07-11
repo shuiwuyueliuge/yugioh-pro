@@ -1,0 +1,15 @@
+@media screen and (max-width: 64em) {
+ th,td {
+    display: none !important;
+ }
+ 
+    td {
+    text-align: left;
+    display: block;
+    border: 0!important;
+    width: 100%!important;
+    float: left;
+    clear: left;
+    border: 0;
+}
+}
