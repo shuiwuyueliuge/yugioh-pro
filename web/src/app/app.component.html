@@ -1,0 +1,28 @@
+<div class="layout-topbar">
+    <ygo-topbar (menuActive)="changeMenuActive($event)"></ygo-topbar>
+</div>
+
+<div class="layout-sidebar" [ngClass]="{'active': menuActive}">
+    <ygo-slidemenu (item)="addTab($event)"></ygo-slidemenu>
+</div>
+
+<div class="layout-content">
+    <p-tabMenu [model]="items" class="layout-tab-menu">
+        <ng-template pTemplate="item" let-item let-i="index">
+            <div class="layout-tab" [ngClass]="{'small': smallTab}">
+                <div class="ui-menuitem-text">
+                    <div class="ui-menuitem-icon layout-tab-icon" [ngClass]="item.icon" *ngIf="item.icon"></div>
+                    {{item.label}}
+                </div>
+                <a class="ui-menuitem-icon ng-star-inserted layout-tab-quit" (click)="closeItem($event, i)"
+                    *ngIf="i != 0" [ngClass]="{'move': smallTab}">
+                    <span class="pi pi-times layout-tab-quit-icon"></span>
+                </a>
+            </div>
+        </ng-template>
+    </p-tabMenu>
+    <ygo-content></ygo-content>
+</div>
+
+<div class="layout-mask" *ngIf="menuActive" (click)="changeMenuActive(false)">
+</div>

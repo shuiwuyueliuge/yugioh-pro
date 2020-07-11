@@ -20,11 +20,10 @@ public class RedisFactory {
 		return new ReactiveRedisTemplate<K, V>(context.getFactory(), ctx);
 	}
 
-	public static <String, V> ReactiveRedisTemplate<java.lang.String, V> initStringRedisTemplate(ReactiveRedisConnectionFactory factory, Class<V> valueType) {
-		RedisSerializer<V> valueSerializer = new Jackson2JsonRedisSerializer<V>(valueType);
+	public static <String, V> ReactiveRedisTemplate<java.lang.String, V> initStringRedisTemplate(ReactiveRedisConnectionFactory factory, RedisSerializer<V> valueSerializer) {
 		RedisSerializer<java.lang.String> keySerializer = new StringRedisSerializer();
 		RedisSerializationContextBuilder<java.lang.String, V> build = RedisSerializationContext.newSerializationContext();
-		RedisSerializationContext<java.lang.String, V> ctx = build.string(keySerializer)
+		RedisSerializationContext<java.lang.String, V> ctx = build.key(keySerializer)
 				.value(valueSerializer)
 				.hashKey(keySerializer)
 				.hashValue(valueSerializer)

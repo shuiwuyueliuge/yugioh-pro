@@ -14,13 +14,13 @@ public class PackageFacadeImpl implements PackageFacade {
     private CardSourceStrategyContext strategyContext;
 
     @Override
-    @PostMapping(value = "/package/detail/{sourceType}")
+    @PostMapping("/package/detail/{sourceType}")
     public void publishPackageDetail(@RequestBody PackageData packageData, @PathVariable("sourceType") Integer sourceType) {
         strategyContext.publishPackageDetail(packageData, sourceType);
     }
 
     @Override
-    @GetMapping(value = "/package/{sourceType}")
+    @GetMapping("/package/{sourceType}")
     public List<PackageData> gainPackageList(@PathVariable("sourceType") Integer sourceType) {
         return strategyContext.gainPackageList(sourceType);
     }

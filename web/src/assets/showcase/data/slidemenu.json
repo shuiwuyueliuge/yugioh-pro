@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "label": "File",
+            "icon": "pi pi-pw pi-file",
+            "items": [
+                {
+                    "label": "New",
+                    "icon": "pi pi-fw pi-plus",
+                    "items": [
+                        {
+                            "label": "User",
+                            "icon": "pi pi-fw pi-user-plus"
+                        }
+                    ]
+                },
+                {
+                    "label": "Open",
+                    "icon": "pi pi-fw pi-external-link",
+                    "routerLink": "/content/sync"
+                }
+            ]
+        }
+    ]
+}
