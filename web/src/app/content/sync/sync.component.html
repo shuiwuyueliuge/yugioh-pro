@@ -1,10 +1,10 @@
 <p-table #dt [columns]="cols" [value]="cars" [scrollable]="true" scrollHeight="flex" [(selection)]="selectedCustomers">
     <ng-template pTemplate="header">
         <tr>
-            <th style="width:3%;text-align: center;">
+            <th style="width:4%;text-align: center;">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th style="width:4%;">序号</th>
+            <th>序号</th>
             <th style="width:40%;">卡包名称</th>
             <th style="width:40%;">卡包路径</th>
             <th style="width:10%;">操作</th>
@@ -12,12 +12,18 @@
     </ng-template>
     <ng-template pTemplate="body" let-car>
         <tr>
-            <td style="width:3%;text-align: center;">
+            <td class="table-check-box">
                 <p-tableCheckbox [value]="car"></p-tableCheckbox>
             </td>
-            <td style="width:4%;text-align: center;">{{car.seq}}</td>
-            <td style="width:40%;">{{car.name}}</td>
-            <td style="width:40%;">{{car.uri}}</td>
+            <td class="table-package-seq">{{car.seq}}</td>
+            <td style="width:40%;">
+                <span class="ui-column-title">卡包名称</span>
+                {{car.name}}
+            </td>
+            <td style="width:40%;">
+                <span class="ui-column-title">卡包路径</span>
+                {{car.uri}}
+            </td>
             <td style="width:10%;" (click)="selectRow()">操作</td>
         </tr>
     </ng-template>

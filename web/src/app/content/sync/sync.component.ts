@@ -11,7 +11,7 @@ export class SyncComponent implements OnInit {
 
   cars: Package[] = [];
 
-  selectedCustomers: Package[];
+  selectedCustomers: Package[] = [];
 
   cols: any[];
 
