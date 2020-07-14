@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
 public class RedisConfig {
@@ -16,6 +17,6 @@ public class RedisConfig {
 
     @Bean
     public ReactiveRedisTemplate<Integer, CardDetail> IndexEntityRedis() {
-        return RedisFactory.initIntegerRedisTemplate(factory, CardDetail.class);
+        return RedisFactory.initIntegerRedisTemplate(factory, new Jackson2JsonRedisSerializer<CardDetail>(CardDetail.class));
     }
 }

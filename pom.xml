@@ -182,8 +182,8 @@
 		<module>yugioh-cardsource</module>
 		<module>yugioh-websocket</module>
 		<module>yugioh-transform</module>
-        <module>yugioh-manager</module>
-    </modules>
+		<module>yugioh-manager</module>
+	</modules>
 
 	<build>
 		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>

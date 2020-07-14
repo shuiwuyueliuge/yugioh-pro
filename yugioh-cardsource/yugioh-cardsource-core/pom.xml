@@ -33,7 +33,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.yugioh.cardsource.core.CardSourceApp</mainClass>
+                    <mainClass>cn.mayu.yugioh.cardsource.core.CardSourceApp</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <executions>

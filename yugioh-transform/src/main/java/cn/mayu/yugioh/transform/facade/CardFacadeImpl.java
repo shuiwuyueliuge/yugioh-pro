@@ -2,7 +2,7 @@ package cn.mayu.yugioh.transform.facade;
 
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.transform.manager.CardManagerContext;
-import cn.yugioh.common.facade.transform.CardFacade;
+import cn.mayu.yugioh.common.facade.transform.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

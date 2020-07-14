@@ -31,8 +31,7 @@ public class RedisFactory {
 		return new ReactiveRedisTemplate<>(factory, ctx);
 	}
 
-	public static <Integer, V> ReactiveRedisTemplate<java.lang.Integer, V> initIntegerRedisTemplate(ReactiveRedisConnectionFactory factory, Class<V> valueType) {
-		RedisSerializer<V> valueSerializer = new Jackson2JsonRedisSerializer<V>(valueType);
+	public static <Integer, V> ReactiveRedisTemplate<java.lang.Integer, V> initIntegerRedisTemplate(ReactiveRedisConnectionFactory factory, RedisSerializer<V> valueSerializer) {
 		RedisSerializer<java.lang.Integer> keySerializer = new IntRedisSerializer();
 		RedisSerializationContextBuilder<java.lang.Integer, V> build = RedisSerializationContext.newSerializationContext();
 		RedisSerializationContext<java.lang.Integer, V> ctx = build.key(keySerializer)

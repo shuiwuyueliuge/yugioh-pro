@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableCaching
-@EnableFeignClients(basePackages = { "cn.yugioh.common.facade.transform" })
+@EnableFeignClients(basePackages = { "cn.mayu.yugioh.common.facade.transform" })
 public class SearchApp {
 
 	public static void main(String[] args) {

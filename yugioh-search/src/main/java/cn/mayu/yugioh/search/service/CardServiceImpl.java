@@ -5,7 +5,7 @@ import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import cn.mayu.yugioh.search.repository.ElasticSearchRepository;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
-import cn.yugioh.common.facade.transform.CardFacade;
+import cn.mayu.yugioh.common.facade.transform.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
