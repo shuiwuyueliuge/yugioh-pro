@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <base href="/">
+    <style type="text/css">
+body {
+	background: #ccc51c;
+	min-height: 100%;
+}
+
+h1 {
+	position: absolute;
+	left: 50%;
+	margin-left: -1.9em;
+	color: hsla(0,0%,100%,.3);
+	font: 900 800% Baskerville, 'Palatino Linotype', Palatino, serif;	
+}
+
+@keyframes loading {
+	from { max-width: 0; }
+}
+
+h1:before {
+	content: attr(data-content);
+	position: absolute;
+	overflow: hidden;
+	max-width: 4em;
+	color: white;
+	animation: loading 10s infinite linear;
+}
+    </style>
+</head>
+
+<body>
+    <h1 data-content="Loading">Loading</h1>
+</body>
+</html>

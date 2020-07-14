@@ -9,6 +9,9 @@ import { ContentModule } from './content/content.module';
 import { HomeComponent } from './home/home.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -23,9 +26,11 @@ import { HttpClientModule } from '@angular/common/http';
     SlidemenuModule,
     TopbarModule,
     TabMenuModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastModule,
+    ButtonModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

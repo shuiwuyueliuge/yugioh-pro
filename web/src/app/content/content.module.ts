@@ -5,6 +5,8 @@ import { ContentRoutingModule } from './content-routing.module';
 import { SyncComponent } from './sync/sync.component';
 import { SyncService } from './sync/sync.service'; 
 import { TableModule } from 'primeng/table';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
@@ -19,6 +21,8 @@ import { ButtonModule } from 'primeng/button';
     CommonModule,
     ContentRoutingModule,
     TableModule,
+    SelectButtonModule,
+    FormsModule,
     ButtonModule
   ],
   providers: [

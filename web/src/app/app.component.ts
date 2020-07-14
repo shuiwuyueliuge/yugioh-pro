@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
 
   public smallTab: boolean;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private messageService: MessageService) {
     this.menuActive = false;
     this.smallTab = false;
     this.items = [
@@ -60,4 +61,21 @@ export class AppComponent implements OnInit {
 
     this.items.push({ label: event.label, icon: event.icon, routerLink: event.routerLink });
   }
+
+
+  // showSuccess() {
+  //   this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Order submitted' });
+  // }
+
+  // showInfo() {
+  //   this.messageService.add({ severity: 'info', summary: 'Info Message', detail: 'PrimeNG rocks' });
+  // }
+
+  // showWarn() {
+  //   this.messageService.add({ severity: 'warn', summary: 'Warn Message', detail: 'There are unsaved changes' });
+  // }
+
+  // showError() {
+  //   this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Validation failed' });
+  // }
 }

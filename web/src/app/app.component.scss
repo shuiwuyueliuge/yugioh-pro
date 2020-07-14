@@ -29,7 +29,7 @@
 .layout-content {
     margin-left: 250px;
     padding-top: 64px;
-    height: calc(100% - 70px);
+    height: calc(100% - 120px);
     background-color: #fff;
     position: absolute;
     width: calc(100% - 260px);
@@ -81,6 +81,24 @@
 .layout-tab-quit-icon {
     font-size: 0.1em;
 }
+
+.custom-toast {
+    height: 500px;
+}
+
+// :host ::ng-deep .custom-toast .ui-toast-message {
+//     background: #FC466B;
+//     background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+//     background: linear-gradient(to right, #3F5EFB, #FC466B);
+// }
+
+// :host ::ng-deep .custom-toast .ui-toast-message div {
+//     color: #ffffff;
+// }
+
+// :host ::ng-deep .custom-toast .ui-toast-message.ui-toast-message-info .ui-toast-close-icon {
+//     color: #ffffff;
+// }
 
 @media screen and (max-width: 64em) {
     .layout-topbar {

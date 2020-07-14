@@ -1,6 +1,5 @@
 .table-package-seq {
    text-align: center;
-   display: block;
 }
 
 .table-check-box {
@@ -17,10 +16,14 @@
       display: none !important;
    }
 
+   tr {
+      border: 1px solid #c8c8c8;
+   }
+
    td {
        text-align: left;
        display: block;
-       //border: 0 none !important;
+       border: 0 none !important;
        width: 100% !important;
        float: left;
        clear: left;
@@ -40,6 +43,6 @@
    }
 
    .table-check-box {
-      text-align: left;
+      display: none !important;
    }
 }
