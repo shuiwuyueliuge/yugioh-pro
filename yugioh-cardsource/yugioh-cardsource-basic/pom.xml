@@ -62,5 +62,10 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-web-autoconfigure</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

@@ -16,5 +16,6 @@
         <module>yugioh-common-redis</module>
         <module>yugioh-common-dto</module>
         <module>yugioh-common-facade</module>
+        <module>yugioh-common-web</module>
     </modules>
 </project>

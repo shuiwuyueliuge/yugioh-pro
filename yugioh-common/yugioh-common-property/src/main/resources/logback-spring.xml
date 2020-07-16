@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
-    <property name="PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'^(Caller[+]0\t at )|(\r?\n)$',''} - %X{traceId} - %X{requestMethod} %X{uri} - %msg%n"/>
+    <property name="PATTERN" value="%d{HH:mm:ss.SSS} [%thread] %-5level %replace(%caller{1}){'^(Caller[+]0\t at )|(\r?\n)$',''} - [%X{traceId}] - [%X{requestMethod}] [%X{uri}] - %msg%n"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

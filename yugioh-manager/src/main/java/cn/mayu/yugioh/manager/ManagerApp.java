@@ -7,11 +7,11 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableCaching
-@EnableFeignClients(basePackages = { "cn.mayu.yugioh.common.facade.cardsource" })
+@EnableFeignClients(basePackages = {"cn.mayu.yugioh.common.facade.cardsource"})
 public class ManagerApp {
 
-	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(ManagerApp.class);
-		app.run(args);
-	}
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(ManagerApp.class);
+        app.run(args);
+    }
 }

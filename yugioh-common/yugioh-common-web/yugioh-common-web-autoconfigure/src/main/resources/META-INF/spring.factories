@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cn.mayu.yugioh.common.web.core.config.CorsConfig,\
+cn.mayu.yugioh.common.web.core.config.WebConfig,\
+cn.mayu.yugioh.common.web.core.intercept.TraceInterceptor,\
+cn.mayu.yugioh.common.web.core.intercept.WebExceptionWrapper,\
+cn.mayu.yugioh.common.web.core.intercept.RestWrapperInterceptor,\
+cn.mayu.yugioh.common.web.core.intercept.RpcDecoder,\
+cn.mayu.yugioh.common.web.core.intercept.FeignBasicAuthRequestInterceptor

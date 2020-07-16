@@ -11,23 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import cn.mayu.yugioh.basic.authorize.service.AuthUserDetails;
-import cn.mayu.yugioh.common.core.api.ApiRestWrapper;
-import cn.mayu.yugioh.common.core.api.UserDetialsVO;
+import cn.mayu.yugioh.common.core.api.UserDetailsVO;
 
 @RestController
 @RequestMapping("/user")
-@ApiRestWrapper
 public class UserController {
 	
 	@Autowired
 	private TokenStore tokenStore;
 
 	@RequestMapping("/principal")
-	public UserDetialsVO getPrincipalDetails(@RequestParam("access_token") String accessToken) {
+	public UserDetailsVO getPrincipalDetails(@RequestParam("access_token") String accessToken) {
 		OAuth2Authentication authentication = tokenStore.readAuthentication(accessToken);
 		UserDetails authorities = (AuthUserDetails) authentication.getPrincipal();
 		List<String> list = authorities.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-		UserDetialsVO userDetialsVO = new UserDetialsVO(authorities.getUsername(), authorities.getPassword(), list, authorities.isAccountNonLocked());
+		UserDetailsVO userDetialsVO = new UserDetailsVO(authorities.getUsername(), authorities.getPassword(), list, authorities.isAccountNonLocked());
 		return userDetialsVO;
 	}
 }

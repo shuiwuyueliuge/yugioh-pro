@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
-@FeignClient(name = "card-source")
+@FeignClient(name = "card-source", contextId = "package")
 public interface PackageFacade {
 
     @PostMapping("/package/detail/{sourceType}")
@@ -17,3 +17,4 @@ public interface PackageFacade {
     @GetMapping("/package/{sourceType}")
     List<PackageData> gainPackageList(@PathVariable("sourceType") Integer sourceType);
 }
+
