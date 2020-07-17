@@ -2,7 +2,7 @@ package cn.mayu.yugioh.security.core.social.qq;
 
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 
 public class QQOAuth2ApiBinding extends AbstractOAuth2ApiBinding implements QQ {
@@ -21,14 +21,15 @@ public class QQOAuth2ApiBinding extends AbstractOAuth2ApiBinding implements QQ {
 	@Override
 	public QQUserInfo getUserInfo() throws Exception {
 		String result = this.getRestTemplate().getForObject(String.format(USER_INFO_URL, token, "101575852", getOpenId()), String.class);
-		return new ObjectMapper().readValue(result, QQUserInfo.class);
+		return null;
+		//return new ObjectMapper().readValue(result, QQUserInfo.class);
 	}
 
 	@Override
 	public String getOpenId() throws Exception {
 		String result = this.getRestTemplate().getForObject(String.format(OPEN_ID_URL, token), String.class);
 		result = result.replace("callback( ", "").replace(" );", "");
-		return new ObjectMapper().readValue(result, OpenId.class).openid;
+		return null;//return new ObjectMapper().readValue(result, OpenId.class).openid;
 	}
 	
 	@Data

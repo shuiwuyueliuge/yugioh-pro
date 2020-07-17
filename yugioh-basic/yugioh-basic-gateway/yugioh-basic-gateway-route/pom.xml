@@ -13,20 +13,15 @@
 	<artifactId>yugioh-basic-gateway-route</artifactId>
 
 	<name>yugioh-basic-gateway-route</name>
-	<url>http://maven.apache.org</url>
 
 	<dependencies>
 		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-redis</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>cn.mayu</groupId>
-			<artifactId>yugioh-common-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -45,9 +40,16 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
 		</dependency>
+
 		<dependency>
-			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache</artifactId>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-redis</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.mayu</groupId>
+			<artifactId>yugioh-common-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

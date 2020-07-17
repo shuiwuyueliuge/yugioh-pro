@@ -13,20 +13,14 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.mayu</groupId>
-            <artifactId>yugioh-common-dto-transform</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.mayu</groupId>
-            <artifactId>yugioh-common-core</artifactId>
+            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
@@ -47,24 +41,30 @@
         <!--			<groupId>org.springframework.cloud</groupId>-->
         <!--			<artifactId>spring-cloud-starter-zipkin</artifactId>-->
         <!--		</dependency>-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
+
         <dependency>
             <groupId>cn.mayu</groupId>
             <artifactId>yugioh-common-facade-cardsource</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>
             <artifactId>yugioh-common-dto-cardsource</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>cn.mayu</groupId>
             <artifactId>yugioh-common-web-autoconfigure</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-dto-transform</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.mayu</groupId>
+            <artifactId>yugioh-common-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

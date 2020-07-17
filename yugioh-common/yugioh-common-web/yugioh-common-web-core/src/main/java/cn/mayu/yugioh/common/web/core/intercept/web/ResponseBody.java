@@ -1,10 +1,12 @@
 package cn.mayu.yugioh.common.web.core.intercept.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResponseBody<T> {
 
     private static final String SRT = "{\"code\":%s,\"msg\":\"%s\",\"traceId\":\"%s\",\"data\":\"%s\"}";

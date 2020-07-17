@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import cn.mayu.yugioh.basic.monitor.model.AccessToken;
 import static cn.mayu.yugioh.common.core.util.RestUtil.*;
-import static cn.mayu.yugioh.common.core.util.HttpServletRequestUtil.*;
+//import static cn.mayu.yugioh.common.core.util.HttpServletRequestUtil.*;
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
@@ -29,10 +29,10 @@ public class UserServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Map<String, String> params = new HashMap<String, String>();
-		String password = getParam(PASSWORD);
-		if (password == null) return null;
+		//String password = getParam(PASSWORD);
+		//if (password == null) return null;
 		params.put(USERNAME, username);
-		params.put(PASSWORD, password);
+		//params.put(PASSWORD, password);
 		params.put(CLIENT_ID, clientId);
 		AccessToken accessToken = post("http://localhost:9600/login", params, AccessToken.class);
 		return new User(username, "", new ArrayList<GrantedAuthority>());

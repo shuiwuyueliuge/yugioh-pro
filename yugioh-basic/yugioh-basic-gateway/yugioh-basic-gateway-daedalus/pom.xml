@@ -11,12 +11,9 @@
 	</parent>
 
 	<artifactId>yugioh-basic-gateway-daedalus</artifactId>
-
 	<name>yugioh-basic-gateway-daedalus</name>
-	<url>http://maven.apache.org</url>
+
 	<dependencies>
-		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId> 
-			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
@@ -25,6 +22,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
@@ -33,13 +31,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency> -->
+
 		<dependency>
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-redis</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cn.mayu</groupId>
 			<artifactId>yugioh-common-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -52,10 +55,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>cn.mayu.yugioh.basic.gateway.App</mainClass>
-					<layout>ZIP</layout>
-				</configuration>
+				<version>2.2.6.RELEASE</version>
 				<executions>
 					<execution>
 						<goals>

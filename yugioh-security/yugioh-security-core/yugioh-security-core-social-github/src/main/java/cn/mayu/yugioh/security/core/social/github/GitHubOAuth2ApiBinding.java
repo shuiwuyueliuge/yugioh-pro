@@ -2,7 +2,7 @@ package cn.mayu.yugioh.security.core.social.github;
 
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.oauth2.TokenStrategy;
-import com.fasterxml.jackson.databind.ObjectMapper;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class GitHubOAuth2ApiBinding extends AbstractOAuth2ApiBinding implements GitHub {
 	
@@ -17,6 +17,7 @@ public class GitHubOAuth2ApiBinding extends AbstractOAuth2ApiBinding implements 
 	@Override
 	public GitHubUserInfo getUserInfo() throws Exception {
 		String result = this.getRestTemplate().getForObject(String.format(USER_INFO_URL, token), String.class);
-		return new ObjectMapper().readValue(result, GitHubUserInfo.class);
+		return null;
+		//return new ObjectMapper().readValue(result, GitHubUserInfo.class);
 	}
 }

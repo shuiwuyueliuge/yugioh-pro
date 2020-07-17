@@ -1,0 +1,13 @@
+= 测试接口文档
+:toc: left
+:toc-title: 接口目录
+:toclevels: 4
+
+== test接口
+
+=== 1. test1
+
+include::{snippets}/sync/test1/http-request.adoc[]
+include::{snippets}/sync/test1/response-fields.adoc[]
+include::{snippets}/sync/test1/curl-request.adoc[]
+include::{snippets}/sync/test1/http-response.adoc[]

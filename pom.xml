@@ -106,87 +106,92 @@
 				<version>0.6.0</version>
 			</dependency>
 			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-property</artifactId>
-				<version>${version}</version>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-all</artifactId>
+				<version>4.1.22.Final</version>
 			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-mongo</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-security-application</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-security-core-imgcode</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-facade-search</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-core</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-facade-transform</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-dto-search</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-redis</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-security-browser</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-dto-transform</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-security-core-base</artifactId>
-				<version>${version}</version>
-			</dependency>
-			<dependency>
-				<groupId>cn.mayu</groupId>
-				<artifactId>yugioh-common-facade-cardsource</artifactId>
-				<version>${version}</version>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-property</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-mongo</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-security-application</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-security-core-imgcode</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-facade-search</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-core</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-facade-transform</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-dto-search</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-redis</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-security-browser</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-dto-transform</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-security-core-base</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
+<!--			<dependency>-->
+<!--				<groupId>cn.mayu</groupId>-->
+<!--				<artifactId>yugioh-common-facade-cardsource</artifactId>-->
+<!--				<version>${project.version}</version>-->
+<!--			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 
 	<modules>
 		<module>yugioh-basic</module>
 		<module>yugioh-common</module>
-		<module>yugioh-test</module>
 		<module>yugioh-search</module>
 		<module>yugioh-security</module>
 		<module>yugioh-cardsource</module>
 		<module>yugioh-websocket</module>
 		<module>yugioh-transform</module>
 		<module>yugioh-manager</module>
+		<module>yugioh-test</module>
 	</modules>
 
 	<build>
-		<finalName>${artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>
+		<finalName>${project.artifactId}-1.0.${buildNumber}-SNAPSHOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -202,7 +207,6 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.7</version>
 			</plugin>
-			<!--发布源码插件 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
