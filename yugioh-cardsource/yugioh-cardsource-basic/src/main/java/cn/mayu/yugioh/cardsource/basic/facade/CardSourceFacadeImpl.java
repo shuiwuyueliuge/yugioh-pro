@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class CardSourceFacadeImpl implements CardSourceFacade {
 
     @Override
-    @GetMapping("/card-source/type")
+    @GetMapping("/source/type")
     public List<SourceType> getSourceType() {
         return sources().stream().map(data -> new SourceType(data.toString(), data.getType())).collect(Collectors.toList());
     }

@@ -5,9 +5,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
-@FeignClient(name = "card-source", contextId = "card-source")
+@FeignClient(name = "card-source", contextId = "source")
 public interface CardSourceFacade {
 
-    @GetMapping("/card-source/type")
+    @GetMapping("/source/type")
     List<SourceType> getSourceType();
 }

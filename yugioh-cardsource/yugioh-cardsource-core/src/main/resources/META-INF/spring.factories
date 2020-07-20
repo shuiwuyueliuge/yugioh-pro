@@ -1,5 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.mayu.yugioh.cardsource.basic.manager.CardSourceStrategyContext,\
 cn.mayu.yugioh.cardsource.basic.facade.PackageFacadeImpl,\
+  cn.mayu.yugioh.cardsource.basic.facade.CardSourceFacadeImpl,\
 cn.mayu.yugioh.cardsource.basic.stream.LimitPublisher,\
 cn.mayu.yugioh.cardsource.basic.stream.PackagePublisher

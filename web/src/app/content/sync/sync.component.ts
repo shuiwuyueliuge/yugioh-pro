@@ -21,29 +21,38 @@ export class SyncComponent implements OnInit {
   constructor(private syncService: SyncService) {
     this.syncService.getCardSources().then(source => {
       source.forEach(data => {
-        this.cardSources.push({ label: data.name, value: { id: data.id } });
+        this.cardSources.push({ label: data.name, value: { id: data.type } });
       });
 
       this.selectedCardSource = this.cardSources[0].value;
-      this.syncService.getPackage(this.cardSources[0].value.id).then(packages => {
-        let seq = 1;
-        packages.forEach(pack => {
-          pack.seq = seq;
-          seq++;
-        });
-
-        this.packages = packages;
-      });
+      this.initPackageData(this.cardSources[0].value.id);
     });
   }
 
   ngOnInit() { }
 
-  public selectPackage(): void {
+  public selectPackage(uri: string): void {
     console.log(this.selectedPackages);
+    console.log(uri);
+    let publishData = new Array<string>(this.selectedPackages.length);
+    publishData.push(uri);
+    this.selectedPackages.forEach(data => publishData.push(data.uri));
+    this.syncService.publishPackage({packageUris: publishData, priority: 2}, this.selectedCardSource.id);
   }
 
   public selCardSource(): void {
-    console.log(this.selectedCardSource.id);
+   this.initPackageData(this.selectedCardSource.id);
+  }
+
+  private initPackageData(cardSource: number): void {
+    this.syncService.getPackage(cardSource).then(packages => {
+      let seq = 1;
+      packages.forEach(pack => {
+        pack.seq = seq;
+        seq++;
+      });
+
+      this.packages = packages;
+    });
   }
 }
