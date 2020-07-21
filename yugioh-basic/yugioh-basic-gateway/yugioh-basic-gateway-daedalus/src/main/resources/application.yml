@@ -12,9 +12,15 @@ hystrix:
 spring:
   application:    
     name: gateway 
-#  cloud:
-#    gateway:
-#      routes:
+  cloud:
+    gateway:
+      routes:
+        - id: ingredients-fallback
+          uri: lb://web-socket
+          predicates:
+            - Path=/
+#          filters:
+#            - StripPrefix=1
 #        - id: blog
 #          uri: http://www.baidu.com
 #          predicates:

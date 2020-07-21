@@ -5,10 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class App {
+public class GateWayApp {
 	
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(App.class);
+		SpringApplication app = new SpringApplication(GateWayApp.class);
 		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
