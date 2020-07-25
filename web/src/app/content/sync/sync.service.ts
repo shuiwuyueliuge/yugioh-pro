@@ -45,6 +45,10 @@ export class SyncService {
     return EMPTY;
   }
 
+  public test(): void {
+    console.log(12);
+  }
+
   public handleError(error: HttpErrorResponse, caught: any) {
     // let errorMessage = 'Unknown error!';
     // if (error.error instanceof ErrorEvent) {

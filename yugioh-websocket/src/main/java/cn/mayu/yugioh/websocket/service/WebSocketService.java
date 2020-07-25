@@ -10,9 +10,11 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
-import java.util.Date;
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
+/**
+ *  mq receive {"msg":"123","code":323,"data":{"requestId":"fsdfsa"}}
+ */
 @Slf4j
 public class WebSocketService extends SimpleChannelInboundHandler<Object> {
 
@@ -20,10 +22,6 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("receive:{}", msg);
-        }
-
         if (msg instanceof FullHttpRequest) { // Ws handshake is a universal HTTP protocol
             handleHttpRequest(ctx, (FullHttpRequest) msg);
         }
@@ -34,20 +32,20 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
+        // TODO gateway authentication
+        if (req.decoderResult().isSuccess() && ("websocket".equals(req.headers().get("Upgrade")))) {
+            WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("", null, false);
+            handShaker = wsFactory.newHandshaker(req);
+            if (handShaker == null) {
+                WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
+            } else {
+                handShaker.handshake(ctx.channel(), req);
+            }
 
-
-        if (!req.decoderResult().isSuccess() || (!"websocket".equals(req.headers().get("Upgrade")))) {
-            sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
 
-        WebSocketServerHandshakerFactory wsFactory = new WebSocketServerHandshakerFactory("", null, false);
-        handShaker = wsFactory.newHandshaker(req);
-        if (handShaker == null) {
-            WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
-        } else {
-            handShaker.handshake(ctx.channel(), req);
-        }
+        sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
     }
 
     private void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest req, DefaultFullHttpResponse res) {
@@ -79,11 +77,15 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
         }
 
         if (frame instanceof TextWebSocketFrame) {
+            // TODO need biz requestId
             String request = ((TextWebSocketFrame) frame).text();
-            String res = new Date().toString() + ctx.channel().id().asLongText() + ":" + request;
-            TextWebSocketFrame tws = new TextWebSocketFrame(res);
-            ChannelSupervise.send2One(ctx.channel().id().asShortText(), tws);
-            return;
+            if (log.isDebugEnabled()) {
+                log.debug("receive:{}", request);
+            }
+
+//            String res = ctx.channel().id().asLongText();
+//            TextWebSocketFrame tws = new TextWebSocketFrame(res);
+//            ChannelSupervise.send2One(ctx.channel().id().asShortText(), tws);
         }
     }
 

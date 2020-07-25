@@ -17,4 +17,4 @@ interface Resources {
     description: string;
 }
 
-export { SLIDE_MENU, PACKAGE, CARD_SOURCE, PACKAGE_PUBLISH}
+export { SLIDE_MENU, PACKAGE, CARD_SOURCE, PACKAGE_PUBLISH }

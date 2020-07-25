@@ -1,6 +1,8 @@
 <p-table [value]="packages" [scrollable]="true" scrollHeight="flex" [(selection)]="selectedPackages">
     <ng-template pTemplate="caption">
-        <p-selectButton [options]="cardSources" [(ngModel)]="selectedCardSource" (click)="selCardSource()"></p-selectButton>
+        <p-selectButton [options]="cardSources" [(ngModel)]="selectedCardSource" (click)="selCardSource()">
+        </p-selectButton>
+        <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
@@ -29,14 +31,21 @@
                 <span class="ui-column-title">卡包路径</span>
                 {{pack.uri}}
             </td>
-            <td style="width:10%;" (click)="selectPackage(pack.uri)">
-                <button pButton type="button" icon="pi pi-arrow-circle-down" styleClass="ui-button-icon" style="color:yellowgreen"></button>
+            <td style="width:10%;" (click)="selectPackage(pack)">
+                <button pButton type="button" icon="pi pi-arrow-circle-down" styleClass="ui-button-icon"
+                    style="color:yellowgreen"></button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" *ngIf="pack.progressShow">
+                <p-progressBar [value]="pack.progress" [style]="{'height': '6px'}"></p-progressBar>
             </td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td colspan="4" style="text-align:left;background-color:aquamarine"><i class="pi pi-exclamation-triangle" style="margin-right: 5px;padding-top: 2px;"></i>暂无卡包信息</td>
+            <td colspan="5" style="text-align:left;background-color:aquamarine"><i class="pi pi-exclamation-triangle"
+                    style="margin-right: 5px;padding-top: 2px;"></i>暂无卡包信息</td>
         </tr>
     </ng-template>
 </p-table>

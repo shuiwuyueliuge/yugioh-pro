@@ -8,6 +8,9 @@ import { TableModule } from 'primeng/table';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { WebSocketService } from './web-socket.service'; 
+import { StepsModule } from 'primeng/steps';
 
 @NgModule({
   declarations: [
@@ -23,10 +26,13 @@ import { ButtonModule } from 'primeng/button';
     TableModule,
     SelectButtonModule,
     FormsModule,
-    ButtonModule
+    ButtonModule,
+    ProgressBarModule,
+    StepsModule
   ],
   providers: [
-    SyncService
+    SyncService,
+    WebSocketService
   ]
 })
 export class ContentModule { }
