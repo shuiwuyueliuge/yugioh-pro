@@ -12,9 +12,6 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
-/**
- *  mq receive {"msg":"123","code":323,"data":{"requestId":"fsdfsa"}}
- */
 @Slf4j
 public class WebSocketService extends SimpleChannelInboundHandler<Object> {
 
@@ -78,11 +75,12 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
 
         if (frame instanceof TextWebSocketFrame) {
             // TODO need biz requestId
-            String request = ((TextWebSocketFrame) frame).text();
+            String requestId = ((TextWebSocketFrame) frame).text();
             if (log.isDebugEnabled()) {
-                log.debug("receive:{}", request);
+                log.debug("receive:{}", requestId);
             }
 
+            ChannelSupervise.addChannel(requestId, ctx.channel());
 //            String res = ctx.channel().id().asLongText();
 //            TextWebSocketFrame tws = new TextWebSocketFrame(res);
 //            ChannelSupervise.send2One(ctx.channel().id().asShortText(), tws);
@@ -94,8 +92,6 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
         if (log.isDebugEnabled()) {
             log.debug("client connect channel-id:{}", ctx.channel().id().asLongText());
         }
-
-        ChannelSupervise.addChannel(ctx.channel());
     }
 
     @Override

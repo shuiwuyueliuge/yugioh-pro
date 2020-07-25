@@ -19,5 +19,6 @@
         <module>yugioh-common-dto-transform</module>
         <module>yugioh-common-dto-search</module>
         <module>yugioh-common-dto-cardsource</module>
+        <module>yugioh-common-dto-websocket</module>
     </modules>
 </project>

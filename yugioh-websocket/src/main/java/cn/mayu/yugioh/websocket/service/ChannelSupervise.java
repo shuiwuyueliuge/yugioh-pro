@@ -1,5 +1,8 @@
 package cn.mayu.yugioh.websocket.service;
 
+import cn.mayu.yugioh.websocket.model.WebSocketMsg;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import io.netty.channel.group.ChannelGroup;
@@ -15,9 +18,9 @@ public class ChannelSupervise {
 
     private static ConcurrentMap<String, ChannelId> ChannelMap = new ConcurrentHashMap<>();
 
-    public static void addChannel(Channel channel) {
+    public static void addChannel(String requestId, Channel channel) {
         GlobalGroup.add(channel);
-        ChannelMap.put(channel.id().asShortText(), channel.id());
+        ChannelMap.put(requestId, channel.id());
     }
 
     public static void removeChannel(Channel channel) {
@@ -25,15 +28,23 @@ public class ChannelSupervise {
         ChannelMap.remove(channel.id().asShortText());
     }
 
-    public static Channel findChannel(String id) {
-        return GlobalGroup.find(ChannelMap.get(id));
+    public static Channel findChannel(String requestId) {
+        return GlobalGroup.find(ChannelMap.get(requestId));
     }
 
     public static void send2All(TextWebSocketFrame tws) {
         GlobalGroup.writeAndFlush(tws);
     }
 
-    public static void send2One(String id, TextWebSocketFrame tws) {
-        findChannel(id).writeAndFlush(tws);
+    public static <T> void send2One(String requestId, WebSocketMsg<T> msg) {
+        String data = null;
+        try {
+            data = new ObjectMapper().writeValueAsString(msg);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+
+        }
+
+        findChannel(requestId).writeAndFlush(new TextWebSocketFrame(data));
     }
 }
