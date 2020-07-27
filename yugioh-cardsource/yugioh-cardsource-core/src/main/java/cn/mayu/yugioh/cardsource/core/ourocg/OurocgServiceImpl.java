@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.cardsource.core.ourocg;
 
+import cn.mayu.yugioh.cardsource.basic.service.DataSourceLogService;
 import cn.mayu.yugioh.cardsource.basic.stream.WebSocketPublisher;
 import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.transform.LimitDetail;
@@ -9,9 +10,6 @@ import cn.mayu.yugioh.cardsource.basic.datacenter.PackageCenter;
 import cn.mayu.yugioh.cardsource.basic.manager.CardSourceEnum;
 import cn.mayu.yugioh.cardsource.basic.stream.LimitPublisher;
 import cn.mayu.yugioh.cardsource.basic.stream.PackagePublisher;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgIncludeRepository;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgLimitRepository;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgPackageRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,10 +39,8 @@ public class OurocgServiceImpl implements OurocgService {
 	private LimitPublisher limitPublisher;
 
 	@Autowired
-	public OurocgServiceImpl(OurocgPackageRepository ourocgRepository,
-							 OurocgIncludeRepository includeRepository,
-							 OurocgLimitRepository limitRepository) {
-		OurocgDataCenter ourocgDataCenter = new OurocgDataCenter(ourocgRepository, includeRepository, limitRepository);
+	public OurocgServiceImpl(DataSourceLogService dataSourceLogService) {
+		OurocgDataCenter ourocgDataCenter = new OurocgDataCenter(dataSourceLogService);
 		this.packageCenter = ourocgDataCenter;
 		this.limitCenter = ourocgDataCenter;
 	}
@@ -106,7 +102,6 @@ public class OurocgServiceImpl implements OurocgService {
 
 	@Override
 	public void run(String... args) {
-		webSocketPublisher.publish("213");
 		newThread(this).start();
 	}
 }

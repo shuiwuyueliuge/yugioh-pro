@@ -1,17 +1,15 @@
 package cn.mayu.yugioh.cardsource.core.ourocg;
 
+import static cn.mayu.yugioh.cardsource.basic.manager.CardSourceEnum.OUROCG;
+import cn.mayu.yugioh.cardsource.basic.service.DataSourceLogService;
 import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.LimitDetail;
 import cn.mayu.yugioh.common.dto.transform.PackageDetail;
 import cn.mayu.yugioh.cardsource.basic.datacenter.LimitCenter;
 import cn.mayu.yugioh.cardsource.basic.datacenter.PackageCenter;
-import cn.mayu.yugioh.cardsource.basic.html.*;
 import cn.mayu.yugioh.cardsource.core.ourocg.html.*;
 import cn.mayu.yugioh.cardsource.core.ourocg.model.*;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgIncludeRepository;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgLimitRepository;
-import cn.mayu.yugioh.cardsource.core.ourocg.repository.OurocgPackageRepository;
 import org.springframework.beans.BeanUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,33 +23,10 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
     private String description;
 
-    private HtmlHandler<String> cardDataTranslater;
+    private DataSourceLogService dataSourceLogService;
 
-    private HtmlHandler<Include> includeTranslater;
-
-    private HtmlHandler<List<PackageData>> packageListTranslater;
-
-    private HtmlHandler<LimitInfo> limitDataTranslater;
-
-    private HtmlHandler<List<String>> limitListTranslater;
-
-    private OurocgPackageRepository ourocgRepository;
-
-    private OurocgIncludeRepository includeRepository;
-
-    private OurocgLimitRepository limitRepository;
-
-    public OurocgDataCenter(OurocgPackageRepository ourocgRepository,
-                            OurocgIncludeRepository includeRepository,
-                            OurocgLimitRepository limitRepository) {
-        this.ourocgRepository = ourocgRepository;
-        this.includeRepository = includeRepository;
-        this.limitRepository = limitRepository;
-        this.cardDataTranslater = new CardDataHtmlHandler();
-        this.includeTranslater = new IncludeInfoHandler();
-        this.packageListTranslater = new PackageListHandler();
-        this.limitDataTranslater = new LimitDataHandler();
-        this.limitListTranslater = new LimitListHandler();
+    public OurocgDataCenter(DataSourceLogService dataSourceLogService) {
+        this.dataSourceLogService = dataSourceLogService;
         this.description = "https://www.ourocg.cn/package";
     }
 
@@ -67,10 +42,10 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
     @Override
     public PackageDetail gainPackageDetail(String resources) {
-        String data = cardDataTranslater.handle(resources);
+        String data = OurocgHtmlHandlers.cardDataTranslater.handle(resources);
         OurocgMetaData metaData = readToOurocgMetaData(data);
         PackageDetail packageDetail = new PackageDetail();
-        ourocgRepository.save(metaData).subscribe();
+        dataSourceLogService.save(OUROCG, "package", metaData);
         metaDataToPackageDetail(packageDetail, metaData);
         return packageDetail;
     }
@@ -104,8 +79,8 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
             }
 
             // 收录详情/调整 解析
-            Include cd = includeTranslater.handle(ourocgCard.getHref());
-            includeRepository.save(cd).subscribe();
+            Include cd = OurocgHtmlHandlers.includeTranslater.handle(ourocgCard.getHref());
+            dataSourceLogService.save(OUROCG, "include", cd);
             cardDetail.setAdjust(cd.getAdjust());
             saveIncludeInfo(cd, cardDetail, packageDetail);
             return cardDetail;
@@ -130,13 +105,13 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
     @Override
     public List<PackageData> gainPackageList(String resources) {
-        return packageListTranslater.handle(resources);
+        return OurocgHtmlHandlers.packageListTranslater.handle(resources);
     }
 
     @Override
     public LimitDetail gainLimitDetail(String resources) {
-        LimitInfo limitInfo = limitDataTranslater.handle(resources);
-        limitRepository.save(limitInfo).subscribe();
+        LimitInfo limitInfo = OurocgHtmlHandlers.limitDataTranslater.handle(resources);
+        dataSourceLogService.save(OUROCG, "limit", limitInfo);
         LimitDetail limitDetail = new LimitDetail();
         limitDetail.setName(limitInfo.getName());
         limitDetail.setForbidden(limitInfo.getForbidden());
@@ -149,6 +124,6 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
     @Override
     public List<String> gainLimitList(String resources) {
-        return limitListTranslater.handle(resources);
+        return OurocgHtmlHandlers.limitListTranslater.handle(resources);
     }
 }

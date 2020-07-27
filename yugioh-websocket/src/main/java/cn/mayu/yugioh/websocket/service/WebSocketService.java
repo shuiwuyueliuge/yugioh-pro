@@ -74,7 +74,6 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
         }
 
         if (frame instanceof TextWebSocketFrame) {
-            // TODO need biz requestId
             String requestId = ((TextWebSocketFrame) frame).text();
             if (log.isDebugEnabled()) {
                 log.debug("receive:{}", requestId);

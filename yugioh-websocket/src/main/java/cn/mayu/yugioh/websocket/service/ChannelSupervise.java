@@ -29,6 +29,11 @@ public class ChannelSupervise {
     }
 
     public static Channel findChannel(String requestId) {
+        Channel channel = (Channel) ChannelMap.get(requestId);
+        if (channel == null) {
+            return null;
+        }
+
         return GlobalGroup.find(ChannelMap.get(requestId));
     }
 
@@ -45,6 +50,11 @@ public class ChannelSupervise {
 
         }
 
-        findChannel(requestId).writeAndFlush(new TextWebSocketFrame(data));
+        Channel channel = findChannel(requestId);
+        if (channel == null) {
+            return;
+        }
+
+        channel.writeAndFlush(new TextWebSocketFrame(data));
     }
 }

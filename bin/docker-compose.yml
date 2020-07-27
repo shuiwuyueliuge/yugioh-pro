@@ -104,7 +104,7 @@ services:
     ports:
       - 9100:9100
   logstash:
-    container_name: logstash:7.1.1
+    container_name: logstash
     privileged: true
     network_mode: esnetwork
     image: logstash:7.1.1

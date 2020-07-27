@@ -4,4 +4,5 @@ cn.mayu.yugioh.cardsource.basic.facade.PackageFacadeImpl,\
 cn.mayu.yugioh.cardsource.basic.facade.CardSourceFacadeImpl,\
 cn.mayu.yugioh.cardsource.basic.stream.LimitPublisher,\
 cn.mayu.yugioh.cardsource.basic.stream.PackagePublisher,\
-cn.mayu.yugioh.cardsource.basic.stream.WebSocketPublisher
+cn.mayu.yugioh.cardsource.basic.stream.WebSocketPublisher,\
+cn.mayu.yugioh.cardsource.basic.service.DataSourceLogServiceImpl
