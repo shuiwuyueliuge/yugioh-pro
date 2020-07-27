@@ -3,9 +3,7 @@ package cn.mayu.yugioh.common.web.core.intercept.trace;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.util.Map;
-import static cn.mayu.yugioh.common.web.core.util.HttpRequestHelper.getMethod;
-import static cn.mayu.yugioh.common.web.core.util.HttpRequestHelper.getRequestURI;
-import static cn.mayu.yugioh.common.web.core.util.HttpRequestHelper.getLocalAddr;
+import static cn.mayu.yugioh.common.web.core.util.HttpRequestHelper.*;
 
 @Data
 @EqualsAndHashCode(callSuper=false)
@@ -24,6 +22,10 @@ public class WebTracker extends Tracker {
         String traceId = map.get("traceId");
         String local = getLocalAddr();
         String ipPostfix = local.substring(local.lastIndexOf(".") + 1);
-        map.put("traceId", String.format("%s|%s", traceId, ipPostfix));
+        if (getHeader("feign") != null) {
+            map.put("traceId", traceId);
+        } else {
+            map.put("traceId", String.format("%s|%s", traceId, ipPostfix));
+        }
     }
 }
