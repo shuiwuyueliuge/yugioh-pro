@@ -1,0 +1,100 @@
+buildscript {
+    repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/groups/public/"
+        }
+
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "org.asciidoctor.jvm.convert" version "3.0.0-alpha.3"
+    id "org.asciidoctor.jvm.pdf" version "3.0.0-alpha.3"
+}
+
+allprojects {
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://dl.bintray.com/someok/maven" }
+    }
+}
+
+wrapper {
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+version = '1.0.0'
+
+// 将 asciidoctor 和 asciidoctorPdf 两个 task 中通用的 attributes 统一放置在一起
+asciidoctorj {
+    modules {
+        pdf.version = '1.5.0-beta.2'
+    }
+
+    // 语法高亮，可选项有 coderay, highlightjs, prettify, pygments
+    // 为保证生成的 html5 和 pdf 均有语法高亮，所以启用 coderay
+    // 使用其它几个选项还需要做不少额外的工作，没有必要
+    attributes 'source-highlighter': 'coderay'
+}
+
+asciidoctor {
+    logDocuments true
+
+    sources {
+        include 'index.adoc'
+    }
+
+    baseDirFollowsSourceDir()
+
+    // 强制每次都重新生成
+    outputs.upToDateWhen { true }
+    outputOptions {
+        backends = ['html5']
+    }
+
+//  下述几个属性可将 css 从内嵌到 html5 页面改为外联的 css 文件
+//     attributes 'linkcss': true
+//     attributes 'stylesdir': 'css/'
+//     attributes 'stylesheet': 'asciidoctor.css'
+
+}
+
+pdfThemes {
+    // 思源黑体
+    local 'KaiGenGothicCN', {
+        styleDir = file('data/themes')
+        styleName = 'KaiGenGothicCN'
+    }
+
+    // 思源宋体
+    local 'SourceHanSerifCN', {
+        styleDir = file('data/themes')
+        styleName = 'SourceHanSerifCN'
+    }
+}
+
+asciidoctorPdf {
+    logDocuments true
+
+    sources {
+        include 'index.adoc'
+    }
+
+    baseDirFollowsSourceDir()
+
+    // 强制每次都重新生成
+    outputs.upToDateWhen { false }
+
+    fontsDir file('data/fonts')
+//     theme 'KaiGenGothicCN'
+    theme 'SourceHanSerifCN'
+}
+
+// 同时生成 html5 和 pdf
+task generateAll {
+    dependsOn asciidoctor, asciidoctorPdf
+    doLast {
+        println 'generate html5 and pdf over!'
+    }
+}

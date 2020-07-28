@@ -28,12 +28,12 @@
 			<!--这里的id需要和settings.xml中的server的id一致 -->
 			<id>ygo-release</id>
 			<name>Ygo release Repository</name>
-			<url>http://127.0.0.1:8081/repository/ygo-release/</url>
+			<url>http://172.17.237.151:8081/repository/maven-releases/</url>
 		</repository>
 		<snapshotRepository>
 			<id>ygo-snapshots</id>
 			<name>Ygo snapshots Repository</name>
-			<url>http://127.0.0.1:8081/repository/ygo-snapshot/</url>
+			<url>http://172.17.237.151:8081/repository/maven-snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -110,71 +110,6 @@
 				<artifactId>netty-all</artifactId>
 				<version>4.1.22.Final</version>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-property</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-mongo</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-security-application</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-security-core-imgcode</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-facade-search</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-core</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-facade-transform</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-dto-search</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-redis</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-security-browser</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-dto-transform</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-security-core-base</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>cn.mayu</groupId>-->
-<!--				<artifactId>yugioh-common-facade-cardsource</artifactId>-->
-<!--				<version>${project.version}</version>-->
-<!--			</dependency>-->
 		</dependencies>
 	</dependencyManagement>
 
@@ -196,7 +131,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>

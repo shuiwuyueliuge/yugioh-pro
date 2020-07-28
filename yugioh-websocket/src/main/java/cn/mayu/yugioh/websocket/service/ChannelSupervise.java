@@ -29,12 +29,12 @@ public class ChannelSupervise {
     }
 
     public static Channel findChannel(String requestId) {
-        Channel channel = (Channel) ChannelMap.get(requestId);
-        if (channel == null) {
+        ChannelId channelId = ChannelMap.get(requestId);
+        if (channelId == null) {
             return null;
         }
 
-        return GlobalGroup.find(ChannelMap.get(requestId));
+        return GlobalGroup.find(ChannelMap.get(channelId));
     }
 
     public static void send2All(TextWebSocketFrame tws) {

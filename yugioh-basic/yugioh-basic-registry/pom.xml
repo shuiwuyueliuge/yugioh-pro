@@ -42,42 +42,42 @@
 					</execution>
 				</executions>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>com.spotify</groupId>-->
-<!--				<artifactId>docker-maven-plugin</artifactId>-->
-<!--				<version>1.2.0</version>-->
-<!--				<configuration>-->
-<!--					&lt;!&ndash;打包docker镜像的docker服务器 &ndash;&gt;-->
-<!--					<dockerHost>http://172.18.146.180:2375</dockerHost>-->
-<!--					&lt;!&ndash;镜像名称及版本[ip:port/name:tag] &ndash;&gt;-->
-<!--					<imageName>172.18.146.180:8082/web-demo:1.1</imageName>-->
-<!--					&lt;!&ndash;nexus3 hosted 仓库地址 &ndash;&gt;-->
-<!--					<registryUrl>172.18.146.180:8082</registryUrl>-->
-<!--					<buildArgs>-->
-<!--						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>-->
-<!--					</buildArgs>-->
-<!--					&lt;!&ndash;Dockerfile路径 &ndash;&gt;-->
-<!--					<dockerDirectory>D:\program\yugioh\yugioh-basic\yugioh-basic-registry</dockerDirectory>-->
-<!--					&lt;!&ndash; <baseImage>java:8</baseImage> &ndash;&gt;-->
-<!--					&lt;!&ndash; <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint> &ndash;&gt;-->
-<!--					&lt;!&ndash;是否强制覆盖已有镜像 &ndash;&gt;-->
-<!--					<forceTags>true</forceTags>-->
-<!--					<imageTags>-->
-<!--						&lt;!&ndash;镜像tag &ndash;&gt;-->
-<!--						<imageTag>latest</imageTag>-->
-<!--					</imageTags>-->
-<!--					&lt;!&ndash;复制jar包到docker容器指定目录配置 &ndash;&gt;-->
-<!--					<resources>-->
-<!--						<resource>-->
-<!--							<targetPath>/</targetPath>-->
-<!--							<directory>${project.build.directory}</directory>-->
-<!--							<include>${project.build.finalName}.jar</include>-->
-<!--						</resource>-->
-<!--					</resources>-->
-<!--					&lt;!&ndash;在maven settings.xml中配置的server的id值 &ndash;&gt;-->
-<!--					<serverId>nexus-docker-registry</serverId>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.2.0</version>
+				<configuration>
+					<!--打包docker镜像的docker服务器 -->
+					<dockerHost>http://172.17.237.151:2375</dockerHost>
+					<!--镜像名称及版本[ip:port/name:tag] -->
+					<imageName>172.17.237.151:8082/web-demo:1.2</imageName>
+					<!--nexus3 hosted 仓库地址 -->
+					<registryUrl>172.17.237.151:8082</registryUrl>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+					<!--Dockerfile路径 -->
+					<dockerDirectory>D:\program\yugioh\yugioh\yugioh-basic\yugioh-basic-registry</dockerDirectory>
+					<!-- <baseImage>java:8</baseImage> -->
+					<!-- <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint> -->
+					<!--是否强制覆盖已有镜像 -->
+					<forceTags>true</forceTags>
+					<imageTags>
+						<!--镜像tag -->
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<!--复制jar包到docker容器指定目录配置 -->
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.jar</include>
+						</resource>
+					</resources>
+					<!--在maven settings.xml中配置的server的id值 -->
+					<serverId>nexus-docker-registry</serverId>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

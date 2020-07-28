@@ -1,0 +1,354 @@
+= 环境搭建和发布相关说明
+Firstname Lastname <xxx.qq.com>
+:title-logo-image: image::logo.png[]
+:toc: left
+:toc-title: 目录
+:toclevels: 4
+:source-highlighter: coderay
+:imagesdir: images
+:docinfodir: meta
+:docinfo: shared
+:icons: font
+:icon-set: fas
+:lang: zh-Hans-CN
+:chapter-label:
+:appendix-caption: 附录
+:title-page:
+:sectnums:
+:sectanchors:
+:sectlinks:
+:experimental:
+
+:quick-uri: http://asciidoctor.org/docs/asciidoc-syntax-quick-reference/
+
+[#overview]
+== 文件
+|===
+|文件 |说明
+
+|docker-compose.yml
+|安装redis,rabbitmq,nexus3,mongodb,mysql,nginx
+
+|docker-compose-run.sh
+|通过yml卸载/安装docker,新建挂载目录,执行docker-compose
+
+|docker-run.sh
+|系统启动运行docker
+
+|*.conf
+|docker挂载的配置文件
+|===
+
+[#sh]
+== 去除sh的换行符
+
+*sed -i 's/\r//' xxx.sh*
+
+[#nexus3]
+== nexus3配置
+
+IMPORTANT: 初始帐号admin,初始密码在/usr/local/docker/nexus3/nexus-data/admin.password.
+
+=== 阿里云镜像仓库
+
+[aliyun]
+*Create repository：*::
+  maven repository(proxy)
+*Name：*::
+  maven-aliyun
+*Remote storage：*::
+  http://maven.aliyun.com/nexus/content/groups/public
+maven-public -> *Members：*::
+  添加maven-aliyun
+
+=== docker镜像仓库
+
+IMPORTANT: *Realms* 菜单中, *Docker Bearer Token Realm* 移动到 *Active*.
+
+==== hosted
+[hosted]
+*Create repository：*::
+  docker repository(hosted)
+*Name：*::
+  docker-hosted
+*HTTP：*::
+  8082
+*Allow anonymous docker pull ( Docker Bearer Token Realm required )：*::
+  true
+*Allow clients to use the V1 API to interact with this repository：*::
+  true
+*Validate that all content uploaded to this repository is of a MIME type appropriate for the repository format：*::
+  true
+
+==== proxy
+[proxy]
+*Create repository：*::
+  docker repository(proxy)
+*Name：*::
+  docker-proxy
+*Remote storage：*::
+  https://t5t8q6wn.mirror.aliyuncs.co
+*Use Docker Hub：*::
+  true
+*Allow clients to use the V1 API to interact with this repository：*::
+  true
+*Validate that all content uploaded to this repository is of a MIME type appropriate for the repository format：*::
+  true
+
+==== group
+[group]
+*Create repository：*::
+  docker repository(group)
+*Name：*::
+  docker-group
+*HTTP：*::
+  8083
+*Allow anonymous docker pull ( Docker Bearer Token Realm required )：*::
+  true
+*Allow clients to use the V1 API to interact with this repository：*::
+  true
+*Validate that all content uploaded to this repository is of a MIME type appropriate for the repository format：*::
+  true
+
+=== 本地setting.xml文件
+
+IMPORTANT: 以下是示例配置.
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+    <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+        <localRepository>D:/repository</localRepository> // <1>
+        <servers>
+            <server>
+                <id>ygo-release</id> // <2>
+                <username>你的账号</username>
+                <password>你的密码</password>
+            </server>
+            <server>
+                <id>ygo-snapshots</id> // <3>
+                <username>你的账号</username>
+                <password>你的密码</password>
+            </server>
+            <server>
+                <id>nexus-docker-registry</id> // <4>
+                <username>你的账号</username>
+                <password>你的密码</password>
+            </server>
+        </servers>
+        <mirrors>
+            <mirror>
+                <id>nexus</id>
+                <mirrorOf>*</mirrorOf>
+                <name>central-mirror</name>
+                <url>http://172.18.146.180:8081/repository/maven-public/</url>  // <5>
+            </mirror>
+    </mirrors>
+</settings>
+----
+<1> maven下载的jar包存放的位置.
+<2> releases仓库的id，名字随便写.
+<3> snapshots仓库的id，名字随便写.
+<4> docker仓库的id，名字随便写.
+<5> nexus3的maven-public仓库地址.
+
+=== jar上传到nexus3
+
+IMPORTANT: 以下是示例配置.
+
+[source,xml]
+----
+<distributionManagement>
+    <repository>
+        <id>ygo-release</id> // <1>
+        <name>Ygo release Repository</name>
+        <url>http://127.0.0.1:8081/repository/ygo-release/</url> // <2>
+    </repository>
+    <snapshotRepository> // <3>
+        <id>ygo-snapshots</id>
+        <name>Ygo snapshots Repository</name>
+        <url>http://127.0.0.1:8081/repository/ygo-snapshot/</url>
+    </snapshotRepository>
+</distributionManagement>
+----
+<1> release仓库,这里的id需要和settings.xml中的server的id一致.
+<2> 仓库地址
+<3> snapshots仓库,这里的id需要和settings.xml中的server的id一致.
+
+[#mysql]
+== mysql配置
+
+====
+. 进入docker容器:docker exec -it mysql /bin/bash
+. 登录mysql设置远程连接
+. 允许远程访问:ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'root';
+. flush privileges;
+. 退出mysql:exit;
+====
+
+[#mongodb]
+== mongodb配置
+
+====
+. 进入容器:docker exec -it mongodb mongo admin
+. 创建管理角色的用户:db.createUser({ user: 'admin', pwd: 'admin', roles: [{ role: "userAdminAnyDatabase", db: "admin" }]});
+. 验证用户:db.auth("admin","admin");
+. 切换库:use 你的数据库
+. 创建读写权限用户:db.createUser({ user: '用户名', pwd: '密码', roles: [{ role: "readWrite", db: "指定数据库" }]});
+====
+
+[#docker-start]
+== 开机启动docker
+
+====
+. centos命令:crontab -e
+. 写入并保存:@reboot sh /home/docker-run.sh
+====
+
+[#release]
+== 项目发布
+
+====
+发布服务器从git仓库拉取代码,打包编译自动执行docker插件,docker镜像上传到nexus3和docker服务器,正式环境拉取nexus3的镜像运行容器.
+====
+
+=== docker连接nexus3仓库
+
+IMPORTANT: 以下是示例配置.
+
+. 修改仓库地址：vi /etc/docker/daemon.json
+
+====
+例如：nexus3的ip为172.18.146.180,docker-hosted端口是8082,docker-group端口是8083.
+
+daemon.json修改为:
+[source,json]
+----
+{
+    "registry-mirrors": ["http://172.18.146.180:8083"],
+    "insecure-registries": ["172.18.146.180:8082","172.18.146.180:8083"]
+}
+----
+====
+
+. 重启docker:systemctl restart docker
+. 查看registry-mirrors:docker info
+. docker设置远程访问:vi /lib/systemd/system/docker.service
+. 把ExecStart=/usr/bin/dockerd-current \修改为ExecStart=/usr/bin/dockerd-current -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock \
+. 确认服务器2375端口开放
+. 通知docker修改配置文件:systemctl daemon-reload
+. 重启docker：systemctl restart docker
+
+=== docker上传镜像到nexus3
+
+IMPORTANT: docker镜像格式 -> 【ip】:【端口】/【镜像名称】:【版本号】
+
+. 登录nexus3:docker login 172.18.146.180:8082，输入账号密码
+====
+例如：docker tag redis 172.18.146.180:8082/redis
+====
+. 描述:把本地redis镜像标记为172.18.146.180:8082/redis:1.0
+. 上传tag:docker push 172.18.146.180:8082/redis:1.0
+. docker查询镜像不带版本号默认为latest,不带【ip】:【端口】前缀的默认从docker.io查询,从nexus3查询需要带有【ip】:【端口】，如果是latest则不需要.
+====
+例如查询上面上传的redis镜像：docker search 172.18.146.180:8082/redis:1.0
+====
+
+=== maven插件打包成docker镜像发布到nexus3和docker-server
+
+*编写Dockerfile (示例):*
+[source,Dockerfile]
+----
+FROM java:8 // <1>
+MAINTAINER tester // <2>
+ARG JAR_FILE // <3>
+ADD ${JAR_FILE} /home/app.jar // <4>
+RUN mkdir -p /home/config/ // <5>
+ADD /src/main/resources/application.properties /home/config/ // <6>
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","/home/app.jar","--spring.config.location=/home/config/application.properties"] // <7>
+EXPOSE 9300 // <8>
+----
+<1> 依赖的镜像(docker会自动pull)
+<2> 维护人
+<3> 获取打包后的jar名称
+<4> 把jar复制到/home/
+<5> RUN 可以执行linux命令
+<6> 使用外部的配置文件
+<7> 执行 java -jar 命令 (CMD:在启动容器时才执行此行。RUN：构建镜像时就执行此行),指定配置文件地址.docker容器中默认的在/下运行jar,"-Djava.security.egd=file:/dev/./urandom"好像可以加快tomcat的启动速度(待测试)
+<8> 设置对外端口为 9300
+
+*pom文件配置:*
+
+[source,Dockerfile]
+----
+<plugin>
+    <groupId>com.spotify</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>1.2.0</version>
+    <configuration>
+        <dockerHost>http://172.18.146.180:2375</dockerHost> // <1>
+        <imageName>172.18.146.180:8082/web-demo:1.1</imageName> // <2>
+        <registryUrl>172.18.146.180:8082</registryUrl> // <3>
+        <buildArgs>
+            <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+        </buildArgs>
+        <dockerDirectory>D:\program\demo\demo2</dockerDirectory> // <4>
+        <!--<baseImage>java:8</baseImage>--> // <5>
+        <!--<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
+        <forceTags>true</forceTags> // <6>
+        <imageTags>
+            <imageTag>latest</imageTag> // <7>
+        </imageTags>
+        <resources>
+            <resource> // <8>
+                <targetPath>/</targetPath>
+                <directory>${project.build.directory}</directory>
+                <include>${project.build.finalName}.jar</include>
+            </resource>
+        </resources>
+        <serverId>nexus-docker-registry</serverId> // <9>
+    </configuration>
+</plugin>
+----
+<1> 打包docker镜像的docker服务器
+<2> 镜像名称及版本[ip:port/name:tag]
+<3> nexus3 hosted 仓库地址
+<4> Dockerfile路径
+<5> 不使用Dockerfile可以使用下面2个参数
+<6> 是否强制覆盖已有镜像
+<7> 镜像tag
+<8> 复制jar包到docker容器指定目录配置
+<9> 在maven settings.xml中配置的server的id值
+
+IMPORTANT: 打包命令 -> mvn clean compile package docker:build -DpushImage -Dmaven.test.skip=true
+
+[#container]
+== 开机启动docker
+
+*例如:*
+
+====
+改写地址：jdbc:mysql://127.0.0.1:3306/test 改为 jdbc:mysql://【mysql】:3306/test
+
+查看mysql容器的地址：docker inspect mysql，"Networks"中的第一个为mysql容器的net。例如：查到为home_default
+
+使用链接：docker run --name web-demo -p 9300:9300 --link mysql:mysql --net home_default  172.18.146.180:8082/web-demo:1.1 --link 【容器名称】:【mysql】
+====
+
+[#es]
+== docker安装es可能遇到的问题
+
+=== 跨域问题
+
+. 进入elasticsearch容器内部，修改配置文件elasticsearch.yml
+. 复制yml代码
+. docker ps -a   #拿到运行容器elasticsearch 的 id
+. docker exec -it ******(容器id) /bin/bash
+. cd ./config
+. vim elasticsearch.yml
+. 复制yml代码
+. 在elasticsearch.yml中添加:http.cors.enabled: true,http.cors.allow-origin: "*"
+. 重启 elasticsearch容器
+. docker restart  elasticsearch

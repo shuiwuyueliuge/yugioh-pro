@@ -50,7 +50,7 @@ cd ${CURRENT_FILE}
 cp redis.conf ${DOCKER_VOLUMES}/redis/conf
 cp my.cnf ${DOCKER_VOLUMES}/mysql/conf
 cp default.conf ${DOCKER_VOLUMES}/nginx/conf
-chmod 666 ${DOCKER_VOLUMES}/*
+chmod -Rf 777 ${DOCKER_VOLUMES}
 
 sysctl -w vm.max_map_count=262144
 

@@ -120,6 +120,7 @@
 						查看registry-mirrors：docker info
 						docker设置远程访问：vi /lib/systemd/system/docker.service
 						把ExecStart=/usr/bin/dockerd-current \修改为ExecStart=/usr/bin/dockerd-current -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock \
+						通知docker修改配置文件：systemctl daemon-reload
 						重启docker：systemctl restart docker
 **********************************************************************************************
 				8.docker打包上传到nexus3
