@@ -117,7 +117,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
     		CardTypeDTO cardTypeDto = getCardType(card.getTypeStList());
 			Integer cardId = cardManagerContext.cardSave(new CardDTO(cardTypeDto, card));
 			byte[] image = urlImg2Byte(card.getImgUrl());
-			// imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
+			imageService.uploadInFTP(image, cardId, cardTypeDto.getCardType());
 			PackageRareDTO packageRareDto = new PackageRareDTO(card.getRareList(), cardId, packageId, card.getSerial(), cardTypeDto.getCardType());
 			rareService.save(packageRareDto);
 		} catch (Exception e) {

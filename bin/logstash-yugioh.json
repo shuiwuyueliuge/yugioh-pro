@@ -1,0 +1,68 @@
+{
+  "template": "card",
+  "settings": {
+    "index.refresh_interval": "5s"
+  },
+  "mappings": {
+    "properties": {
+      "effect": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "id": {
+        "type": "long"
+      },
+      "race": {
+        "type": "long"
+      },
+      "atk": {
+        "type": "long"
+      },
+      "def": {
+        "type": "long"
+      },
+      "level": {
+        "type": "long"
+      },
+      "link": {
+        "type": "long"
+      },
+      "pend": {
+        "type": "long"
+      },
+      "typeVal": {
+        "type": "long"
+      },
+      "attribute": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "typeSt": {
+        "type": "text",
+        "analyzer": "whitespace"
+      },
+      "linkArrow": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}

@@ -18,9 +18,9 @@ public class ChannelSupervise {
 
     private static ConcurrentMap<String, ChannelId> ChannelMap = new ConcurrentHashMap<>();
 
-    public static void addChannel(String requestId, Channel channel) {
+    public static void addChannel(Channel channel) {
         GlobalGroup.add(channel);
-        ChannelMap.put(requestId, channel.id());
+        ChannelMap.put(channel.id().asShortText(), channel.id());
     }
 
     public static void removeChannel(Channel channel) {
@@ -28,9 +28,9 @@ public class ChannelSupervise {
         ChannelMap.remove(channel.id().asShortText());
     }
 
-    public static Channel findChannel(String requestId) {
-        ChannelId channelId = ChannelMap.get(requestId);
-        if (channelId == null) {
+    public static Channel findChannel(String channelId) {
+        ChannelId id = ChannelMap.get(channelId);
+        if (id == null) {
             return null;
         }
 

@@ -13,5 +13,5 @@ ADD /src/main/resources/application.properties /home/config/
 
 ENTRYPOINT ["java","-jar","/home/yugioh-basic-registry.jar","--spring.config.location=/home/config/application.properties"]
  
-#  设置对外端口为 9300
-EXPOSE 9300
+#  设置对外端口为 9000
+EXPOSE 9000

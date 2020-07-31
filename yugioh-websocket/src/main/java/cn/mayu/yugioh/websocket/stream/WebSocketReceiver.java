@@ -11,7 +11,7 @@ import org.springframework.messaging.Message;
 public class WebSocketReceiver {
 
 	/**
-	 * mq receive {"msg":"123","code":323,"data":{"requestId":"fsdfsa","progress":19}}
+	 * mq receive {"msg":"123","code":323,"data":{"channelId":"fsdfsa","progress":19}}
 	 */
 	@StreamListener(WebSocketInputStream.WEB_SOCKET_SAVE_INPUT)
 	public void receiveSave(Message<PackageWebSocketDTO> message) {
@@ -19,6 +19,6 @@ public class WebSocketReceiver {
 		WebSocketMsg<PackageWebSocketDTO> msg = new WebSocketMsg<>();
 		msg.setCode(200);
 		msg.setData(message.getPayload());
-		ChannelSupervise.send2One(message.getPayload().getRequestId(), msg);
+		ChannelSupervise.send2One(message.getPayload().getChannelId(), msg);
 	}
 }

@@ -46,8 +46,8 @@ public class OurocgServiceImpl implements OurocgService {
 	}
 
 	@Override
-	public void publishPackageDetail(List<String> packageUrls, Integer priority) {
-		addAll(packageUrls, priority, PACKAGE);
+	public void publishPackageDetail(List<String> packageUrls, Integer priority, String channelId) {
+		addAll(packageUrls, priority, PACKAGE, channelId);
 	}
 
 	@Override
@@ -78,9 +78,11 @@ public class OurocgServiceImpl implements OurocgService {
 				OurocgQueueGuardian.PriorityQueueModel model = OurocgQueueGuardian.take();
 				if (model == null) continue;
 				if (model.getDataType() == PACKAGE) {
+					webSocketPublisher.publish("{\"channelId\":\"" + model.getChannelId() + "\",\"progress\":65,\"packageName\":\"" + model.getData() + "\"}");
 					String url = String.format(OUROCG_URL, model.getData());
 					PackageDetail packageDetail = packageCenter.gainPackageDetail(url);
 					packagePublisher.publish(packageDetail);
+					webSocketPublisher.publish("{\"channelId\":\"" + model.getChannelId() + "\",\"progress\":100,\"packageName\":\"" + model.getData() + "\"}");
 				}
 
 				if (model.getDataType() == LIMIT) {

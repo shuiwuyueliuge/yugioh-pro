@@ -28,9 +28,16 @@ export class WebSocketService {
 
   public getWsObservable(key: string): Observable<any> {
     return this.ws.multiplex(
-      () => ({ type: 'subscribe', tag: key }),
-      () => ({ type: 'unsubscribe', tag: key }), 
-      message => message.type === key
+      () => ({subscribe: key }),
+      () => ({ unsubscribe: key }), 
+      message => true
+      //message => message.channelId === key 返回内容过滤
     );
   }
+
+  
+
+  // this.webSocketService.getWsObservable('sync').subscribe(data => {console.log(data);this.a.unsubscribe();});
+  // this.webSocketService.getWsObservable('sync2').subscribe(data => console.log(data));
+  // this.webSocketService.sendMsg('fds');
 }

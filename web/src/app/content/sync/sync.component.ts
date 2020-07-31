@@ -21,14 +21,15 @@ export class SyncComponent implements OnInit {
 
   public selectedCardSource: any;
 
-  a: Subscription;
+  public channelId: string;
+
+  aaa:boolean = true;
 
   items: MenuItem[];
 
   activeIndex: number;
 
   constructor(private syncService: SyncService, private webSocketService: WebSocketService) {
-    this.a = this.webSocketService.getWsObservable('sync').subscribe(data => console.log(data));
     this.syncService.getCardSources().then(source => {
       source.forEach(data => {
         this.cardSources.push({ label: data.name, value: { id: data.type } });
@@ -36,6 +37,25 @@ export class SyncComponent implements OnInit {
 
       this.selectedCardSource = this.cardSources[0].value;
       this.initPackageData(this.cardSources[0].value.id);
+    });
+
+    this.webSocketService.getWsObservable('selectPackage').subscribe(res => {
+     
+      if (this.aaa) {
+        this.channelId = res.channelId;
+        this.aaa = false;
+      } else {
+        console.log(res);
+        this.selectedPackages.forEach(data => {
+          if (data.uri == res.data.packageName) {
+            if (data.progress == 100) {
+              return;
+            }
+
+            data.progress = res.data.progress;
+          }
+        });
+      }
     });
   }
 
@@ -59,16 +79,14 @@ export class SyncComponent implements OnInit {
   }
 
   public selectPackage(selPack: Package): void {
-    let uri = selPack.uri;
-    selPack.progressShow = true;
-    let publishData = new Array<string>();
-    publishData.push(uri);
-    this.selectedPackages.forEach(data => {
-      publishData.push(data.uri);
-      data.progressShow = true;
-    });
-
-    this.syncService.publishPackage({ packageUris: publishData, priority: 2 }, this.selectedCardSource.id);
+      this.selectedPackages.push(selPack);
+      let publishData = new Array<string>();
+      this.selectedPackages.forEach(data => {
+        publishData.push(data.uri);
+        data.progressShow = true;
+      });
+  
+      this.syncService.publishPackage({ packageUris: publishData, priority: 2, channelId: this.channelId }, this.selectedCardSource.id);
   }
 
   public selCardSource(): void {
@@ -77,12 +95,9 @@ export class SyncComponent implements OnInit {
 
   private initPackageData(cardSource: number): void {
     this.syncService.getPackage(cardSource).then(packages => {
-      let seq = 1;
       packages.forEach(pack => {
-        pack.seq = seq;
-        pack.progress = (seq > 100) ? 100 : seq;
+        pack.seq = 1;
         pack.progressShow = false;
-        seq++;
       });
 
       this.packages = packages;

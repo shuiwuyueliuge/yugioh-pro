@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "packages")
+@Document(collection = "sync-log")
 public class DataSourceLogEntity {
 
     @Id

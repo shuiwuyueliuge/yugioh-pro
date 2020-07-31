@@ -42,19 +42,22 @@ systemctl restart docker
 DOCKER_VOLUMES="/usr/local/docker"
 
 echo -e "\033[33m 创建docker挂载文件夹 -> ${DOCKER_VOLUMES} \033[0m"
-#mkdir -p /usr/local/docker/redis/conf /usr/local/docker/redis/data /usr/local/docker/nexus3/nexus-data /usr/local/docker/mongo/data /usr/local/docker/mongo/config /usr/local/docker/mysql/conf /usr/local/docker/mysql/logs /usr/local/docker/mysql/data /usr/local/docker/nginx/conf /usr/local/docker/nginx/logs
 mkdir -p ${DOCKER_VOLUMES}
 cd ${DOCKER_VOLUMES}
-mkdir -p ${DOCKER_VOLUMES}/redis/conf ${DOCKER_VOLUMES}/redis/data ${DOCKER_VOLUMES}/nexus3/nexus-data ${DOCKER_VOLUMES}/mongo/data ${DOCKER_VOLUMES}/mongo/config ${DOCKER_VOLUMES}/mysql/conf ${DOCKER_VOLUMES}/mysql/logs ${DOCKER_VOLUMES}/mysql/data ${DOCKER_VOLUMES}/nginx/conf ${DOCKER_VOLUMES}/nginx/logs ${DOCKER_VOLUMES}/logstash/log ${DOCKER_VOLUMES}/logstash/config ${DOCKER_VOLUMES}/es/config ${DOCKER_VOLUMES}/es/plugins ${DOCKER_VOLUMES}/es/data ${DOCKER_VOLUMES}/es/logs ${DOCKER_VOLUMES}/vsftpd
+mkdir -p ${DOCKER_VOLUMES}/redis/conf ${DOCKER_VOLUMES}/redis/data ${DOCKER_VOLUMES}/nexus3/nexus-data ${DOCKER_VOLUMES}/mongo/data ${DOCKER_VOLUMES}/mongo/config ${DOCKER_VOLUMES}/mysql/conf ${DOCKER_VOLUMES}/mysql/logs ${DOCKER_VOLUMES}/mysql/data ${DOCKER_VOLUMES}/nginx/conf ${DOCKER_VOLUMES}/nginx/logs ${DOCKER_VOLUMES}/logstash/log ${DOCKER_VOLUMES}/logstash/config/conf.d ${DOCKER_VOLUMES}/es/config ${DOCKER_VOLUMES}/es/plugins ${DOCKER_VOLUMES}/es/data ${DOCKER_VOLUMES}/es/logs ${DOCKER_VOLUMES}/vsftpd
 cd ${CURRENT_FILE}
 cp redis.conf ${DOCKER_VOLUMES}/redis/conf
 cp my.cnf ${DOCKER_VOLUMES}/mysql/conf
 cp default.conf ${DOCKER_VOLUMES}/nginx/conf
+cp elasticsearch.yml ${DOCKER_VOLUMES}/es/config
+cp logstash.yml ${DOCKER_VOLUMES}/logstash/log
+cp logstash-yugioh.conf ${DOCKER_VOLUMES}/logstash/config/conf.d
+cp logstash-yugioh.json ${DOCKER_VOLUMES}/logstash/config/conf.d
 chmod -Rf 777 ${DOCKER_VOLUMES}
 
 sysctl -w vm.max_map_count=262144
 
-docker network create esnetwork
+docker network create ygonetwork
 
 # 运行 docker-compose
 echo -e "\033[33m 安装 docker-compose \033[0m"

@@ -10,6 +10,9 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.TimeUnit;
+
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
 @Slf4j
@@ -74,15 +77,18 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
         }
 
         if (frame instanceof TextWebSocketFrame) {
-            String requestId = ((TextWebSocketFrame) frame).text();
+            String msg = ((TextWebSocketFrame) frame).text();
             if (log.isDebugEnabled()) {
-                log.debug("receive:{}", requestId);
+                log.debug("receive:{}", msg);
             }
 
-            ChannelSupervise.addChannel(requestId, ctx.channel());
-//            String res = ctx.channel().id().asLongText();
-//            TextWebSocketFrame tws = new TextWebSocketFrame(res);
-//            ChannelSupervise.send2One(ctx.channel().id().asShortText(), tws);
+            ChannelSupervise.addChannel(ctx.channel());
+            String res = ctx.channel().id().asShortText();
+            if (log.isDebugEnabled()) {
+                log.debug("send:{}", res);
+            }
+
+            ctx.channel().writeAndFlush(new TextWebSocketFrame("{\"channelId\":\"" + res + "\"}"));
         }
     }
 

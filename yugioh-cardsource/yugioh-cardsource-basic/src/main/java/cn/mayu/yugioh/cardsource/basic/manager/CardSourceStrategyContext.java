@@ -18,7 +18,7 @@ public class CardSourceStrategyContext {
     }
 
     public void publishPackageDetail(PackageData packageData, Integer sourceType) {
-        getStrategy(sourceType).publishPackageDetail(packageData.getPackageUris(), packageData.getPriority());
+        getStrategy(sourceType).publishPackageDetail(packageData.getPackageUris(), packageData.getPriority(), packageData.getChannelId());
     }
 
     public void publishLimitDetail(String LimitUrl, Integer priority, Integer sourceType) {

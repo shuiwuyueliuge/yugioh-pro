@@ -11,6 +11,10 @@
 	</parent>
 	<artifactId>yugioh-basic-registry</artifactId>
 
+	<properties>
+		<registerVersion>1.0</registerVersion>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -29,6 +33,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>${project.artifactId}-${registerVersion}.${buildNumber}-SNAPSHOT</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -46,35 +51,31 @@
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>1.2.0</version>
+				<executions>
+					<execution>
+						<id>build-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>push-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-					<!--打包docker镜像的docker服务器 -->
-					<dockerHost>http://172.17.237.151:2375</dockerHost>
-					<!--镜像名称及版本[ip:port/name:tag] -->
-					<imageName>172.17.237.151:8082/web-demo:1.2</imageName>
-					<!--nexus3 hosted 仓库地址 -->
-					<registryUrl>172.17.237.151:8082</registryUrl>
+					<forceTags>true</forceTags>
+					<pushImage>true</pushImage>
+					<dockerHost>${dockerHost}</dockerHost>
+					<imageName>${nexus3Host}/${project.artifactId}:${registerVersion}.${buildNumber}-SNAPSHOT</imageName>
 					<buildArgs>
 						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
 					</buildArgs>
-					<!--Dockerfile路径 -->
-					<dockerDirectory>D:\program\yugioh\yugioh\yugioh-basic\yugioh-basic-registry</dockerDirectory>
-					<!-- <baseImage>java:8</baseImage> -->
-					<!-- <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint> -->
-					<!--是否强制覆盖已有镜像 -->
-					<forceTags>true</forceTags>
-					<imageTags>
-						<!--镜像tag -->
-						<imageTag>latest</imageTag>
-					</imageTags>
-					<!--复制jar包到docker容器指定目录配置 -->
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-					<!--在maven settings.xml中配置的server的id值 -->
+					<dockerDirectory>${basedir}</dockerDirectory>
 					<serverId>nexus-docker-registry</serverId>
 				</configuration>
 			</plugin>

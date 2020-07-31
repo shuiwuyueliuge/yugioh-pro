@@ -2,6 +2,8 @@ package cn.mayu.yugioh.cardsource.core.ourocg;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.slf4j.MDC;
+
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
@@ -27,16 +29,16 @@ public class OurocgQueueGuardian {
     }
 
     public static void addOne(String content, Integer priority, DataTypeEnum dataType) {
-        PriorityQueueModel queueModel = new PriorityQueueModel(content, priority, dataType);
+        PriorityQueueModel queueModel = new PriorityQueueModel(content, priority, dataType, "");
         synchronized ("") {
             OUROCG_QUEUE.remove(queueModel);
             OUROCG_QUEUE.add(queueModel);
         }
     }
 
-    public static void addAll(List<String> content, Integer priority, DataTypeEnum dataType) {
+    public static void addAll(List<String> content, Integer priority, DataTypeEnum dataType, String channelId) {
         content.stream().forEach(data -> {
-            PriorityQueueModel queueModel = new PriorityQueueModel(data, priority, dataType);
+            PriorityQueueModel queueModel = new PriorityQueueModel(data, priority, dataType, channelId);
             synchronized ("") {
                 OUROCG_QUEUE.remove(queueModel);
                 OUROCG_QUEUE.add(queueModel);
@@ -53,6 +55,8 @@ public class OurocgQueueGuardian {
         private int priority;
 
         private DataTypeEnum dataType;
+
+        private String channelId;
     }
 }
 

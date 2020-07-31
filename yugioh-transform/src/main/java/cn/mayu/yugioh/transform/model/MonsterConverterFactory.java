@@ -24,14 +24,14 @@ public class MonsterConverterFactory implements DomainConverterFactory<CardProto
 		monsterSaved.setLevel(card.getLevel());
 		monsterSaved.setAttribute(indexService.findByNameFromCache(2, card.getAttribute()));
 		monsterSaved.setRace(indexService.findByNameFromCache(3, card.getRace()));
-		monsterSaved.setAtk(card.getAtk().equals("?") ? -1 : Integer.parseInt(card.getAtk()));
+		monsterSaved.setAtk(card.getAtk().replace("？", "?").equals("?") ? -1 : Integer.parseInt(card.getAtk()));
 		monsterSaved.setPendL(card.getPendL().equals("") ? -1 : Integer.parseInt(card.getPendL()));
 		monsterSaved.setPendR(card.getPendR().equals("") ? -1 : Integer.parseInt(card.getPendR()));
 		monsterSaved.setLink(card.getLink().equals("") ? -1 : Integer.parseInt(card.getLink()));
 		if (card.getDef().equals("")) {
 			monsterSaved.setDef(-2);
 		} else {
-			monsterSaved.setDef(card.getDef().equals("?") ? -1 : Integer.parseInt(card.getDef()));
+			monsterSaved.setDef(card.getDef().replace("？", "?").equals("?") ? -1 : Integer.parseInt(card.getDef()));
 		}
 
 		return monsterSaved;

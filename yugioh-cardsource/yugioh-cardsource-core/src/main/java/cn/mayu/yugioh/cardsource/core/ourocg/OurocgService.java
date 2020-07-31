@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadFactory;
 
 public interface OurocgService extends Runnable, ThreadFactory, CommandLineRunner, CardSourceStrategy {
 
-    void publishPackageDetail(List<String> packageUrls, Integer priority);
+    void publishPackageDetail(List<String> packageUrls, Integer priority, String channelId);
 
     void publishLimitDetail(String LimitUrl, Integer priority);
 

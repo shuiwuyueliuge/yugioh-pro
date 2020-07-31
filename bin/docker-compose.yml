@@ -3,7 +3,9 @@ services:
   redis:
     container_name: redis
     privileged: true
+    restart: always
     image: redis
+    network_mode: ygonetwork
     ports:
       - 6379:6379
     volumes:
@@ -14,6 +16,8 @@ services:
   rabbitmq:
      container_name: rabbitmq
      hostname: my-rabbit
+     restart: always
+     network_mode: ygonetwork
      image: rabbitmq:management
      ports:
        - 5672:5672
@@ -21,6 +25,7 @@ services:
   nexus3:
     container_name: nexus3
     privileged: true
+    restart: always
     image: docker.io/sonatype/nexus3
     ports:
        - 8081:8081
@@ -33,6 +38,8 @@ services:
   mongodb: 
     container_name: mongodb
     privileged: true
+    restart: always
+    network_mode: ygonetwork
     image: mongo
     ports:
       - 27017:27017
@@ -46,6 +53,8 @@ services:
   mysql:
     container_name: mysql
     privileged: true
+    restart: always
+    network_mode: ygonetwork
     image: mysql
     ports:
        - 3306:3306
@@ -59,6 +68,8 @@ services:
   nginx:
     container_name: nginx
     privileged: true
+    restart: always
+    network_mode: ygonetwork
     image: nginx
     ports:
        - 8080:80
@@ -68,6 +79,8 @@ services:
   ftp:
     container_name: ftp
     privileged: true
+    restart: always
+    network_mode: host
     image: fauria/vsftpd
     ports:
        - 20:20
@@ -81,35 +94,63 @@ services:
   elasticsearch:
     container_name: elasticsearch
     image: elasticsearch:7.1.1
-    network_mode: esnetwork
+    restart: always
+    network_mode: ygonetwork
     ports:
       - 9300:9300
       - 9200:9200
     environment:
       - discovery.type=single-node
     volumes:
-      - /usr/local/docker/es/config/elasticsearch.yml:/config/elasticsearch.yml
+      - /usr/local/docker/es/config:/config
       - /usr/local/docker/es/plugins:/plugins
       - /usr/local/docker/es/data:/data
       - /usr/local/docker/es/logs:/logs
   kibana:
     container_name: kibana
     image: kibana:7.1.1
-    network_mode: esnetwork
+    restart: always
+    network_mode: ygonetwork
     ports:
       - 5601:5601
   elasticsearch-head:
     container_name: elasticsearch-head
+    restart: always
     image: mobz/elasticsearch-head:5
     ports:
       - 9100:9100
   logstash:
+    restart: always
     container_name: logstash
     privileged: true
-    network_mode: esnetwork
-    image: logstash:7.1.1
+    network_mode: ygonetwork
+    build: .
+    image: logstash:my
     ports:
       - 5044:5044
+      - 5045:5045
+    links:
+      - mysql
+      - elasticsearch
+    depends_on:
+      - mysql
+      - elasticsearch
     volumes:
-      - /usr/local/docker/logstash/log/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - /usr/local/docker/logstash/config/conf.d/:/usr/share/logstash/conf.d/
+      - /usr/local/docker/logstash/log:/usr/share/logstash/config
+      - /usr/local/docker/logstash/config/conf.d:/usr/share/logstash/conf.d
+  zipkin:
+    restart: always
+    container_name: zipkin
+    image: openzipkin/zipkin
+    privileged: true
+    network_mode: ygonetwork
+    command:
+      --zipkin.collector.rabbitmq.addresses=rabbitmq
+      --zipkin.collector.rabbitmq.username=guest
+      --zipkin.collector.rabbitmq.password=guest
+    ports:
+      - 9411:9411
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq

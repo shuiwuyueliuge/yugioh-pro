@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PackageWebSocketDTO {
 
-    private String requestId;
+    private String channelId;
 
     private Integer progress;
+
+    private String packageName;
 }
