@@ -59,8 +59,3 @@ public class OurocgQueueGuardian {
         private String channelId;
     }
 }
-
-enum DataTypeEnum {
-
-    PACKAGE, LIMIT;
-}

@@ -24,7 +24,7 @@ import static cn.mayu.yugioh.cardsource.core.ourocg.OurocgQueueGuardian.addOne;
 public class OurocgServiceImpl implements OurocgService {
 
 	private PackageCenter packageCenter;
-	
+
 	private LimitCenter limitCenter;
 
 	@Autowired
@@ -34,7 +34,7 @@ public class OurocgServiceImpl implements OurocgService {
 
 	@Autowired
 	private PackagePublisher packagePublisher;
-	
+
 	@Autowired
 	private LimitPublisher limitPublisher;
 
