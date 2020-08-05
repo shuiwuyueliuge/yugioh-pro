@@ -98,7 +98,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
                 card.setSerial(info.getNumber());
                 card.getRare().add(info.getRare());
             } else {// 英文版卡包重新放入队列
-                addOne(info.getHref(), 0, PACKAGE);
+                addOne(info.getHref(), 0, PACKAGE, "");
             }
         }
     }
