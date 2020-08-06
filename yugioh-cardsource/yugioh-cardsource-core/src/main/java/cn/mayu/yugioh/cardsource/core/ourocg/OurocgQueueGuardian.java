@@ -1,46 +1,47 @@
 package cn.mayu.yugioh.cardsource.core.ourocg;
 
+import com.google.common.hash.HashCode;
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.slf4j.MDC;
-
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class OurocgQueueGuardian {
 
-    private static final BlockingQueue<PriorityQueueModel> OUROCG_QUEUE;
+    private static final Queue<PriorityQueueModel> OUROCG_QUEUE;
+
+    private static final Queue<PriorityQueueModel> REPEAT_QUEUE;
 
     static {
-        OUROCG_QUEUE = new PriorityBlockingQueue<PriorityQueueModel>(1000, (o1, o2) -> { // TODO initialCapacity is 1000，package maybe not so mach
-            if (o1.getPriority() > o2.getPriority()) return -1;
-            if (o1.getPriority() < o2.getPriority()) return 1;
-            return 0;
-        });
+        OUROCG_QUEUE = new LinkedBlockingQueue<>();
+        REPEAT_QUEUE = new LinkedBlockingQueue<>();
     }
 
     public static PriorityQueueModel take() {
-        try {
-            return OUROCG_QUEUE.take();
-        } catch (InterruptedException e) {
-            return null;
-        }
+        return OUROCG_QUEUE.poll();
     }
 
-    public static void addOne(String content, Integer priority, DataTypeEnum dataType) {
-        PriorityQueueModel queueModel = new PriorityQueueModel(content, priority, dataType, "");
-        synchronized ("") {
-            OUROCG_QUEUE.remove(queueModel);
-            OUROCG_QUEUE.add(queueModel);
-        }
+    public static PriorityQueueModel takeRepeat() {
+        return REPEAT_QUEUE.poll();
     }
 
-    public static void addAll(List<String> content, Integer priority, DataTypeEnum dataType, String channelId) {
+    public static void addOne(String content, DataTypeEnum dataType, String channelId, String subscribe) {
+        PriorityQueueModel queueModel = new PriorityQueueModel(content, dataType, channelId, subscribe);
+        OUROCG_QUEUE.add(queueModel);
+    }
+
+    public static void addAll(List<String> content, DataTypeEnum dataType, String channelId, String subscribe) {
         content.stream().forEach(data -> {
-            PriorityQueueModel queueModel = new PriorityQueueModel(data, priority, dataType, channelId);
+            PriorityQueueModel queueModel = new PriorityQueueModel(data, dataType, channelId, subscribe);
             synchronized ("") {
-                OUROCG_QUEUE.remove(queueModel);
+                if (OUROCG_QUEUE.contains(queueModel)) {
+                    REPEAT_QUEUE.add(queueModel);
+                    return;
+                }
+
                 OUROCG_QUEUE.add(queueModel);
             }
         });
@@ -48,14 +49,29 @@ public class OurocgQueueGuardian {
 
     @Data
     @AllArgsConstructor
-     static class PriorityQueueModel {
+    static class PriorityQueueModel {
 
         private String data;
-
-        private int priority;
 
         private DataTypeEnum dataType;
 
         private String channelId;
+
+        private String subscribe;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PriorityQueueModel that = (PriorityQueueModel) o;
+            return Objects.equals(data, that.data) &&
+                    dataType == that.dataType &&
+                    Objects.equals(subscribe, that.subscribe);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(data, dataType, subscribe);
+        }
     }
 }

@@ -4,4 +4,6 @@ export interface Package {
   seq: number;
   progress: number;
   progressShow: boolean;
+  buttonLabel: string;
+  buttonDisabled: boolean;
 }

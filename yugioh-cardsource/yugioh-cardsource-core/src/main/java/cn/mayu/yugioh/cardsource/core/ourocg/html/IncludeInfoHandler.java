@@ -1,6 +1,5 @@
 package cn.mayu.yugioh.cardsource.core.ourocg.html;
 
-
 import cn.mayu.yugioh.cardsource.basic.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.cardsource.basic.html.HtmlParser;
 import cn.mayu.yugioh.cardsource.basic.interceptor.HttpStatusCodeInterceptorChain;

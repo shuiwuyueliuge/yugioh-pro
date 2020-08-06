@@ -1,62 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Package } from './package';
 import { CardSource } from './card-source';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { PACKAGE, CARD_SOURCE, PACKAGE_PUBLISH } from '../../url';
-import { throwError, EMPTY } from 'rxjs';
-import { retry, catchError, timeout } from 'rxjs/operators';
-import { MessageService } from 'primeng/api';
 import { PackageData } from './package-data';
+import { HttpService } from '../../http.service';
+import { ResultData } from '../../response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SyncService {
 
-  constructor(private http: HttpClient, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private httpService: HttpService) { }
 
-  public async getPackage(cardSource: number): Promise<Package[]> {
+  public getPackage(cardSource: number): Promise<ResultData<Package[]>> {
     let uri = PACKAGE.uri;
-    const res = await this.http.get<any>(uri + cardSource).pipe(timeout(30000), catchError(this.handleError)).toPromise();
-    if (localStorage.msg != null) {
-      this.messageService.add({ severity: 'error', summary: localStorage.msg, detail: uri, closable: false });
-      localStorage.removeItem('msg');
-      return [];
-    }
-
-    return (<Package[]>res.data);
+    return this.httpService.get<ResultData<Package[]>>(`${uri}${cardSource}`, 3000);
   }
 
-  public async getCardSources(): Promise<CardSource[]> {
+  public getCardSources(): Promise<ResultData<CardSource[]>> {
     let uri = CARD_SOURCE.uri;
-    const res = await this.http.get<any>(uri).pipe(timeout(30000), catchError(this.handleError)).toPromise();
-    return (<CardSource[]>res.data);
+    return this.httpService.get<ResultData<CardSource[]>>('assets/showcase/data/cardsource.json', 3000);
   }
 
-  public async publishPackage(data: PackageData, cardSource: number): Promise<any> {
+  public async publishPackage(data: PackageData, cardSource: number): Promise<ResultData<string[]>> {
     let uri = PACKAGE_PUBLISH.uri;
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
-    const res = await this.http.post(uri + cardSource, JSON.stringify(data), httpOptions).pipe(timeout(30000), catchError(this.handleError)).toPromise();
-    return EMPTY;
+    return this.httpService.postJson<ResultData<string[]>>(`${uri}${cardSource}`, data, 3000);
   }
 
   public test(): void {
     console.log(12);
-  }
-
-  public handleError(error: HttpErrorResponse, caught: any) {
-    // let errorMessage = 'Unknown error!';
-    // if (error.error instanceof ErrorEvent) {
-    //   errorMessage = `Error: ${error.error.message}`;
-    // } else {
-    //   errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    // }
-    localStorage["msg"] = `${error.status} ${error.statusText}`;
-    return EMPTY;
   }
 }

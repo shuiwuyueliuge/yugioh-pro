@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.websocket.service;
 
-import cn.mayu.yugioh.websocket.model.WebSocketMsg;
+import cn.mayu.yugioh.common.dto.websocket.WebSocketMsg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.Channel;
@@ -41,7 +41,7 @@ public class ChannelSupervise {
         GlobalGroup.writeAndFlush(tws);
     }
 
-    public static <T> void send2One(String requestId, WebSocketMsg<T> msg) {
+    public static <T> void send2One(String requestId, Object msg) {
         String data = null;
         try {
             data = new ObjectMapper().writeValueAsString(msg);

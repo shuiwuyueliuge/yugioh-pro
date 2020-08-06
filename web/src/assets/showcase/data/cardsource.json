@@ -4,5 +4,7 @@
            "type": 0,
            "name": "OUROCG"
         }
-    ]
+    ],
+    "msg": "success",
+    "code": 200
 }

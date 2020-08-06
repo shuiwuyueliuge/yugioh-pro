@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackageWebSocketDTO {
-
-    private String channelId;
-
-    private Integer progress;
+public class PackageAnalyseEvent {
 
     private String packageName;
+
+    private Integer progress;
 }

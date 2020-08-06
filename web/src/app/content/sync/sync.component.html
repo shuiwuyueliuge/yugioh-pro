@@ -2,7 +2,6 @@
     <ng-template pTemplate="caption">
         <p-selectButton [options]="cardSources" [(ngModel)]="selectedCardSource" (click)="selCardSource()">
         </p-selectButton>
-        <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
@@ -31,13 +30,13 @@
                 <span class="ui-column-title">卡包路径</span>
                 {{pack.uri}}
             </td>
-            <td style="width:10%;" (click)="selectPackage(pack)">
-                <button pButton type="button" icon="pi pi-arrow-circle-down" styleClass="ui-button-icon"
-                    style="color:yellowgreen"></button>
+            <td style="width:10%;" rowspan="2">
+                <p-button label="{{pack.buttonLabel}}" (onClick)="selectPackage(pack)" [disabled]="pack.buttonDisabled">
+                </p-button>
             </td>
         </tr>
         <tr>
-            <td colspan="5" *ngIf="pack.progressShow">
+            <td colspan="4" *ngIf="pack.progressShow">
                 <p-progressBar [value]="pack.progress" [style]="{'height': '6px'}"></p-progressBar>
             </td>
         </tr>

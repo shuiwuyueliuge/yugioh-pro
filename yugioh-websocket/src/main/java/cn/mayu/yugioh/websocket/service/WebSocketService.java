@@ -1,5 +1,7 @@
 package cn.mayu.yugioh.websocket.service;
 
+import cn.mayu.yugioh.common.core.util.JsonUtil;
+import cn.mayu.yugioh.common.dto.websocket.WebSocketMsg;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -10,9 +12,6 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.concurrent.TimeUnit;
-
 import static io.netty.handler.codec.http.HttpUtil.isKeepAlive;
 
 @Slf4j
@@ -61,7 +60,7 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
         }
     }
 
-    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
+    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame)  {
         if (frame instanceof CloseWebSocketFrame) {
             handShaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
             return;
@@ -88,7 +87,11 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
                 log.debug("send:{}", res);
             }
 
-            ctx.channel().writeAndFlush(new TextWebSocketFrame("{\"channelId\":\"" + res + "\"}"));
+            String subscribe = JsonUtil.findValue(msg, "subscribe");
+            WebSocketMsg webSocketMsg = new WebSocketMsg();
+            webSocketMsg.setChannelId(res);
+            webSocketMsg.setSubscribe(subscribe);
+            ctx.channel().writeAndFlush(new TextWebSocketFrame(JsonUtil.writeValueAsString(webSocketMsg)));
         }
     }
 

@@ -6,11 +6,11 @@ import org.springframework.boot.CommandLineRunner;
 import java.util.List;
 import java.util.concurrent.ThreadFactory;
 
-public interface OurocgService extends Runnable, ThreadFactory, CommandLineRunner, CardSourceStrategy {
+public interface OurocgService extends ThreadFactory, CommandLineRunner, CardSourceStrategy {
 
-    void publishPackageDetail(List<String> packageUrls, Integer priority, String channelId);
+    void publishPackageDetail(List<String> packageUrls, String channelId, String subscribe);
 
-    void publishLimitDetail(String LimitUrl, Integer priority);
+    void publishLimitDetail(String LimitUrl);
 
     List<PackageData> gainPackageList();
 

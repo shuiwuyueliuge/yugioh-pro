@@ -2,6 +2,8 @@ package cn.mayu.yugioh.cardsource.core.ourocg.html;
 
 import cn.mayu.yugioh.cardsource.basic.html.DefaultHtmlHandler;
 import cn.mayu.yugioh.cardsource.basic.html.HtmlParser;
+import cn.mayu.yugioh.cardsource.basic.interceptor.HttpStatusCodeInterceptor;
+import cn.mayu.yugioh.cardsource.basic.interceptor.HttpStatusCodeInterceptorChain;
 
 public class CardDataHtmlHandler extends DefaultHtmlHandler<String> {
 
@@ -24,13 +26,23 @@ public class CardDataHtmlHandler extends DefaultHtmlHandler<String> {
     }
 
     private String cardDataFilter(String metaData) {
-        try {
-            return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1)
-                    .replace(REPLACE_SOURCE, REPLACE_TARGET);
-        } catch (Exception e) {
-        	System.out.println(metaData);
-        	e.printStackTrace();
-        	throw e;
+        return metaData.substring(metaData.indexOf(SUB_START), metaData.lastIndexOf(SUB_END) + 1)
+                .replace(REPLACE_SOURCE, REPLACE_TARGET);
+    }
+
+    @Override
+    protected void addHttpStatusCodeInterceptor(HttpStatusCodeInterceptorChain chain) {
+        super.addHttpStatusCodeInterceptor(chain);
+        chain.addInterceptor(new ErrorInterceptor());
+    }
+
+    private static class ErrorInterceptor implements HttpStatusCodeInterceptor {
+
+        @Override
+        public void handelStatusCode(String url, HtmlParser parser) {
+            if (parser.getStateCode() == 500) {
+                throw new RuntimeException(parser.getResponse().toString());
+            }
         }
     }
 }

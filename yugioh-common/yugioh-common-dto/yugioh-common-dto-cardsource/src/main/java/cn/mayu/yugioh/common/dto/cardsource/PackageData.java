@@ -16,7 +16,7 @@ public class PackageData {
 
     private List<String> packageUris;
 
-    private Integer priority;
-
     private String channelId;
+
+    private String subscribe;
 }

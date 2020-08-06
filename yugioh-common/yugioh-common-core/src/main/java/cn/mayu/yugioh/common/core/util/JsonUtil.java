@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.common.core.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +34,20 @@ public class JsonUtil {
 		return init().writeValueAsBytes(value);
 	}
 	
-	public static String writeValueAsString(Object value) throws Exception {
-		return init().writeValueAsString(value);
+	public static String writeValueAsString(Object value) {
+		try {
+			return init().writeValueAsString(value);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String findValue(String content, String keyName) {
+		try {
+			return init().readTree(content).findValue(keyName).textValue();
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private static ObjectMapper init() {

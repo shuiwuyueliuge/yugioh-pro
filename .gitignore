@@ -5,7 +5,6 @@
 /classes
 **/target/**
 **/logs/**
-**/test/**
 .git/
 .settings/
 pom.properties

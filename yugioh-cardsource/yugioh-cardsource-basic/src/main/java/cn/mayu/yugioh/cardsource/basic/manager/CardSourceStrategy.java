@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface CardSourceStrategy {
 
-    void publishPackageDetail(List<String> packageUrls, Integer priority, String channelId);
+    void publishPackageDetail(List<String> packageUrls, String channelId, String subscribe);
 
-    void publishLimitDetail(String LimitUrl, Integer priority);
+    void publishLimitDetail(String LimitUrl);
 
     List<PackageData> gainPackageList();
 

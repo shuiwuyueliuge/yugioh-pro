@@ -18,11 +18,11 @@ public class CardSourceStrategyContext {
     }
 
     public void publishPackageDetail(PackageData packageData, Integer sourceType) {
-        getStrategy(sourceType).publishPackageDetail(packageData.getPackageUris(), packageData.getPriority(), packageData.getChannelId());
+        getStrategy(sourceType).publishPackageDetail(packageData.getPackageUris(), packageData.getChannelId(), packageData.getSubscribe());
     }
 
-    public void publishLimitDetail(String LimitUrl, Integer priority, Integer sourceType) {
-        getStrategy(sourceType).publishLimitDetail(LimitUrl, priority);
+    public void publishLimitDetail(String LimitUrl, Integer sourceType) {
+        getStrategy(sourceType).publishLimitDetail(LimitUrl);
     }
 
     public List<PackageData> gainPackageList(Integer sourceType) {

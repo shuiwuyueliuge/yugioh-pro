@@ -29,7 +29,7 @@
 .layout-content {
     margin-left: 250px;
     padding-top: 64px;
-    height: calc(100% - 220px);
+    height: calc(100% - 120px);
     background-color: #fff;
     position: absolute;
     width: calc(100% - 260px);
@@ -86,11 +86,12 @@
     height: 500px;
 }
 
-// :host ::ng-deep .custom-toast .ui-toast-message {
-//     background: #FC466B;
-//     background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
-//     background: linear-gradient(to right, #3F5EFB, #FC466B);
-// }
+:host ::ng-deep .custom-toast .ui-toast-message {
+    //background: #FC466B;
+    //background: -webkit-linear-gradient(to right, #3F5EFB, #FC466B);
+    //background: linear-gradient(to right, #3F5EFB, #FC466B);
+    width: 200%;
+}
 
 // :host ::ng-deep .custom-toast .ui-toast-message div {
 //     color: #ffffff;
