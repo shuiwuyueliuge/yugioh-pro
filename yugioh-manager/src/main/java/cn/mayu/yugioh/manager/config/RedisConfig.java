@@ -16,7 +16,7 @@ public class RedisConfig {
     private ReactiveRedisConnectionFactory factory;
 
     @Bean
-    public ReactiveRedisTemplate<Integer, List> initRedisTemplate() {
-        return RedisFactory.initIntegerRedisTemplate(factory, new Jackson2JsonRedisSerializer<>(List.class));
+    public ReactiveRedisTemplate<String, List> initRedisTemplate() {
+        return RedisFactory.initStringRedisTemplate(factory, new Jackson2JsonRedisSerializer<>(List.class));
     }
 }

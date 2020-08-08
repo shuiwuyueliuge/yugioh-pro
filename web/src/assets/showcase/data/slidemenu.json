@@ -1,21 +1,25 @@
 {
     "data": [
         {
-            "label": "File",
-            "icon": "pi pi-pw pi-file",
+            "label": "首页",
+            "icon": "pi pi-fw pi-home",
+            "routerLink": "/"
+        },
+        {
+            "label": "源数据解析",
             "items": [
                 {
-                    "label": "New",
-                    "icon": "pi pi-fw pi-plus",
-                    "items": [
-                        {
-                            "label": "User",
-                            "icon": "pi pi-fw pi-user-plus"
-                        }
-                    ]
+                    "label": "发售卡包解析",
+                    "icon": "pi pi-fw pi-external-link",
+                    "routerLink": "/content/sync/package"
                 },
                 {
-                    "label": "Open",
+                    "label": "禁卡表解析",
+                    "icon": "pi pi-fw pi-external-link",
+                    "routerLink": "/content/sync/limit"
+                },
+                {
+                    "label": "卡片解析",
                     "icon": "pi pi-fw pi-external-link",
                     "routerLink": "/content/sync"
                 }

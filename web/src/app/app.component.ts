@@ -20,11 +20,15 @@ export class AppComponent implements OnInit {
     this.menuActive = false;
     this.smallTab = false;
     this.items = [
-      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/' }
+      { label: '首页', icon: 'pi pi-fw pi-home', routerLink: '/' }
     ];
   }
 
   ngOnInit() {
+    let interval = setInterval(() => {
+      console.log(new Date());
+      clearInterval(interval);
+    }, 1000);
   }
 
   public changeMenuActive(event: any): void {
@@ -61,21 +65,4 @@ export class AppComponent implements OnInit {
 
     this.items.push({ label: event.label, icon: event.icon, routerLink: event.routerLink });
   }
-
-
-  // showSuccess() {
-  //   this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Order submitted' });
-  // }
-
-  // showInfo() {
-  //   this.messageService.add({ severity: 'info', summary: 'Info Message', detail: 'PrimeNG rocks' });
-  // }
-
-  // showWarn() {
-  //   this.messageService.add({ severity: 'warn', summary: 'Warn Message', detail: 'There are unsaved changes' });
-  // }
-
-  // showError() {
-  //   this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Validation failed' });
-  // }
 }

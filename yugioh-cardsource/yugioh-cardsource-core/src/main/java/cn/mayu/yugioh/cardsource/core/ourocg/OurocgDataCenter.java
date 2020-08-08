@@ -1,7 +1,8 @@
 package cn.mayu.yugioh.cardsource.core.ourocg;
 
-import static cn.mayu.yugioh.cardsource.basic.manager.CardSourceEnum.OUROCG;
+import static cn.mayu.yugioh.cardsource.basic.factory.CardSourceEnum.OUROCG;
 import cn.mayu.yugioh.cardsource.basic.service.DataSourceLogService;
+import cn.mayu.yugioh.common.dto.cardsource.LimitData;
 import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.LimitDetail;
@@ -16,8 +17,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import static cn.mayu.yugioh.common.core.util.JsonUtil.readValueSnakeCase;
-import static cn.mayu.yugioh.cardsource.core.ourocg.DataTypeEnum.PACKAGE;
-import static cn.mayu.yugioh.cardsource.core.ourocg.OurocgQueueGuardian.addOne;
 
 public class OurocgDataCenter implements PackageCenter, LimitCenter {
 
@@ -97,9 +96,11 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
                 packageDetail.setOfferingDate(info.getSellTime());
                 card.setSerial(info.getNumber());
                 card.getRare().add(info.getRare());
-            } else {// 英文版卡包重新放入队列
-                addOne(info.getHref(), PACKAGE, "", "");
+                continue;
             }
+
+            // 英文版卡包
+            packageDetail.getEnPackages().add(info.getHref());
         }
     }
 
@@ -123,7 +124,7 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
     }
 
     @Override
-    public List<String> gainLimitList(String resources) {
+    public List<LimitData> gainLimitList(String resources) {
         return OurocgHtmlHandlers.limitListTranslater.handle(resources);
     }
 }

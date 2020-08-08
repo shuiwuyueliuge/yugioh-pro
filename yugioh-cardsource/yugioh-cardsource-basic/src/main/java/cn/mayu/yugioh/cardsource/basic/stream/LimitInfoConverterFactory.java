@@ -11,6 +11,7 @@ public class LimitInfoConverterFactory implements DomainConverterFactory<LimitDe
         LimitProto.LimitDetail.Builder build = LimitProto.LimitDetail.newBuilder();
         build.setName(source.getName());
         build.addAllForbidden(source.getForbidden());
+        build.setPublishTime(source.getPublishTime());
         build.addAllLimited(source.getLimited());
         build.addAllSemiLimited(source.getSemiLimited());
         return build.build();

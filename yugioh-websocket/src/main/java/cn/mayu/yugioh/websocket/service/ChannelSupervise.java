@@ -1,6 +1,5 @@
 package cn.mayu.yugioh.websocket.service;
 
-import cn.mayu.yugioh.common.dto.websocket.WebSocketMsg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.netty.channel.Channel;

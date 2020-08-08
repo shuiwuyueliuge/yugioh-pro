@@ -11,9 +11,10 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastModule } from 'primeng/toast';
 import { ButtonModule } from 'primeng/button';
-import { HttpService } from './http.service';
-import { ToastService } from './message.service';
+import { HttpService } from './common/http/http.service';
+import { ToastService } from './common/message/message.service';
 import { MessageService } from 'primeng/api';
+import { WebSocketService } from './common/web-socket/web-socket.service'; 
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     ButtonModule
   ],
-  providers: [MessageService, ToastService, HttpService],
+  providers: [MessageService, ToastService, HttpService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

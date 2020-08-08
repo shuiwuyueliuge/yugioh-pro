@@ -1,7 +1,8 @@
 package cn.mayu.yugioh.websocket.service;
 
 import cn.mayu.yugioh.common.core.util.JsonUtil;
-import cn.mayu.yugioh.common.dto.websocket.WebSocketMsg;
+import cn.mayu.yugioh.common.dto.websocket.WebSocketEvent;
+import cn.mayu.yugioh.common.dto.websocket.WebSocketSource;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
@@ -88,9 +89,9 @@ public class WebSocketService extends SimpleChannelInboundHandler<Object> {
             }
 
             String subscribe = JsonUtil.findValue(msg, "subscribe");
-            WebSocketMsg webSocketMsg = new WebSocketMsg();
-            webSocketMsg.setChannelId(res);
-            webSocketMsg.setSubscribe(subscribe);
+            WebSocketEvent webSocketMsg = new WebSocketEvent();
+            WebSocketSource source = new WebSocketSource(res, subscribe);
+            webSocketMsg.setSource(source);
             ctx.channel().writeAndFlush(new TextWebSocketFrame(JsonUtil.writeValueAsString(webSocketMsg)));
         }
     }

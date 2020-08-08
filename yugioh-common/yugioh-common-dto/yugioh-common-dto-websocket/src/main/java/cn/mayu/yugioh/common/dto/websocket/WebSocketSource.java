@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackageAnalyseEvent {
+public class WebSocketSource {
 
-    private String packageName;
+    private String channelId;
 
-    private Integer progress;
+    private String subscribe;
 }

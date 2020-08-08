@@ -8,15 +8,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PackageData {
+public class PackageData extends BaseData {
 
     private String name;
 
     private String uri;
-
-    private List<String> packageUris;
-
-    private String channelId;
-
-    private String subscribe;
 }

@@ -1,4 +1,4 @@
-package cn.mayu.yugioh.cardsource.basic.manager;
+package cn.mayu.yugioh.cardsource.basic.factory;
 
 import lombok.AllArgsConstructor;
 import java.util.List;

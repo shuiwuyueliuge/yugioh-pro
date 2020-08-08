@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.common.dto.transform;
 
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,4 +31,7 @@ public class PackageDetail {
 	
 	// 卡片详情
 	private List<CardDetail> cards;
+
+	// 英文版相同卡包
+	private List<String> enPackages = new ArrayList<>();
 }

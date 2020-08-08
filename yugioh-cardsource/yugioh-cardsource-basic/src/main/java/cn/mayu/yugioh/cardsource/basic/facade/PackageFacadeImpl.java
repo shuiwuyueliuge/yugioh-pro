@@ -2,7 +2,7 @@ package cn.mayu.yugioh.cardsource.basic.facade;
 
 import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.facade.cardsource.PackageFacade;
-import cn.mayu.yugioh.cardsource.basic.manager.CardSourceStrategyContext;
+import cn.mayu.yugioh.cardsource.basic.factory.CardSourceStrategyContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

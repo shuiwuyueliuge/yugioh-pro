@@ -15,7 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Data
 @Entity
 @Table(name = "t_forbidden")
-@SQLInsert(sql = "INSERT IGNORE INTO t_forbidden(card_id, card_name, limit_time, limit_val, modify_time, type_val, id) values (?, ?, ?, ?, ?, ?, ?)")
+@SQLInsert(sql = "INSERT IGNORE INTO t_forbidden(card_id, card_name, limit_time, limit_val, modify_time, type_val, id, region) values (?, ?, ?, ?, ?, ?, ?, ?)")
 public class ForbiddenEntity {
 
     @Id

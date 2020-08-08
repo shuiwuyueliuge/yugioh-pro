@@ -1,5 +1,6 @@
 package cn.mayu.yugioh.manager.controller;
 
+import cn.mayu.yugioh.common.dto.cardsource.LimitData;
 import cn.mayu.yugioh.common.dto.cardsource.PackageData;
 import cn.mayu.yugioh.common.dto.cardsource.SourceType;
 import cn.mayu.yugioh.manager.service.SyncService;
@@ -26,5 +27,15 @@ public class SyncController {
     @GetMapping("/sync/source")
     public List<SourceType> getSourceType() {
         return syncService.getSourceType();
+    }
+
+    @GetMapping("/sync/limit/{sourceType}")
+    public List<LimitData> gainLimitList(@PathVariable("sourceType") Integer sourceType) {
+        return syncService.gainLimitList(sourceType);
+    }
+
+    @PostMapping("/sync/limit/{sourceType}")
+    public void publishLimitDetail(@RequestBody LimitData limitData, @PathVariable("sourceType") Integer sourceType) {
+        syncService.publishLimitDetail(limitData, sourceType);
     }
 }
