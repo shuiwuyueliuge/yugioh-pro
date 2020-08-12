@@ -16,6 +16,7 @@ import lombok.Data;
 @Entity
 @Table(name = "t_index")
 public class IndexEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

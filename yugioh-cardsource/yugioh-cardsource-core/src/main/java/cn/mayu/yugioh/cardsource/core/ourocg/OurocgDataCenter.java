@@ -40,6 +40,11 @@ public class OurocgDataCenter implements PackageCenter, LimitCenter {
     }
 
     @Override
+    public String url() {
+        return "https://www.ourocg.cn%s";
+    }
+
+    @Override
     public PackageDetail gainPackageDetail(String resources) {
         String data = OurocgHtmlHandlers.cardDataTranslater.handle(resources);
         OurocgMetaData metaData = readToOurocgMetaData(data);

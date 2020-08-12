@@ -16,7 +16,7 @@ public class RedisConfig {
     private ReactiveRedisConnectionFactory factory;
 
     @Bean
-    public ReactiveRedisTemplate<Integer, CardDetail> IndexEntityRedis() {
-        return RedisFactory.initIntegerRedisTemplate(factory, new Jackson2JsonRedisSerializer<CardDetail>(CardDetail.class));
+    public ReactiveRedisTemplate<Integer, CardDetail> initCardRedisTemplate() {
+        return RedisFactory.initIntegerRedisTemplate(factory, new Jackson2JsonRedisSerializer<>(CardDetail.class));
     }
 }

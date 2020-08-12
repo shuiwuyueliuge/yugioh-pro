@@ -7,5 +7,5 @@ public interface CardManager {
 
 	Integer cardSave(CardDTO cardDto);
 
-	CardDetail findByIdAndTypeVal(Integer id);
+	CardDetail findByIdAndTypeVal(CardDetail detail);
 }

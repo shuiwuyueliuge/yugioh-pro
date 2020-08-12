@@ -5,6 +5,7 @@ import cn.mayu.yugioh.common.web.core.intercept.web.ResultCodeEnum;
 import cn.mayu.yugioh.common.web.core.intercept.web.RpcBody;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import feign.FeignException;
 import feign.Response;
 import feign.Util;
@@ -32,6 +33,6 @@ public class RpcDecoder implements Decoder {
             throw new RpcServiceException(responseBody.getStackTrace(), responseBody.getMsg());
         }
 
-        return responseBody.getData();
+        return objectMapper.convertValue(responseBody.getData(), TypeFactory.defaultInstance().constructType(type));
     }
 }

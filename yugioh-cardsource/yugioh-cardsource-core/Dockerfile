@@ -6,12 +6,13 @@ MAINTAINER yugioh-pro
 # 获取打包后的jar名称
 ARG JAR_FILE
 
-ADD ${JAR_FILE} /home/app.jar
+ADD ${JAR_FILE} /home/yugioh-cardsource.jar
 RUN mkdir -p /home/config/
 ADD /src/main/resources/application.properties /home/config/
+ADD /src/main/resources/application-pro.properties /home/config/
 #  执行 java -jar 命令 （CMD：在启动容器时才执行此行。RUN：构建镜像时就执行此行）
 
-ENTRYPOINT ["java","-jar","/home/yugioh-cardsource.jar","--spring.config.location=/home/config/application.properties"]
+ENTRYPOINT ["java","-jar","/home/yugioh-cardsource.jar --spring.config.location=/home/config/application.properties"]
  
 #  设置对外端口为 9300
 EXPOSE 9300

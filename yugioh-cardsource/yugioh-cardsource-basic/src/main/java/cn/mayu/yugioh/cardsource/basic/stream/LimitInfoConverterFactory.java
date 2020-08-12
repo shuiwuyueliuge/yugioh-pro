@@ -14,6 +14,7 @@ public class LimitInfoConverterFactory implements DomainConverterFactory<LimitDe
         build.setPublishTime(source.getPublishTime());
         build.addAllLimited(source.getLimited());
         build.addAllSemiLimited(source.getSemiLimited());
+        build.setRegion(source.getRegion());
         return build.build();
     }
 }

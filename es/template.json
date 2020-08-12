@@ -1,5 +1,5 @@
 {
-  "template": "ygo",
+  "template": "card",
   "settings": {
     "index.refresh_interval": "5s"
   },
@@ -52,21 +52,11 @@
       },
       "typeSt": {
         "type": "text",
-        "fields": {
-          "raw": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "analyzer": "whitespace"
       },
       "linkArrow": {
         "type": "text",
-        "fields": {
-          "raw": {
-            "type": "keyword",
-            "ignore_above": 256
-          }
-        }
+        "analyzer": "whitespace"
       }
     }
   }

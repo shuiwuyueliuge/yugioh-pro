@@ -32,7 +32,7 @@ public class ElasticsearchCardEntity {
 
     private Integer atk;
 
-    private List<Integer> typeSt;
+    private String typeSt; // example {1 2 3}
 
-    private List<Integer> linkArrow;
+    private String linkArrow; // example {1 2 3}
 }

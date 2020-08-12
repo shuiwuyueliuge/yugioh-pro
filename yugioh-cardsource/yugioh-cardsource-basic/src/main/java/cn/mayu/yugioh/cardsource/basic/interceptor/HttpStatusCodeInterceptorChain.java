@@ -9,7 +9,7 @@ public class HttpStatusCodeInterceptorChain implements HttpStatusCodeInterceptor
 	private List<HttpStatusCodeInterceptor> chain;
 	
 	{
-		chain = new ArrayList<HttpStatusCodeInterceptor>();
+		chain = new ArrayList<>();
 	}
 
 	@Override

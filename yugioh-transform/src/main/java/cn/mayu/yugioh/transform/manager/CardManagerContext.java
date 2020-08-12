@@ -4,6 +4,8 @@ import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import cn.mayu.yugioh.transform.model.dto.CardDTO;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CardManagerContext {
@@ -18,8 +20,8 @@ public class CardManagerContext {
 		return getCardManager(cardDto.getCardTypeDTO().getCardType()).cardSave(cardDto);
 	}
 
-	public CardDetail findByIdAndTypeVal(Integer id, Integer typeVal) {
-		return getCardManager(typeVal).findByIdAndTypeVal(id);
+	public List<CardDetail> findByIdAndTypeVal(List<CardDetail> details) {
+		return details.stream().map(data -> getCardManager(Integer.valueOf(data.getTypeVal())).findByIdAndTypeVal(data)).collect(Collectors.toList());
 	}
 
 	private CardManager getCardManager(Integer cardType) {

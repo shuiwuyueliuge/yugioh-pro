@@ -17,8 +17,8 @@ public class LimitDataHandler extends DefaultHtmlHandler<LimitInfo> {
 		String html = parser.toString();
 		String[] tbodys = parser.parseByTag("tbody");
 		List<List<String>> hashIds = parseLimitList(tbodys, parser);
-		String tatile = parser.setHtml(html).parseByClassIndex("title", 0).toString();
-		entity.setName(tatile);
+		String title = parser.setHtml(html).parseByClassIndex("title", 0).toString();
+		entity.setName(title);
 		entity.setForbidden(hashIds.get(0));
 		entity.setLimited(hashIds.get(1));
 		entity.setSemiLimited(hashIds.get(2));

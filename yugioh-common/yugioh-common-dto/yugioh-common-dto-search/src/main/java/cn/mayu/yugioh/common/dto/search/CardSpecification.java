@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
+/**
+ * 单个条件之间是and关系，集合之间是or关系
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -2,30 +2,22 @@ package cn.mayu.yugioh.search.repository;
 
 import cn.mayu.yugioh.common.dto.search.CardSpecification;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
-import cn.mayu.yugioh.search.model.condition.EsCardConditionChecker;
-import cn.mayu.yugioh.search.model.condition.EsCardConditionCheckerChain;
+import cn.mayu.yugioh.search.model.condition.ConditionProviderChain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Component;
-import java.util.List;
 
 @Component
 public class ElasticSearchRepository {
 
+    @Autowired
     private ElasticsearchRestTemplate esTemplate;
 
-    private EsCardConditionCheckerChain checkerChain;
-
     @Autowired
-    public ElasticSearchRepository(ElasticsearchRestTemplate esTemplate, List<EsCardConditionChecker> esCardConditionCheckers) {
-        this.esTemplate = esTemplate;
-        this.checkerChain = new EsCardConditionCheckerChain(esCardConditionCheckers);
-    }
+    private ConditionProviderChain conditionProviderChain;
 
     public SearchHits<ElasticsearchCardEntity> searchCard(CardSpecification cardSpecification) {
-        NativeSearchQueryBuilder queryBuilder = checkerChain.initNativeSearchQueryBuilder(cardSpecification);
-        return esTemplate.search(queryBuilder.build(), ElasticsearchCardEntity.class);
+        return esTemplate.search(conditionProviderChain.buildCondition(cardSpecification), ElasticsearchCardEntity.class);
     }
 }

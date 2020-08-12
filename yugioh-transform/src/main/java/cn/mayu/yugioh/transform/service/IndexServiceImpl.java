@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Service;
-
 import cn.mayu.yugioh.transform.model.entity.IndexEntity;
 import cn.mayu.yugioh.transform.repository.IndexRepository;
 

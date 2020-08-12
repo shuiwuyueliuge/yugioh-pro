@@ -19,8 +19,6 @@ import java.util.List;
 @Component
 public class OurocgLimitFactory extends AsyncNoticeManager implements LimitFactory {
 
-    private static final String OUROCG_URL = "https://www.ourocg.cn%s";
-
     private LimitCenter limitCenter;
 
     @Autowired
@@ -41,7 +39,7 @@ public class OurocgLimitFactory extends AsyncNoticeManager implements LimitFacto
 
     @Override
     public List<LimitData> gainLimitList() {
-        String limitUrl = String.format(OUROCG_URL, "/Limit-Latest");
+        String limitUrl = String.format(limitCenter.url(), "/Limit-Latest");
         return limitCenter.gainLimitList(limitUrl);
     }
 

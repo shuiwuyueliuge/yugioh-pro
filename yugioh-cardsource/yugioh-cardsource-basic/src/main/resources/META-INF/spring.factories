@@ -2,8 +2,11 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.mayu.yugioh.cardsource.basic.factory.CardSourceStrategyContext,\
 cn.mayu.yugioh.cardsource.basic.facade.PackageFacadeImpl,\
 cn.mayu.yugioh.cardsource.basic.facade.CardSourceFacadeImpl,\
-  cn.mayu.yugioh.cardsource.basic.facade.LimitFacadeImpl,\
+cn.mayu.yugioh.cardsource.basic.facade.LimitFacadeImpl,\
 cn.mayu.yugioh.cardsource.basic.stream.LimitPublisher,\
 cn.mayu.yugioh.cardsource.basic.stream.PackagePublisher,\
 cn.mayu.yugioh.cardsource.basic.stream.WebSocketPublisher,\
-cn.mayu.yugioh.cardsource.basic.service.DataSourceLogServiceImpl
+cn.mayu.yugioh.cardsource.basic.service.DataSourceLogServiceImpl,\
+cn.mayu.yugioh.cardsource.basic.service.CardSourceServiceImpl,\
+cn.mayu.yugioh.cardsource.basic.service.PackageServiceImpl,\
+cn.mayu.yugioh.cardsource.basic.service.LimitServiceImpl

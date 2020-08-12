@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.mayu.yugioh.common.facade.transform.CardFacadeFallBack,\
+cn.mayu.yugioh.common.facade.transform.HystrixClientFallbackFactory
+

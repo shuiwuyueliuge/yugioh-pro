@@ -5,4 +5,8 @@ public interface DataCenter {
 	boolean exists();
 	
 	String description();
+
+	default String url() {
+		return null;
+	}
 }

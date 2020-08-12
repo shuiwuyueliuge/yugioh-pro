@@ -4,9 +4,8 @@ import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.transform.manager.CardManagerContext;
 import cn.mayu.yugioh.common.facade.transform.CardFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 public class CardFacadeImpl implements CardFacade {
@@ -15,9 +14,8 @@ public class CardFacadeImpl implements CardFacade {
     private CardManagerContext cardManagerContext;
 
     @Override
-    @GetMapping("/card")
-    public CardDetail findByIdAndTypeVal(@RequestParam("id") Integer id,
-                                         @RequestParam("typeVal") Integer typeVal) {
-        return cardManagerContext.findByIdAndTypeVal(id, typeVal);
+    @PostMapping("/card")
+    public List<CardDetail> findByIdAndTypeVal(@RequestBody List<CardDetail> details) {
+        return cardManagerContext.findByIdAndTypeVal(details);
     }
 }

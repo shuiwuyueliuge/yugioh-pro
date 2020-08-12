@@ -20,8 +20,6 @@ import java.util.List;
 @Component
 public class OurocgPackageFactory extends AsyncNoticeManager implements PackageFactory {
 
-    private static final String OUROCG_URL = "https://www.ourocg.cn%s";
-
     private PackageCenter packageCenter;
 
     @Autowired
@@ -42,7 +40,7 @@ public class OurocgPackageFactory extends AsyncNoticeManager implements PackageF
 
     @Override
     public List<PackageData> gainPackageList() {
-        String packageUrl = String.format(OUROCG_URL, "/package");
+        String packageUrl = String.format(packageCenter.url(), "/package");
         return packageCenter.gainPackageList(packageUrl);
     }
 
@@ -62,7 +60,7 @@ public class OurocgPackageFactory extends AsyncNoticeManager implements PackageF
     public void doAsync(EventObject eventObject) {
         OurocgEvent event = (OurocgEvent) eventObject;
         WebSocketSource source = (WebSocketSource) event.getSource();
-        String url = String.format(OUROCG_URL, event.getData());
+        String url = String.format(packageCenter.url(), event.getData());
         PackageDetail packageDetail = packageCenter.gainPackageDetail(url);
         if (packageDetail.getEnPackages().size() > 0) {
             publishPackageDetail(packageDetail.getEnPackages(), source.getChannelId(), source.getSubscribe());
