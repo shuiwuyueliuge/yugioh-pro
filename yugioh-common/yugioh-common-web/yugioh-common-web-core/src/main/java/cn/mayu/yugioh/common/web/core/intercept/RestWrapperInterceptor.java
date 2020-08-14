@@ -45,6 +45,11 @@ public class RestWrapperInterceptor implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        if (tracker == null) {
+            this.tracker = new WebTracker();
+            this.tracker.track();
+        }
+
         return true;
     }
 

@@ -6,6 +6,7 @@ import cn.mayu.yugioh.common.dto.cardsource.SourceType;
 import cn.mayu.yugioh.manager.service.SyncService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class SyncController {
     }
 
     @PostMapping("/sync/package/{sourceType}")
-    public void publishPackageDetail(@RequestBody PackageData packageData, @PathVariable("sourceType") Integer sourceType) {
+    public void publishPackageDetail(@RequestBody @Valid PackageData packageData, @PathVariable("sourceType") Integer sourceType) {
         syncService.publishPackageDetail(packageData, sourceType);
     }
 
@@ -35,7 +36,7 @@ public class SyncController {
     }
 
     @PostMapping("/sync/limit/{sourceType}")
-    public void publishLimitDetail(@RequestBody LimitData limitData, @PathVariable("sourceType") Integer sourceType) {
+    public void publishLimitDetail(@RequestBody @Valid LimitData limitData, @PathVariable("sourceType") Integer sourceType) {
         syncService.publishLimitDetail(limitData, sourceType);
     }
 }

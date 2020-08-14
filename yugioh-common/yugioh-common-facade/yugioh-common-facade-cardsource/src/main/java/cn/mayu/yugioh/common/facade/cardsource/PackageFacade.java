@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
-@FeignClient(name = "card-source", contextId = "package")
+@FeignClient(name = "card-source", contextId = "package", fallbackFactory = PackageFacadeFallbackFactory.class)
 public interface PackageFacade {
 
     @PostMapping("/package/detail/{sourceType}")

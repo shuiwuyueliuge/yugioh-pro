@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
-@FeignClient(name = "transform", contextId = "card", fallbackFactory = HystrixClientFallbackFactory.class)
+@FeignClient(name = "transform", contextId = "card", fallbackFactory = CardFacadeFallbackFactory.class)
 public interface CardFacade {
 
     @PostMapping("/card")

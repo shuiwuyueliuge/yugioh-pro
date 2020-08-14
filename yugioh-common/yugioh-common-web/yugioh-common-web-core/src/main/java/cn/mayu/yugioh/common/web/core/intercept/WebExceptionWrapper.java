@@ -4,6 +4,7 @@ import cn.mayu.yugioh.common.web.core.exception.RpcServiceException;
 import cn.mayu.yugioh.common.web.core.exception.ServiceException;
 import cn.mayu.yugioh.common.web.core.intercept.web.ResultCodeEnum;
 import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolationException;
@@ -13,6 +14,11 @@ public class WebExceptionWrapper {
 
     @ExceptionHandler(value = BindException.class)
     public ServiceException handleBindException(BindException ex){
+        return new ServiceException(ResultCodeEnum.PARAM_BIND_ERROR.getCode(), ResultCodeEnum.PARAM_BIND_ERROR.toString(), ex);
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ServiceException handleBindException(MethodArgumentNotValidException ex){
         return new ServiceException(ResultCodeEnum.PARAM_BIND_ERROR.getCode(), ResultCodeEnum.PARAM_BIND_ERROR.toString(), ex);
     }
 
