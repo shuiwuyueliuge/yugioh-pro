@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.repository;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecification;
+import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
 import cn.mayu.yugioh.search.model.condition.ConditionProviderChain;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class ElasticSearchRepository {
     @Autowired
     private ConditionProviderChain conditionProviderChain;
 
-    public SearchHits<ElasticsearchCardEntity> searchCard(CardSpecification cardSpecification) {
+    public SearchHits<ElasticsearchCardEntity> searchCard(CardSpecificationDTO cardSpecification) {
         return esTemplate.search(conditionProviderChain.buildCondition(cardSpecification), ElasticsearchCardEntity.class);
     }
 }

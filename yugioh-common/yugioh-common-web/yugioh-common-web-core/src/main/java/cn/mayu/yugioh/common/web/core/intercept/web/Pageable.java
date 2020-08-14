@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class Pageable<T> extends ResponseBody {
 
-    private Integer count;
+    private Long count;
 
     private Integer currentPage;
 
-    public Pageable(Integer count, Integer currentPage, T data, String traceId) {
+    public Pageable(Long count, Integer currentPage, T data, String traceId) {
         super(data, traceId);
         this.count = count;
         this.currentPage = currentPage;

@@ -2,7 +2,10 @@ package cn.mayu.yugioh.transform.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.CardProto;
+import cn.mayu.yugioh.transform.manager.CardManagerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,9 @@ public class CardInfoServiceImpl implements CardInfoService {
 
 	@Autowired
 	private TypeRepository typeRepository;
+
+	@Autowired
+	private CardManagerContext cardManagerContext;
 
 	@Override
 	@Transactional
@@ -90,5 +96,10 @@ public class CardInfoServiceImpl implements CardInfoService {
             }).collect(Collectors.toList());
 			typeRepository.saveAll(typeEntities);
 		}
+	}
+
+	@Override
+	public List<CardDetail> findByIdAndTypeVal(List<CardDetail> details) {
+		return cardManagerContext.findByIdAndTypeVal(details);
 	}
 }

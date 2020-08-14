@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardSpecification {
+public class CardSpecificationDTO {
 
     private String keyWord;
 

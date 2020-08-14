@@ -1,6 +1,7 @@
 package cn.mayu.yugioh.transform.service;
 
 import java.util.List;
+import cn.mayu.yugioh.common.dto.transform.CardDetail;
 import cn.mayu.yugioh.common.dto.transform.CardProto;
 
 public interface CardInfoService {
@@ -12,4 +13,6 @@ public interface CardInfoService {
 	void saveLinks(List<String> linkArrow, Integer cardId);
 	
 	void saveTypes(List<Integer> types, Integer cardId);
+
+	List<CardDetail> findByIdAndTypeVal(List<CardDetail> details);
 }

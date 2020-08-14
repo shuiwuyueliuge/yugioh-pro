@@ -24,6 +24,16 @@
                     "routerLink": "/content/sync"
                 }
             ]
+        },
+        {
+            "label": "查询",
+            "items": [
+                {
+                    "label": "卡片查询",
+                    "icon": "pi pi-fw pi-external-link",
+                    "routerLink": "/content/search/card"
+                }
+            ]
         }
     ]
 }

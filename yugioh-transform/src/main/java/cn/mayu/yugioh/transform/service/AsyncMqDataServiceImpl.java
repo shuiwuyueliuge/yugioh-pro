@@ -1,7 +1,8 @@
-package cn.mayu.yugioh.transform.manager;
+package cn.mayu.yugioh.transform.service;
 
 import java.util.List;
 import cn.mayu.yugioh.common.dto.transform.*;
+import cn.mayu.yugioh.transform.manager.CardManagerContext;
 import com.google.protobuf.TextFormat;
 import org.springframework.amqp.support.AmqpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,11 @@ import cn.mayu.yugioh.transform.model.dto.CardTypeDTO;
 import cn.mayu.yugioh.transform.model.dto.PackageRareDTO;
 import cn.mayu.yugioh.transform.model.entity.ForbiddenEntity;
 import cn.mayu.yugioh.transform.repository.ForbiddenRepository;
-import cn.mayu.yugioh.transform.service.ImageService;
-import cn.mayu.yugioh.transform.service.IndexService;
-import cn.mayu.yugioh.transform.service.PackageService;
-import cn.mayu.yugioh.transform.service.RareService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
+public class AsyncMqDataServiceImpl implements AsyncMqDataService {
 	
 	@Autowired
 	private ForbiddenRepository forbiddenRepository;
@@ -49,7 +46,7 @@ public class AsyncMqDataManagerImpl implements AsyncMqDataManager {
 	
 	private DomainConverterFactory<LimitProto.LimitDetail, ForbiddenEntity> limitConverterFactory;
 	
-	public AsyncMqDataManagerImpl() {
+	public AsyncMqDataServiceImpl() {
 		limitConverterFactory = new LimitConverterFactory();
 	}
 

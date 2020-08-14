@@ -8,7 +8,8 @@ export const environment = {
   package: '',
   cardSource: '',
   webSocket: '',
-  limit: '' 
+  limit: '',
+  card: '' 
 };
 
 /*

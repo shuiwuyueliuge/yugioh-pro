@@ -12,12 +12,15 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { StepsModule } from 'primeng/steps';
 import { SyncLimitComponent } from './sync/limit/limit.component';
 import { SyncService } from './sync/sync.service';
+import { CardComponent } from './search/card/card.component';
+import { CardService } from './search/card/card.service';
 
 @NgModule({
   declarations: [
     ContentComponent,
     SyncPackageComponent,
-    SyncLimitComponent
+    SyncLimitComponent,
+    CardComponent
   ],
   exports: [
     ContentComponent
@@ -34,7 +37,8 @@ import { SyncService } from './sync/sync.service';
   ],
   providers: [
     PackageService,
-    SyncService
+    SyncService,
+    CardService
   ]
 })
 export class ContentModule { }

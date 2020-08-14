@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PageVO<T> {
 
-    private Integer count;
+    private Long count;
 
     private Integer currentPage;
 

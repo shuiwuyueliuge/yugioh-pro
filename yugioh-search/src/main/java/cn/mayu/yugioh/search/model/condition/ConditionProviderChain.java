@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecification;
+import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import com.google.common.collect.Lists;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -20,13 +20,13 @@ public class ConditionProviderChain {
     @Autowired
     private List<ConditionProvider> providers;
 
-    public NativeSearchQuery buildCondition(CardSpecification cardSpecification) {
+    public NativeSearchQuery buildCondition(CardSpecificationDTO cardSpecification) {
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
         List<HighlightBuilder.Field> fields = Lists.newArrayList();
         buildCondition(cardSpecification, boolQueryBuilder, fields);
         if (cardSpecification.getPage() != null && cardSpecification.getSize() != null) {
-            queryBuilder.withPageable(PageRequest.of(cardSpecification.getPage(), cardSpecification.getSize()));
+            queryBuilder.withPageable(PageRequest.of(cardSpecification.getPage() - 1, cardSpecification.getSize()));
         }
 
         queryBuilder.withQuery(boolQueryBuilder)
@@ -35,7 +35,7 @@ public class ConditionProviderChain {
         return queryBuilder.build();
     }
 
-    protected void buildCondition(CardSpecification cardSpecification, BoolQueryBuilder boolQueryBuilder, List<HighlightBuilder.Field> fields) {
+    protected void buildCondition(CardSpecificationDTO cardSpecification, BoolQueryBuilder boolQueryBuilder, List<HighlightBuilder.Field> fields) {
         providers.stream().forEach(data -> data.buildCondition(cardSpecification, boolQueryBuilder, fields));
     }
 }

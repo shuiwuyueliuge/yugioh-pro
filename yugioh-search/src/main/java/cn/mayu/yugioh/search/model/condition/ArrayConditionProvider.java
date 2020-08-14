@@ -1,6 +1,6 @@
 package cn.mayu.yugioh.search.model.condition;
 
-import cn.mayu.yugioh.common.dto.search.CardSpecification;
+import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class ArrayConditionProvider<T> extends DefaultConditionProvider {
 
     @Override
-    public void buildCondition(CardSpecification cardSpecification, BoolQueryBuilder boolQueryBuilder, List<HighlightBuilder.Field> fields) {
+    public void buildCondition(CardSpecificationDTO cardSpecification, BoolQueryBuilder boolQueryBuilder, List<HighlightBuilder.Field> fields) {
         if (skip(cardSpecification)) {
             return;
         }
@@ -24,5 +24,5 @@ public abstract class ArrayConditionProvider<T> extends DefaultConditionProvider
 
     protected abstract String getFiledKey();
 
-    protected abstract List<T> getFiledValue(CardSpecification cardSpecification);
+    protected abstract List<T> getFiledValue(CardSpecificationDTO cardSpecification);
 }

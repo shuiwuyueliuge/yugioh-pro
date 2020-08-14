@@ -18,7 +18,6 @@ import cn.mayu.yugioh.transform.model.dto.CardDTO;
 import cn.mayu.yugioh.transform.model.dto.CardTypeDTO;
 import cn.mayu.yugioh.transform.model.entity.MagicTrapEntity;
 import cn.mayu.yugioh.transform.service.CardInfoService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

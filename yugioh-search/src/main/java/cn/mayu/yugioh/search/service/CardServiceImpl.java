@@ -1,12 +1,14 @@
 package cn.mayu.yugioh.search.service;
 
 import cn.mayu.yugioh.common.core.util.BeanUtil;
+import cn.mayu.yugioh.common.dto.search.CardResponseDTO;
 import cn.mayu.yugioh.common.dto.transform.CardDetail;
-import cn.mayu.yugioh.common.dto.search.CardSpecification;
+import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 import cn.mayu.yugioh.search.repository.ElasticSearchRepository;
 import cn.mayu.yugioh.search.model.ElasticsearchCardEntity;
 import cn.mayu.yugioh.common.facade.transform.CardFacade;
 import com.google.common.collect.Lists;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -34,11 +36,11 @@ public class CardServiceImpl implements CardService {
     private CardFacade cardFacade;
 
     @Override
-    public List<CardDetail> searchCard(CardSpecification cardSpecification) {
+    public CardResponseDTO searchCard(CardSpecificationDTO cardSpecification) {
         // es
         SearchHits<ElasticsearchCardEntity> cards = elasticSearchRepository.searchCard(cardSpecification);
-        if (cards.isEmpty()) {
-            return Lists.newArrayList();
+        if (cards.getTotalHits() <= 0) {
+            return new CardResponseDTO(cards.getTotalHits(), Lists.newArrayList());
         }
 
         Cache cardCache = cacheManager.getCache("cardCache");
@@ -62,6 +64,7 @@ public class CardServiceImpl implements CardService {
                 details.add(cardDetail);
             }
 
+            BeanUtils.copyProperties(entity, cardDetail);
             cardDetail.setId(entity.getId());
             cardDetail.setTypeVal(entity.getTypeVal().toString());
             if (entity.getLinkArrow() != null) {
@@ -82,6 +85,10 @@ public class CardServiceImpl implements CardService {
         // db
         if (noCached.size() > 0) {
             List<CardDetail> dbDetails = cardFacade.findByIdAndTypeVal(noCached);
+            if (dbDetails.size() == 0) {
+                return new CardResponseDTO(cards.getTotalHits(), noCached);
+            }
+
             dbDetails.stream().forEach(data -> {
                 CardDetail cardDetail = new CardDetail();
                 cardCache.put(data.getId(), data);
@@ -91,6 +98,6 @@ public class CardServiceImpl implements CardService {
             });
         }
 
-        return details;
+        return new CardResponseDTO(cards.getTotalHits(), details);
     }
 }

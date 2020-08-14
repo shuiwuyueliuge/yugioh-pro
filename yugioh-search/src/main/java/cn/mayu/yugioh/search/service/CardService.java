@@ -1,10 +1,9 @@
 package cn.mayu.yugioh.search.service;
 
-import cn.mayu.yugioh.common.dto.transform.CardDetail;
-import cn.mayu.yugioh.common.dto.search.CardSpecification;
-import java.util.List;
+import cn.mayu.yugioh.common.dto.search.CardResponseDTO;
+import cn.mayu.yugioh.common.dto.search.CardSpecificationDTO;
 
 public interface CardService {
 
-    List<CardDetail> searchCard(CardSpecification cardSpecification);
+    CardResponseDTO searchCard(CardSpecificationDTO cardSpecification);
 }
