@@ -17,12 +17,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
-import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
+import cn.mayu.yugioh.security.core.base.authorizerequest.RequestManager;
+import cn.mayu.yugioh.security.core.base.property.LoginProperty;
 import cn.mayu.yugioh.security.browser.property.CsrfProperty;
 import cn.mayu.yugioh.security.browser.property.LogoutProperty;
 import cn.mayu.yugioh.security.browser.property.RememberMeProperty;
@@ -100,7 +101,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 			http.httpBasic().and().csrf().disable();
 			return;
 		}
-		
+
+		http.apply(new CsrfConfigurerAdapter());
 		if (csrfProperty.isCsrfTokenRepositoryWithHttpOnlyFalse()) {
 			CsrfConfigurer<HttpSecurity> configurer = http.httpBasic().and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		    if (csrfProperty.getCsrfIgnoringAnt()!= null) {
@@ -111,6 +113,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	private void loginConfig(HttpSecurity http) throws Exception {
+		if (loginProperty.isHttp401Unauthorized()) {
+			http.exceptionHandling().authenticationEntryPoint(new Http401UnauthorizedEntryPoint());
+			return;
+		}
+
 		try {
 			if (loginProperty.getLoginPage() == null) {
 				http.formLogin().and().httpBasic();
@@ -139,9 +146,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private void sessionConfig(HttpSecurity http) throws Exception {
 		SessionManagementConfigurer<HttpSecurity> configurer = http.sessionManagement();
-		if (invalidSessionStrategy != null) configurer.invalidSessionStrategy(invalidSessionStrategy);//session超时
+		if (invalidSessionStrategy != null) configurer.invalidSessionStrategy(invalidSessionStrategy);// session超时
 		
-		//并发登陆
+		// 并发登陆
 		configurer.maximumSessions(sessionProperty.getMaximumSessions())
 		          .maxSessionsPreventsLogin(sessionProperty.isMaxSessionsPreventsLogin())
 		          .expiredSessionStrategy(sessionInformationExpiredStrategy);

@@ -12,7 +12,7 @@ import cn.mayu.yugioh.basic.authorize.repository.OauthClientDetailsRepository;
 import cn.mayu.yugioh.basic.authorize.util.HttpServletRequestHelper;
 import cn.mayu.yugioh.common.core.util.Base64Util;
 
-@Service
+//@Service
 public class UserServiceImpl implements UserDetailsService {
 	
 	@Autowired

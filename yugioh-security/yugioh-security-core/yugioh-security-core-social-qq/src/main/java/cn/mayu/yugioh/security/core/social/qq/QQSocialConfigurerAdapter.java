@@ -20,7 +20,7 @@ public class QQSocialConfigurerAdapter extends SocialConfigurerAdapter {
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer,
 			Environment environment) {//"qq", "101575852", "a4bf6596ca7745775e09623be0eff66d"
-		connectionFactoryConfigurer.addConnectionFactory(new QQConnectionFactory("qq", "101575852", "a4bf6596ca7745775e09623be0eff66d"));
+		connectionFactoryConfigurer.addConnectionFactory(new QQConnectionFactory("qq", "101896709", "e95f0137c272cf36f4ec59859cde26c8"));
 	}
 	
 	@Override

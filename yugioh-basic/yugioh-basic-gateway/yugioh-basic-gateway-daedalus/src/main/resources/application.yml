@@ -15,12 +15,18 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: ingredients-fallback
+        - id: websocket-server
           uri: lb://web-socket
           predicates:
             - Path=/
 #          filters:
 #            - StripPrefix=1
+        - id: manager-server
+          uri: lb://manager
+          predicates:
+            - Path=/**
+          filters:
+            - StripPrefix=1
 #        - id: blog
 #          uri: http://www.baidu.com
 #          predicates:
@@ -84,7 +90,7 @@ eureka:
     prefer-ip-address: true
   client:    
     serviceUrl:
-      defaultZone: http://ygo:ygo@127.0.0.1:9000/eureka/
+      defaultZone: http://ygo:ygo@172.17.237.151:9000/eureka/
     registerWithEureka: true
 
 management:

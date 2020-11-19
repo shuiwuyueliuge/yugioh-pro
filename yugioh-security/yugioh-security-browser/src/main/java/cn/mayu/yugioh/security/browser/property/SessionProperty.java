@@ -11,7 +11,7 @@ public class SessionProperty {
 	
 	private boolean maxSessionsPreventsLogin = false;
 	
-	private int sessionTimeout = 18000;//server.servlet.session.timeout=1
+	private int sessionTimeout = 18000;// -> server.servlet.session.timeout=1
 	
-	private String sessionStoreType = "none";//spring.session.store-type=none
+	private String sessionStoreType = "none";// -> spring.session.store-type=none
 }

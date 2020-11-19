@@ -125,7 +125,7 @@
 		<module>yugioh-transform</module>
 		<module>yugioh-manager</module>
 		<module>yugioh-test</module>
-	</modules>
+    </modules>
 
 	<build>
 		<plugins>

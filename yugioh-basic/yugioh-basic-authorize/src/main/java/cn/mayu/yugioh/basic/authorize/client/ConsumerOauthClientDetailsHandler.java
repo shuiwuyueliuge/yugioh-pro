@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
+import cn.mayu.yugioh.security.core.base.property.LoginProperty;
 import cn.mayu.yugioh.basic.authorize.model.dto.UserLoginDto;
 import cn.mayu.yugioh.basic.authorize.model.entity.OauthClientDetails;
 import cn.mayu.yugioh.basic.authorize.model.entity.User;

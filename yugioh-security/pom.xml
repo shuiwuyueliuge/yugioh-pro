@@ -12,7 +12,8 @@
 		<module>yugioh-security-core</module>
 		<module>yugioh-security-browser</module>
     <module>yugioh-security-application</module>
-  </modules>
+        <module>web-test</module>
+    </modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

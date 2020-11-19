@@ -38,6 +38,7 @@ public class ReRedisTokenStore extends RedisTokenStore {
 				int seconds = token.getExpiresIn();
 				conn.expire(authKey, seconds);
 			}
+
 			conn.closePipeline();
 		} finally {
 			conn.close();

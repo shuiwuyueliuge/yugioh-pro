@@ -3,7 +3,7 @@ package cn.mayu.yugioh.security.browser.config;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.session.SessionInformationExpiredStrategy;
-import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
+import cn.mayu.yugioh.security.core.base.property.LoginProperty;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

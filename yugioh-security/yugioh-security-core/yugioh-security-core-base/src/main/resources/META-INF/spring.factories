@@ -1,2 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-cn.mayu.org.yugioh.security.core.base.authorizerequest.DefaultRequestManager
+cn.mayu.yugioh.security.core.base.authorizerequest.DefaultRequestManager,\
+cn.mayu.yugioh.security.core.base.config.EhcacheConfig,\
+cn.mayu.yugioh.security.core.base.property.EhcacheProperty

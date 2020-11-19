@@ -36,7 +36,7 @@ public class CardServiceImpl implements CardService {
     private CardFacade cardFacade;
 
     @Override
-    public CardResponseDTO searchCard(CardSpecificationDTO cardSpecification) {
+    public CardResponnseDTO searchCard(CardSpecificationDTO cardSpecification) {
         // es
         SearchHits<ElasticsearchCardEntity> cards = elasticSearchRepository.searchCard(cardSpecification);
         if (cards.getTotalHits() <= 0) {

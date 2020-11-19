@@ -3,5 +3,5 @@ cn.mayu.yugioh.security.application.config.AppSecurityConfig,\
 cn.mayu.yugioh.security.application.config.AuthServerConfig,\
 cn.mayu.yugioh.security.application.config.ResourceServerConfig,\
 cn.mayu.yugioh.security.application.config.AuthRequestManager,\
-cn.mayu.org.yugioh.security.core.base.property.LoginProperty,\
+cn.mayu.yugioh.security.core.base.property.LoginProperty,\
 cn.mayu.yugioh.security.application.token.OAuth2AccessTokenHelper

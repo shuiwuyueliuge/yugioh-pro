@@ -1,4 +1,6 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 cn.mayu.yugioh.common.facade.cardsource.PackageFacadeFallBack,\
-cn.mayu.yugioh.common.facade.cardsource.PackageFacadeFallbackFactory
+cn.mayu.yugioh.common.facade.cardsource.PackageFacadeFallbackFactory,\
+cn.mayu.yugioh.common.facade.cardsource.CardSourceFacadeFallBack,\
+cn.mayu.yugioh.common.facade.cardsource.CardSourceFacadeFallbackFactory
 

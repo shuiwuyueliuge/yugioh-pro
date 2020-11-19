@@ -6,8 +6,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import cn.mayu.org.yugioh.security.core.base.authorizerequest.RequestManager;
-import cn.mayu.org.yugioh.security.core.base.property.LoginProperty;
+import cn.mayu.yugioh.security.core.base.authorizerequest.RequestManager;
+import cn.mayu.yugioh.security.core.base.property.LoginProperty;
 
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
@@ -28,7 +28,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		requestManager.config(http.authorizeRequests());
 		loginConfig(http);
-		
 	}
 
 	private void loginConfig(HttpSecurity http) throws Exception {

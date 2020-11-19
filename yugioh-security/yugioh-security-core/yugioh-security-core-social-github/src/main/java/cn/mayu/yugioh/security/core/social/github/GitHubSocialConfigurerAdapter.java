@@ -11,8 +11,8 @@ import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import cn.mayu.org.yugioh.security.core.base.social.SocialJdbcUsersConnectionRepository;
-import cn.mayu.org.yugioh.security.core.base.social.SocialProperty;
+import cn.mayu.yugioh.security.core.base.social.SocialJdbcUsersConnectionRepository;
+import cn.mayu.yugioh.security.core.base.social.SocialProperty;
 
 @EnableSocial
 public class GitHubSocialConfigurerAdapter extends SocialConfigurerAdapter {

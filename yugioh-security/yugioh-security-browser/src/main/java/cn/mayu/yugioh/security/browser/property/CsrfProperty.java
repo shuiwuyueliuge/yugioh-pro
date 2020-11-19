@@ -7,9 +7,9 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "yugioh.security.browser")
 public class CsrfProperty {
 	
-	private boolean csrfTokenRepositoryWithHttpOnlyFalse = true;
+	private boolean csrfTokenRepositoryWithHttpOnlyFalse = false;
 	
-	private boolean csrfDisable = false;
+	private boolean csrfDisable = true;
 	
 	private String csrfIgnoringAnt;//, split
 }
